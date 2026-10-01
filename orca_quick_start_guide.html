@@ -3,343 +3,357 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Orca Desktop App - Quick Start Guide</title>
+  <title>Orca Desktop ADE - Getting Started Guide</title>
   <style>
     :root {
-      --bg: #0f172a;
-      --card-bg: #1e293b;
+      --bg: #0b0f19;
+      --card-bg: #111827;
+      --card-border: #1f293d;
       --accent: #38bdf8;
       --accent-hover: #0284c7;
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --border: #334155;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --step-num: #6366f1;
+      --code-bg: #030712;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background-color: var(--bg);
       color: var(--text);
       line-height: 1.6;
       padding: 2rem 1rem;
-    }
-
-    .container {
       max-width: 900px;
       margin: 0 auto;
     }
 
     header {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 1.5rem;
     }
 
-    header h1 {
-      font-size: 2.2rem;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
+    h1 {
+      font-size: 2rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
     }
 
-    header p {
+    p.subtitle {
       color: var(--text-muted);
+      font-size: 1rem;
+      margin-top: 0.5rem;
     }
 
-    .nav-tabs {
+    /* Tabs Navigation */
+    .tabs {
       display: flex;
       gap: 0.5rem;
-      border-bottom: 1px solid var(--border);
       margin-bottom: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
     }
 
     .tab-btn {
-      background: none;
-      border: none;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
       color: var(--text-muted);
-      padding: 0.75rem 1.25rem;
-      font-size: 1rem;
-      font-weight: 600;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
       cursor: pointer;
-      border-bottom: 2px solid transparent;
+      font-weight: 600;
+      font-size: 0.9rem;
       transition: all 0.2s ease;
+      white-space: nowrap;
     }
 
     .tab-btn:hover {
+      border-color: var(--accent);
       color: var(--text);
     }
 
     .tab-btn.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
     }
 
+    /* Tab Content Area */
     .tab-content {
       display: none;
       background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
       padding: 1.5rem;
-      border-radius: 8px;
-      border: 1px solid var(--border);
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
     }
 
     .tab-content.active {
       display: block;
     }
 
-    h2 {
-      font-size: 1.4rem;
+    /* Workflow Step Formatting */
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
       margin-bottom: 1rem;
-      color: var(--accent);
     }
 
-    .step-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .step-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 1rem;
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-    }
-
-    .step-num {
-      background: var(--accent);
-      color: var(--bg);
+    .step-number {
+      background: var(--step-num);
+      color: #fff;
       font-weight: bold;
-      width: 28px;
-      height: 28px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 1.1rem;
       flex-shrink: 0;
     }
 
-    .step-body h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.25rem;
+    .step-title {
+      font-size: 1.3rem;
+      color: #fff;
     }
 
     .step-body p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      color: #d1d5db;
     }
 
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1rem;
+    .instruction-list {
+      list-style: none;
+      margin-bottom: 1.5rem;
     }
 
-    .feature-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
-      padding: 1rem;
-      border-radius: 6px;
+    .instruction-list li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: #e5e7eb;
     }
 
-    .feature-card h3 {
-      margin-bottom: 0.5rem;
-      color: #e2e8f0;
-    }
-
-    .feature-card p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    /* Interactive Workflow Simulator */
-    .interactive-box {
-      background: rgba(0, 0, 0, 0.2);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 1rem;
-      margin-top: 1rem;
-    }
-
-    .btn {
-      background: var(--accent);
-      color: var(--bg);
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 0.5rem;
-    }
-
-    .btn:hover {
-      background: var(--accent-hover);
-    }
-
-    .status-text {
-      margin-top: 0.5rem;
-      font-family: monospace;
-      color: #34d399;
-    }
-
-    code {
-      background: #090d16;
-      padding: 0.2rem 0.4rem;
-      border-radius: 4px;
-      font-size: 0.85em;
+    .instruction-list li::before {
+      content: "➔";
+      position: absolute;
+      left: 0;
       color: var(--accent);
+    }
+
+    .tip-box {
+      background: rgba(56, 189, 248, 0.08);
+      border-left: 4px solid var(--accent);
+      padding: 0.8rem 1rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.875rem;
+      color: #7dd3fc;
+    }
+
+    .code-inline {
+      background: var(--code-bg);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.85em;
+      color: #f472b6;
+    }
+
+    /* Navigation Controls inside Card */
+    .step-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--card-border);
+    }
+
+    .action-btn {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+
+    }
+
+    .action-btn:hover {
+      background: var(--card-border);
+    }
+
+    .action-btn.primary {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      font-weight: 600;
+    }
+
+    .action-btn.primary:hover {
+      background: var(--accent-hover);
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <header>
-      <h1>Orca Quick Start Guide</h1>
-      <p>Agent Development Environment (ADE) Desktop App Overview</p>
-    </header>
+  <header>
+    <h1>🐋 Orca Desktop ADE</h1>
+    <p class="subtitle">Step-by-step Interactive Getting Started Guide</p>
+  </header>
 
-    <div class="nav-tabs">
-      <button class="tab-btn active" onclick="showTab('concept')">1. What is Orca?</button>
-      <button class="tab-btn" onclick="showTab('steps')">2. Step-by-Step Guide</button>
-      <button class="tab-btn" onclick="showTab('features')">3. Core Features</button>
-      <button class="tab-btn" onclick="showTab('simulator')">4. Interactive Preview</button>
+  <!-- Interactive Navigation Tabs -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab(0)">1. Add Repo</button>
+    <button class="tab-btn" onclick="showTab(1)">2. Create Task</button>
+    <button class="tab-btn" onclick="showTab(2)">3. Select Agent</button>
+    <button class="tab-btn" onclick="showTab(3)">4. Interfere & Edit</button>
+    <button class="tab-btn" onclick="showTab(4)">5. Merge & Ship</button>
+  </div>
+
+  <!-- TAB 1 -->
+  <div class="tab-content active">
+    <div class="step-header">
+      <div class="step-number">1</div>
+      <h2 class="step-title">Connect Your Git Repository</h2>
     </div>
-
-    <!-- TAB 1: CONCEPT -->
-    <div id="concept" class="tab-content active">
-      <h2>Understanding Orca (ADE)</h2>
-      <p>Unlike traditional IDEs designed for a single user writing code, <strong>Orca is an Agent Development Environment (ADE)</strong>. It is built to orchestrate and supervise multiple AI coding agents operating in parallel on your repository.</p>
-      <br>
-      <div class="feature-grid">
-        <div class="feature-card">
-          <h3>Worktree Isolation</h3>
-          <p>Every task automatically runs in its own isolated <code>git worktree</code> branch, preventing agents from overwriting each other's code.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Bring Your Own Agent</h3>
-          <p>Works with existing CLI tools like Claude Code, Gemini, Codex, Cursor CLI, and custom agents.</p>
-        </div>
+    <div class="step-body">
+      <p>Before launching AI agents, Orca needs access to your local codebase or a remote repository.</p>
+      <ul class="instruction-list">
+        <li>Launch the <strong>Orca Desktop application</strong> on your computer.</li>
+        <li>On the main dashboard, click the <strong>"+ Add Repository"</strong> button in the left sidebar.</li>
+        <li>Choose <strong>"Open Local Folder"</strong> to select an existing Git repository on your drive, or select <strong>"Clone Remote"</strong> to download a repository from GitHub/GitLab.</li>
+        <li>Once loaded, verify that your active branch (e.g., <span class="code-inline">main</span> or <span class="code-inline">develop</span>) is displayed in the bottom-left status bar.</li>
+      </ul>
+      <div class="tip-box">
+        💡 <strong>Note:</strong> Make sure your project directory contains a valid <span class="code-inline">.git</span> folder. Orca relies on Git to isolate AI changes safely.
       </div>
     </div>
+    <div class="step-actions">
+      <button class="action-btn" disabled>Previous</button>
+      <button class="action-btn primary" onclick="showTab(1)">Next Step: Create Task ➔</button>
+    </div>
+  </div>
 
-    <!-- TAB 2: SIMPLE STEPS -->
-    <div id="steps" class="tab-content">
-      <h2>How to Use Orca in 5 Simple Steps</h2>
-      <div class="step-list">
-        <div class="step-card">
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <h3>Add Your Repository</h3>
-            <p>Open Orca Desktop and point it to your local Git repository folder.</p>
-          </div>
-        </div>
-
-        <div class="step-card">
-          <div class="step-num">2</div>
-          <div class="step-body">
-            <h3>Create a Task (Worktree)</h3>
-            <p>Click <code>+</code> to start a task (e.g., <code>fix-auth-bug</code>). Orca automatically creates an isolated Git worktree.</p>
-          </div>
-        </div>
-
-        <div class="step-card">
-          <div class="step-num">3</div>
-          <div class="step-body">
-            <h3>Pick an AI Agent</h3>
-            <p>Select which agent to launch in that task's terminal (e.g., Claude Code or Gemini).</p>
-          </div>
-        </div>
-
-        <div class="step-card">
-          <div class="step-num">4</div>
-          <div class="step-body">
-            <h3>Inspect & Review</h3>
-            <p>Use split panes to watch agents work, preview changes in the integrated browser, or edit manually in the built-in Monaco editor.</p>
-          </div>
-        </div>
-
-        <div class="step-card">
-          <div class="step-num">5</div>
-          <div class="step-body">
-            <h3>Merge or Ship</h3>
-            <p>Review the generated diffs, approve changes, and merge the task back into your main branch or open a PR.</p>
-          </div>
-        </div>
+  <!-- TAB 2 -->
+  <div class="tab-content">
+    <div class="step-header">
+      <div class="step-number">2</div>
+      <h2 class="step-title">Create a Task (Isolated Worktree)</h2>
+    </div>
+    <div class="step-body">
+      <p>Orca uses Git Worktrees to run AI agents in isolated environments so they never mess up your main codebase while working.</p>
+      <ul class="instruction-list">
+        <li>Click on <strong>"New Task"</strong> (or press <span class="code-inline">Ctrl+N</span> / <span class="code-inline">Cmd+N</span>).</li>
+        <li>Enter a short descriptive title for what you want the AI to do (e.g., <em>"Add user login form"</em> or <em>"Fix API timeout error"</em>).</li>
+        <li>Orca will automatically spin up a dedicated <strong>Git Worktree</strong> branch in the background.</li>
+        <li>You can create multiple tasks concurrently; each task runs in its own independent workspace without file locks or code bleeding.</li>
+      </ul>
+      <div class="tip-box">
+        💡 <strong>Key Advantage:</strong> You can keep coding on your main branch while three different AI agents work on three separate tasks simultaneously.
       </div>
     </div>
+    <div class="step-actions">
+      <button class="action-btn" onclick="showTab(0)">⬅ Previous</button>
+      <button class="action-btn primary" onclick="showTab(2)">Next Step: Select Agent ➔</button>
+    </div>
+  </div>
 
-    <!-- TAB 3: FEATURES -->
-    <div id="features" class="tab-content">
-      <h2>Key Desktop Features</h2>
-      <div class="feature-grid">
-        <div class="feature-card">
-          <h3>Parallel Tasks</h3>
-          <p>Run multiple tasks simultaneously side by side without branch collision.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Design Mode / Web Preview</h3>
-          <p>Built-in browser tab that lets you click front-end elements to send DOM snippets and screenshots directly to the agent.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Diff Annotation</h3>
-          <p>Highlight code diffs and add inline notes/prompts for your AI agent to refine.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Integrated Terminal & Editor</h3>
-          <p>GPU-accelerated terminal and built-in editor so you can make manual tweaks without leaving the desktop app.</p>
-        </div>
+  <!-- TAB 3 -->
+  <div class="tab-content">
+    <div class="step-header">
+      <div class="step-number">3</div>
+      <h2 class="step-title">Select Model & Instruct Agent</h2>
+    </div>
+    <div class="step-body">
+      <p>Configure which LLM will execute the code changes and provide detailed instructions.</p>
+      <ul class="instruction-list">
+        <li>In the top right panel of the task window, select your preferred model from the dropdown (e.g., <strong>Claude 3.5 Sonnet</strong>, <strong>DeepSeek V3</strong>, or local models via Ollama/LM Studio).</li>
+        <li>Type your prompt in the instruction panel. Be specific about expected outcomes, file paths, or constraints.</li>
+        <li>Click <strong>"Start Agent"</strong> or press <span class="code-inline">Enter</span>.</li>
+        <li>Watch the agent inspect files, write terminal commands, and draft code updates in real-time.</li>
+      </ul>
+      <div class="tip-box">
+        💡 <strong>Best Practice:</strong> Refer directly to relevant files using `@` mentions (e.g., <em>"Check `@src/auth.js` and update error handling"</em>) for higher accuracy.
       </div>
     </div>
+    <div class="step-actions">
+      <button class="action-btn" onclick="showTab(1)">⬅ Previous</button>
+      <button class="action-btn primary" onclick="showTab(3)">Next Step: Interfere & Edit ➔</button>
+    </div>
+  </div>
 
-    <!-- TAB 4: INTERACTIVE SIMULATOR -->
-    <div id="simulator" class="tab-content">
-      <h2>Interactive Workflow Simulator</h2>
-      <p>Simulate how a typical multi-agent task is created in Orca:</p>
-
-      <div class="interactive-box">
-        <p><strong>Step 1:</strong> Enter a Task Name</p>
-        <input type="text" id="taskName" placeholder="e.g., refactor-header" style="padding: 0.4rem; width: 100%; max-width: 300px; margin-top: 0.5rem; background: var(--bg); border: 1px solid var(--border); color: #fff; border-radius: 4px;">
-        <br><br>
-        <p><strong>Step 2:</strong> Select Agent</p>
-        <select id="agentSelect" style="padding: 0.4rem; background: var(--bg); border: 1px solid var(--border); color: #fff; border-radius: 4px; margin-top: 0.5rem;">
-          <option>Claude Code</option>
-          <option>Gemini CLI</option>
-          <option>Codex</option>
-          <option>Cursor CLI</option>
-        </select>
-        <br>
-        <button class="btn" onclick="runSimulation()">Launch Task</button>
-
-        <div id="simResult" class="status-text" style="display: none;"></div>
+  <!-- TAB 4 -->
+  <div class="tab-content">
+    <div class="step-header">
+      <div class="step-number">4</div>
+      <h2 class="step-title">Supervise, Interfere & Edit</h2>
+    </div>
+    <div class="step-body">
+      <p>Unlike standard chat tools, Orca gives you complete control to pause, steer, or manually override the AI mid-process.</p>
+      <ul class="instruction-list">
+        <li><strong>Terminal & Execution:</strong> Inspect terminal output in the built-in terminal pane as the agent executes scripts or tests.</li>
+        <li><strong>Monaco Code Editor:</strong> Click on any modified file to open it in the integrated Monaco editor. You can edit code directly alongside the AI.</li>
+        <li><strong>Design Mode / Browser Preview:</strong> Switch to the <em>Design View</em> tab to preview web UI changes live.</li>
+        <li><strong>Steer/Pause:</strong> Hit <strong>"Pause"</strong> at any point to stop agent execution, modify files manually, and resume.</li>
+      </ul>
+      <div class="tip-box">
+        💡 <strong>Human-in-the-loop:</strong> If the AI gets stuck in a loop, click <strong>"Interfere"</strong>, guide it with a quick text correction, and let it resume.
       </div>
     </div>
+    <div class="step-actions">
+      <button class="action-btn" onclick="showTab(2)">⬅ Previous</button>
+      <button class="action-btn primary" onclick="showTab(4)">Next Step: Merge & Ship ➔</button>
+    </div>
+  </div>
 
+  <!-- TAB 5 -->
+  <div class="tab-content">
+    <div class="step-header">
+      <div class="step-number">5</div>
+      <h2 class="step-title">Review, Merge & Ship</h2>
+    </div>
+    <div class="step-body">
+      <p>Once the agent completes the task, review all modifications before integrating them into your main code branch.</p>
+      <ul class="instruction-list">
+        <li>Click on the <strong>"Diff Viewer"</strong> tab to inspect green/red line-by-line file changes.</li>
+        <li>Run unit tests directly inside Orca's terminal to confirm everything passes smoothly.</li>
+        <li>If satisfied, click <strong>"Merge to Main"</strong> to automatically apply the worktree changes back to your target branch.</li>
+        <li>Alternatively, click <strong>"Create Pull Request"</strong> to push the task branch directly to GitHub for team review.</li>
+        <li>Close or delete the task workspace to clean up the temporary Git worktree.</li>
+      </ul>
+      <div class="tip-box">
+        🚀 <strong>Done!</strong> Your feature is safely merged. You are ready to start a new task.
+      </div>
+    </div>
+    <div class="step-actions">
+      <button class="action-btn" onclick="showTab(3)">⬅ Previous</button>
+      <button class="action-btn primary" onclick="showTab(0)">Back to Step 1 ↺</button>
+    </div>
   </div>
 
   <script>
-    function showTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-      
-      document.getElementById(tabId).classList.add('active');
-      event.currentTarget.classList.add('active');
-    }
+    function showTab(index) {
+      const tabs = document.querySelectorAll('.tab-btn');
+      const contents = document.querySelectorAll('.tab-content');
 
-    function runSimulation() {
-      const task = document.getElementById('taskName').value || 'new-feature';
-      const agent = document.getElementById('agentSelect').value;
-      const res = document.getElementById('simResult');
-
-      res.style.display = 'block';
-      res.innerHTML = `[Orca] Creating git worktree: <code>../${task}</code><br>` +
-                      `[Orca] Spawning agent: <strong>${agent}</strong>...<br>` +
-                      `[Status] Ready! Terminal, editor, and browser preview initialized.`;
+      tabs.forEach((tab, i) => {
+        if (i === index) {
+          tab.classList.add('active');
+          contents[i].classList.add('active');
+        } else {
+          tab.classList.remove('active');
+          contents[i].classList.remove('active');
+        }
+      });
     }
   </script>
 </body>
