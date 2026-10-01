@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orca Desktop App - Quick Start Guide</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      color: var(--text-muted);
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.75rem 1.25rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      color: var(--text);
+    }
+
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .tab-content {
+      display: none;
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .step-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: bold;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-body h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-body p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      border-radius: 6px;
+    }
+
+    .feature-card h3 {
+      margin-bottom: 0.5rem;
+      color: #e2e8f0;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Interactive Workflow Simulator */
+    .interactive-box {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    .btn {
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+
+    .btn:hover {
+      background: var(--accent-hover);
+    }
+
+    .status-text {
+      margin-top: 0.5rem;
+      font-family: monospace;
+      color: #34d399;
+    }
+
+    code {
+      background: #090d16;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.85em;
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Orca Quick Start Guide</h1>
+      <p>Agent Development Environment (ADE) Desktop App Overview</p>
+    </header>
+
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="showTab('concept')">1. What is Orca?</button>
+      <button class="tab-btn" onclick="showTab('steps')">2. Step-by-Step Guide</button>
+      <button class="tab-btn" onclick="showTab('features')">3. Core Features</button>
+      <button class="tab-btn" onclick="showTab('simulator')">4. Interactive Preview</button>
+    </div>
+
+    <!-- TAB 1: CONCEPT -->
+    <div id="concept" class="tab-content active">
+      <h2>Understanding Orca (ADE)</h2>
+      <p>Unlike traditional IDEs designed for a single user writing code, <strong>Orca is an Agent Development Environment (ADE)</strong>. It is built to orchestrate and supervise multiple AI coding agents operating in parallel on your repository.</p>
+      <br>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>Worktree Isolation</h3>
+          <p>Every task automatically runs in its own isolated <code>git worktree</code> branch, preventing agents from overwriting each other's code.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Bring Your Own Agent</h3>
+          <p>Works with existing CLI tools like Claude Code, Gemini, Codex, Cursor CLI, and custom agents.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: SIMPLE STEPS -->
+    <div id="steps" class="tab-content">
+      <h2>How to Use Orca in 5 Simple Steps</h2>
+      <div class="step-list">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h3>Add Your Repository</h3>
+            <p>Open Orca Desktop and point it to your local Git repository folder.</p>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h3>Create a Task (Worktree)</h3>
+            <p>Click <code>+</code> to start a task (e.g., <code>fix-auth-bug</code>). Orca automatically creates an isolated Git worktree.</p>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h3>Pick an AI Agent</h3>
+            <p>Select which agent to launch in that task's terminal (e.g., Claude Code or Gemini).</p>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h3>Inspect & Review</h3>
+            <p>Use split panes to watch agents work, preview changes in the integrated browser, or edit manually in the built-in Monaco editor.</p>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <h3>Merge or Ship</h3>
+            <p>Review the generated diffs, approve changes, and merge the task back into your main branch or open a PR.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: FEATURES -->
+    <div id="features" class="tab-content">
+      <h2>Key Desktop Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>Parallel Tasks</h3>
+          <p>Run multiple tasks simultaneously side by side without branch collision.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Design Mode / Web Preview</h3>
+          <p>Built-in browser tab that lets you click front-end elements to send DOM snippets and screenshots directly to the agent.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Diff Annotation</h3>
+          <p>Highlight code diffs and add inline notes/prompts for your AI agent to refine.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Integrated Terminal & Editor</h3>
+          <p>GPU-accelerated terminal and built-in editor so you can make manual tweaks without leaving the desktop app.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: INTERACTIVE SIMULATOR -->
+    <div id="simulator" class="tab-content">
+      <h2>Interactive Workflow Simulator</h2>
+      <p>Simulate how a typical multi-agent task is created in Orca:</p>
+
+      <div class="interactive-box">
+        <p><strong>Step 1:</strong> Enter a Task Name</p>
+        <input type="text" id="taskName" placeholder="e.g., refactor-header" style="padding: 0.4rem; width: 100%; max-width: 300px; margin-top: 0.5rem; background: var(--bg); border: 1px solid var(--border); color: #fff; border-radius: 4px;">
+        <br><br>
+        <p><strong>Step 2:</strong> Select Agent</p>
+        <select id="agentSelect" style="padding: 0.4rem; background: var(--bg); border: 1px solid var(--border); color: #fff; border-radius: 4px; margin-top: 0.5rem;">
+          <option>Claude Code</option>
+          <option>Gemini CLI</option>
+          <option>Codex</option>
+          <option>Cursor CLI</option>
+        </select>
+        <br>
+        <button class="btn" onclick="runSimulation()">Launch Task</button>
+
+        <div id="simResult" class="status-text" style="display: none;"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+
+    function runSimulation() {
+      const task = document.getElementById('taskName').value || 'new-feature';
+      const agent = document.getElementById('agentSelect').value;
+      const res = document.getElementById('simResult');
+
+      res.style.display = 'block';
+      res.innerHTML = `[Orca] Creating git worktree: <code>../${task}</code><br>` +
+                      `[Orca] Spawning agent: <strong>${agent}</strong>...<br>` +
+                      `[Status] Ready! Terminal, editor, and browser preview initialized.`;
+    }
+  </script>
+</body>
+</html>
