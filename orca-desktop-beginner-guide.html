@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Orca Desktop — Beginner Quick Start</title>
+<style>
+  :root{
+    color-scheme: light dark;
+    --bg:#0b0f14; --card:#121923; --card2:#17212d; --text:#e9eef5;
+    --muted:#9eacbd; --line:#263444; --accent:#63d6b5; --accent2:#72a7ff;
+    --warn:#ffd166; --code:#0a1119;
+  }
+  @media (prefers-color-scheme: light){
+    :root{--bg:#f6f8fb;--card:#fff;--card2:#f0f4f8;--text:#17202a;--muted:#5e6b78;
+      --line:#dce3ea;--accent:#087f67;--accent2:#225fd1;--warn:#9a6500;--code:#f3f5f7;}
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+  main{max-width:980px;margin:auto;padding:42px 22px 70px}
+  h1{font-size:clamp(34px,5vw,56px);line-height:1.02;margin:0 0 10px;letter-spacing:-.035em}
+  h2{font-size:23px;margin:38px 0 14px}
+  h3{font-size:16px;margin:0 0 5px}
+  p{margin:7px 0}
+  a{color:var(--accent2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .kicker{color:var(--accent);font-weight:750;text-transform:uppercase;letter-spacing:.12em;font-size:12px}
+  .lead{font-size:18px;color:var(--muted);max-width:760px}
+  .flow{margin:24px 0;padding:17px 20px;background:var(--card);border:1px solid var(--line);border-radius:14px;font-weight:700}
+  .flow span{color:var(--accent)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 17px}
+  .step{display:flex;gap:13px;align-items:flex-start}
+  .num{flex:0 0 28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#08110e;font-weight:850}
+  .muted{color:var(--muted)}
+  .note{border-left:4px solid var(--warn);padding:11px 14px;background:var(--card2);border-radius:4px 12px 12px 4px;margin:15px 0}
+  code,kbd{background:var(--code);border:1px solid var(--line);border-radius:6px;padding:2px 6px;font-size:.92em}
+  ul{padding-left:20px;margin:8px 0}
+  li{margin:5px 0}
+  table{border-collapse:collapse;width:100%;background:var(--card);border-radius:12px;overflow:hidden}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+  tr:last-child td{border-bottom:0}
+  details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 15px;margin:9px 0}
+  summary{cursor:pointer;font-weight:750}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 8px;margin:2px;font-size:12px;color:var(--muted)}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<main>
+  <div class="kicker">Orca Desktop · Beginner Quick Start</div>
+  <h1>Learn the 20% you’ll use 80% of the time.</h1>
+  <p class="lead">Orca is a desktop IDE for running AI coding agents side-by-side. Each task gets a real Git worktree, so Claude Code, Codex, Cursor CLI and other agents can work independently without overwriting one another.</p>
+
+  <div class="flow"><span>Repo</span> → Worktree → Agent → Review diff → Commit / Push → PR</div>
+
+  <h2>1. One-time setup</h2>
+  <div class="grid">
+    <div class="card step"><div class="num">1</div><div><h3>Install your agent CLI(s)</h3><p>Install and log into Claude Code, Codex, or another CLI <strong>outside Orca first</strong>. Orca reuses those local credentials.</p></div></div>
+    <div class="card step"><div class="num">2</div><div><h3>Add your repo</h3><p>Open Orca → <strong>Add Repo</strong> → select your existing local Git checkout. Orca uses your default branch as the base reference.</p></div></div>
+    <div class="card step"><div class="num">3</div><div><h3>Check permissions</h3><p>Go to <strong>Settings → Agents → Agent Permissions</strong>. Choose <strong>Manual</strong> for normal approvals or <strong>Yolo</strong> for fewer prompts.</p></div></div>
+    <div class="card step"><div class="num">4</div><div><h3>Pick defaults</h3><p>In <strong>Settings → Agents</strong>, enable the CLIs you want and choose your normal default agent.</p></div></div>
+  </div>
+
+  <div class="note"><strong>Important:</strong> Orca defaults supported agents to permission-bypass launch flags. Worktrees reduce risk to your main checkout, but agents can still run commands. Use <strong>Manual</strong> if you want approval prompts.</div>
+
+  <h2>2. Your normal workflow</h2>
+  <div class="grid">
+    <div class="card step"><div class="num">1</div><div><h3>Create a workspace/worktree</h3><p>Click <strong>+</strong> beside the repo. Give the task a name such as <code>fix-login-race</code>. Usually branch from <code>origin/main</code>.</p></div></div>
+    <div class="card step"><div class="num">2</div><div><h3>Launch an agent</h3><p>Choose Claude Code, Codex, Cursor CLI, etc. Orca launches it with that worktree as its working directory.</p></div></div>
+    <div class="card step"><div class="num">3</div><div><h3>Give it the task</h3><p>Prompt the agent normally. You can create more worktrees and give the <em>same prompt</em> to several agents to compare solutions.</p></div></div>
+    <div class="card step"><div class="num">4</div><div><h3>Review, revise, ship</h3><p>Open <strong>Diff</strong>, inspect changes, leave review notes, send notes back to the agent, then stage → commit → push.</p></div></div>
+  </div>
+
+  <h2>3. Worktrees: the key Orca concept</h2>
+  <div class="card">
+    <p>Each workspace is a real <code>git worktree</code> with its <strong>own branch, files and agent terminals</strong>. That isolation is what makes parallel agents practical.</p>
+    <ul>
+      <li><strong>Base ref:</strong> normally <code>origin/main</code>.</li>
+      <li><strong>Start-from ref:</strong> what a new worktree branches from; it can also be another branch or commit.</li>
+      <li><strong>Deleting a workspace:</strong> can remove its worktree and branch, so review before confirming.</li>
+      <li><strong>Gitignored files are not automatically present:</strong> new worktrees may be missing <code>.env</code>, caches, local config or dependencies.</li>
+    </ul>
+    <p class="muted">For repeated setup, use <strong>Settings → Repository → Worktree Shared Paths</strong>, <code>worktree.sharedDirectories</code> in <code>orca.yaml</code>, or <code>.worktreeinclude</code>.</p>
+  </div>
+
+  <h2>4. Running several agents</h2>
+  <div class="card">
+    <p>A useful Orca pattern is to create 2–3 worktrees for the same problem, run a different agent/approach in each, then compare their diffs.</p>
+    <p><span class="pill">spinner = working</span><span class="pill">? = needs you</span><span class="pill">green = done</span><span class="pill">red = blocked</span><span class="pill">gray = idle</span></p>
+    <p>Drag a tab to the <strong>right</strong> edge for a left/right split, or the <strong>bottom</strong> edge for a top/bottom split. Each worktree remembers its own layout.</p>
+  </div>
+
+  <h2>5. Review code before accepting it</h2>
+  <div class="grid">
+    <div class="card"><h3>Diff viewer</h3><p>Shows staged, unstaged and untracked changes. You can stage by file, hunk or line and resolve merge conflicts visually.</p></div>
+    <div class="card"><h3>Annotate AI Diff</h3><p>Hover a changed line → click <strong>+</strong> → leave feedback. When finished, click <strong>Send to agent</strong> to send all review notes together.</p></div>
+    <div class="card"><h3>Commit & push</h3><p>Stage changes, write or AI-generate a commit message, commit, then push. Orca does not silently force-push.</p></div>
+  </div>
+
+  <h2>6. Browser + UI work</h2>
+  <div class="card">
+    <p>Every worktree can have its own embedded Chromium browser, so your local app stays tied to the task you are working on.</p>
+    <p><strong>Design Mode</strong> is especially useful for frontend bugs: enable it in the browser toolbar → click a UI element → Orca sends its HTML, computed CSS, screenshot and (when available) source location to the active agent.</p>
+  </div>
+
+  <h2>7. Claude Code and Codex</h2>
+  <table>
+    <tr><th>Agent</th><th>Before Orca</th><th>What Orca reads</th></tr>
+    <tr><td><strong>Claude Code</strong></td><td>Install CLI and log in once</td><td><code>~/.claude</code></td></tr>
+    <tr><td><strong>Codex</strong></td><td>Install CLI and log in once</td><td><code>~/.codex</code></td></tr>
+  </table>
+  <p class="muted">Orca can track usage/rate limits and supports account switching for these integrations.</p>
+
+  <h2>8. Desktop features worth enabling later</h2>
+  <div class="grid">
+    <div class="card"><h3>Chat UI · Experimental</h3><p><strong>Settings → Experimental → Chat UI.</strong> Gives supported agents a structured chat-like interface. The terminal remains the source of truth.</p></div>
+    <div class="card"><h3>Agent Dashboard · Experimental</h3><p>Shows agents grouped by states such as Needs You, Working and Done. Handy once you regularly run several sessions.</p></div>
+  </div>
+
+  <h2>9. Useful shortcuts</h2>
+  <table>
+    <tr><th>Action</th><th>macOS</th><th>Windows / Linux</th></tr>
+    <tr><td>Settings</td><td><kbd>Cmd</kbd> <kbd>,</kbd></td><td>Use Settings / configured shortcut</td></tr>
+    <tr><td>Next / previous tab</td><td><kbd>Cmd Shift ]/[</kbd></td><td><kbd>Ctrl Shift ]/[</kbd></td></tr>
+    <tr><td>Previous recent tab</td><td><kbd>Ctrl Tab</kbd></td><td><kbd>Ctrl Tab</kbd></td></tr>
+    <tr><td>Close all editor tabs</td><td><kbd>Cmd Option W</kbd></td><td><kbd>Ctrl Alt W</kbd></td></tr>
+    <tr><td>Add review note</td><td><kbd>Cmd Shift A</kbd></td><td><kbd>Ctrl Shift A</kbd></td></tr>
+  </table>
+  <p class="muted">All shortcuts are remappable under <strong>Settings → Shortcuts</strong>.</p>
+
+  <h2>10. When something breaks</h2>
+  <details open><summary>Agent will not start</summary>
+    <p>Run the same CLI in a normal terminal. If it fails there, fix installation/login first. If it only fails in Orca, check <strong>Settings → Agents</strong>, confirm the CLI is on Orca's <code>PATH</code>, then try the tab's <strong>Restart</strong> action.</p>
+  </details>
+  <details><summary>Worktree creation fails</summary>
+    <p>Run <code>git fetch origin</code>. Also check whether that branch already has another worktree.</p>
+  </details>
+  <details><summary>Diff looks stale or wrong</summary>
+    <p>Click the refresh button in the diff toolbar, especially after external Git operations such as rebase or reset.</p>
+  </details>
+  <details><summary>Orca uses too much RAM</summary>
+    <p>Close worktrees you are not using. Worktrees keep file watchers alive, and layouts with many browser tabs consume the most memory.</p>
+  </details>
+
+  <h2>The beginner checklist</h2>
+  <div class="card">
+    <ul>
+      <li>✓ Install + log in to your agent CLI(s).</li>
+      <li>✓ Add your Git repo.</li>
+      <li>✓ Decide <strong>Manual vs Yolo</strong> agent permissions.</li>
+      <li>✓ Create one worktree per task/approach.</li>
+      <li>✓ Let agents work only inside their worktrees.</li>
+      <li>✓ Review the diff before committing.</li>
+      <li>✓ Use review annotations to send precise fixes back to the agent.</li>
+      <li>✓ Commit/push only the solution you want to keep.</li>
+      <li>✓ Delete/archive unused worktrees when finished.</li>
+    </ul>
+  </div>
+
+  <h2>Official docs worth bookmarking</h2>
+  <div class="card">
+    <p>
+      <a href="https://www.onorca.dev/docs/first-session">First 3-agent session</a> ·
+      <a href="https://www.onorca.dev/docs/model/worktrees">Worktrees</a> ·
+      <a href="https://www.onorca.dev/docs/agents/supported">Supported agents</a> ·
+      <a href="https://www.onorca.dev/docs/review/diff-viewer">Diff viewer</a> ·
+      <a href="https://www.onorca.dev/docs/browser/design-mode">Design Mode</a> ·
+      <a href="https://www.onorca.dev/docs/settings">Settings</a> ·
+      <a href="https://www.onorca.dev/docs/troubleshooting">Troubleshooting</a>
+    </p>
+  </div>
+
+  <footer>
+    Condensed from the official Orca documentation at <a href="https://www.onorca.dev/docs">onorca.dev/docs</a>.
+    Reviewed October 1, 2026. This guide intentionally focuses on the desktop workflow and leaves advanced SSH, remote servers,
+    CLI automation, mobile, Jira/Linear integrations and plugins for later.
+  </footer>
+</main>
+</body>
+</html>
