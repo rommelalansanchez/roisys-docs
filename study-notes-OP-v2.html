@@ -1,0 +1,956 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="An English explanatory study guide: C#, .NET 8/9, APIs, data, architecture, React, TypeScript, DevOps, and cloud. 33 chapters with use cases and worked examples.">
+<title>Full-Stack Concepts — Backend, Frontend, DevOps & Cloud</title><style>
+:root{color-scheme:light;--nav:#142d3d;--ink:#1c3341;--muted:#516974;--accent:#096b62;--paper:#f5f3ed;--line:#d6e1de;--soft:#edf5f0;--gold:#ead7a7;--body-size:17px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:130px}body{margin:0;color:var(--ink);background:var(--paper);font:var(--body-size)/1.78 "Segoe UI",Arial,sans-serif}a{color:var(--accent);text-underline-offset:3px}a:hover{text-decoration-thickness:2px}button,input,select{font:inherit}button,select,input[type=checkbox]{cursor:pointer}button{border:1px solid #b4c9c5;border-radius:6px;padding:.45rem .75rem;color:var(--ink);background:#fff;font-size:.82rem;font-weight:650}button:hover{background:#eaf3ee}button.primary{background:var(--accent);color:white;border-color:var(--accent)}:focus-visible{outline:3px solid #b7780b;outline-offset:4px}::selection{background:#c8e7da}.skip{position:fixed;top:-100px;left:12px;background:#fff;padding:12px;z-index:30}.skip:focus{top:10px}.eyebrow{font-size:.7rem;letter-spacing:.15em;font-weight:750;text-transform:uppercase;color:var(--accent);margin:0 0 .4rem}.sidebar{position:fixed;inset:0 auto 0 0;width:286px;padding:28px 21px;background:var(--nav);color:#d9e6e8;overflow-y:auto;scrollbar-width:thin}.brand{font-size:.7rem;letter-spacing:.17em;text-transform:uppercase;font-weight:750;color:#a7d9c7}.sidebar h2{font:500 1.5rem/1.25 Georgia,serif;color:#fff;margin:.6rem 0 1rem}.sidebar .description{font-size:.78rem;color:#b2c8cf;line-height:1.5}.sidebar progress{display:block;width:100%;height:7px;accent-color:#a7d9c7;margin:.6rem 0}.sidebar #progress-label{font-size:.73rem;color:#b6cfd5}.sidebar .quick-links{display:flex;gap:14px;font-size:.77rem;margin:14px 0 22px}.sidebar a{color:#d4e8e6}.nav-group{border-top:1px solid #385261;padding:12px 0 8px}.nav-group>summary{cursor:pointer;font-size:.7rem;font-weight:750;letter-spacing:.08em;text-transform:uppercase;color:#acd7c8}.nav-group nav{padding-top:8px}.nav-group nav a{display:flex;gap:10px;padding:7px 7px;line-height:1.42;font-size:.79rem;text-decoration:none;border-radius:5px}.nav-group nav a:hover,.nav-group nav a.active{background:#27495a;color:white}.nav-no{color:#8aaab3;font-size:.66rem;line-height:1.9;min-width:18px}.sidebar .companion{font-size:.75rem;display:block;margin-top:22px;color:#b8dccb}
+main{margin-left:286px;max-width:1320px;padding:48px clamp(24px,5vw,82px) 70px}.hero{padding-bottom:30px;border-bottom:1px solid #bfcfcb}.hero h1{font:500 clamp(2.6rem,4.2vw,4.5rem)/1.08 Georgia,"Times New Roman",serif;letter-spacing:-.035em;margin:.75rem 0 1.4rem}.hero h1 span{color:var(--accent)}.lead{font-size:1.15rem;color:#425f6c;max-width:750px}.metrics{display:flex;gap:36px;flex-wrap:wrap;margin:24px 0}.metrics strong{font:500 2rem Georgia,serif;display:block}.metrics span{font-size:.67rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}.note{padding:16px 19px;border-left:3px solid #78af9d;background:#eaf1eb;border-radius:0 7px 7px 0;font-size:.87rem}.note p{margin:.25rem 0}.intro{margin:30px 0}.intro h2,.appendix h2{font:500 2rem/1.25 Georgia,serif;margin:.3rem 0 1rem}.intro p{font-size:.94rem}.route{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}.route a{display:block;border:1px solid var(--line);border-radius:8px;background:white;padding:17px;text-decoration:none}.route a strong{display:block;font:600 1.08rem Georgia,serif;margin-bottom:7px}.route a span{font-size:.79rem;line-height:1.5;color:var(--muted);display:block}.route a:hover{border-color:#6ca797}
+.toolbar{position:sticky;top:0;z-index:10;border:1px solid #c6d6d0;background:#fdfefb;padding:14px 16px;border-radius:9px;box-shadow:0 5px 20px #17392c08;margin:30px 0}.toolbar-row{display:grid;grid-template-columns:minmax(0,1fr) 175px auto;gap:10px;align-items:end}.field label{display:block;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:3px}.field input,.field select{width:100%;min-height:41px;background:#fff;color:var(--ink);border:1px solid #aec3bc;padding:7px 9px;border-radius:5px;font-size:.85rem}.toolbar-actions{display:flex;gap:6px;align-items:center;padding-bottom:1px}.toolbar-meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.7rem;margin-top:8px;color:var(--muted)}.toolbar-meta p{margin:0}.js-only{display:none}.has-js .js-only{display:block}.empty{background:#fbefce;padding:18px;border-radius:7px}
+.chapter{margin:40px 0 62px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;scroll-margin-top:130px;box-shadow:0 2px 10px #183f2703}.chapter:target{border-color:#75aa97}.chapter.is-read{border-top:4px solid #6aa78e}.chapter-header{padding:28px 32px 23px;border-bottom:1px solid var(--line);background:#f7faf7}.chapter-header h2{font:500 2.25rem/1.2 Georgia,serif;letter-spacing:-.02em;margin:.35rem 0 .75rem}.chapter-deck{margin:0;color:#526d75;font-size:1rem;max-width:75ch}.chapter-content{padding:8px 32px 25px;max-width:92ch}.chapter-content h3{font-size:.77rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;margin:26px 0 12px;color:var(--accent)}.chapter-content p{margin:.6rem 0 1rem}.concept{padding-left:17px;border-left:2px solid #d4e6dc;margin:18px 0 22px}.concept h4{font-size:1.02rem;line-height:1.45;margin:0 0 .35rem}.concept p{margin:.3rem 0}.example{margin:28px 0;border:1px solid #d4e2df;border-radius:8px;overflow:hidden;background:#f6f9f7}.example-header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:13px 17px;flex-wrap:wrap}.example-header h3{margin:0}.example-header span{font-size:.68rem;color:var(--muted)}pre{margin:0;background:#142e3d;color:#e9f1f3;font:.78rem/1.7 Consolas,"Cascadia Code",monospace;padding:20px;white-space:pre;overflow:auto;tab-size:2;max-width:100%}.example-explanation{font-size:.88rem;padding:2px 17px 10px}.tradeoff{padding:14px 18px;background:#fbf4e3;border-left:3px solid #d8ba76;border-radius:0 7px 7px 0;margin:22px 0}.tradeoff h3{margin:0 0 7px;color:#765d28;font-size:.69rem}.tradeoff p{font-size:.89rem;margin:0;color:#605535}.references{font-size:.74rem;line-height:1.9;color:var(--muted);margin-top:22px!important}.references strong{font-size:.64rem;letter-spacing:.06em;text-transform:uppercase}.references a{white-space:normal}.chapter-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:14px 25px;border-top:1px solid var(--line);font-size:.75rem;background:#f9fcf9}.read-label{display:flex;align-items:center;gap:8px;color:#516f72}.read-label input{width:16px;height:16px;accent-color:var(--accent)}.chapter-footer a{font-size:.74rem}
+.table-scroll{overflow-x:auto;max-width:100%;margin:25px 0}table{width:100%;border-collapse:collapse;font-size:.83rem;background:#fff;line-height:1.55}caption{text-align:left;color:var(--accent);font-weight:700;font-size:.82rem;margin:0 0 9px}th,td{border:1px solid #d5e0da;text-align:left;padding:11px 12px;vertical-align:top}thead th{background:#e9f1eb;color:#234f44;font-size:.74rem}tbody th{font-weight:650;background:#f6faf6}.appendix{padding-top:25px;border-top:1px solid #b8cbc1;margin:30px 0}.appendix h3{font-size:1.1rem;margin:25px 0 10px}.flow{list-style:none;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;counter-reset:step}.flow li{position:relative;padding:18px 14px;background:#fff;border:1px solid var(--line);border-radius:8px;line-height:1.45}.flow li:before{counter-increment:step;content:counter(step,decimal-leading-zero);display:block;color:#4f8b74;font:500 1.4rem Georgia,serif;margin-bottom:8px}.flow strong{display:block;font-size:.85rem}.flow span{display:block;font-size:.75rem;color:var(--muted);margin-top:8px}.appendix p{font-size:.94rem}.tool-note{font-size:.81rem!important;color:var(--muted)}.takeaway{background:#193c48;color:#eef7f0;padding:23px 26px;border-radius:9px;margin-top:25px}.takeaway h3{color:#b6dcc8;margin:0 0 10px}.takeaway p{margin:0;font-size:.92rem}.page-footer{font-size:.75rem;color:var(--muted);margin-top:45px;border-top:1px solid var(--line);padding-top:20px}[hidden]{display:none!important}
+@media(max-width:1150px){.sidebar{width:250px;padding:25px 16px}main{margin-left:250px;padding:36px 28px}.toolbar-row{grid-template-columns:minmax(0,1fr) 160px}.toolbar-actions{grid-column:1/-1}.toolbar{position:relative}.chapter{scroll-margin-top:25px}html{scroll-padding-top:25px}.chapter-header{padding:25px}.chapter-content{padding:7px 25px 20px}.flow{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:800px){.sidebar{position:relative;width:auto;padding:23px 20px}.sidebar h2{font-size:1.4rem}.sidebar .description,.sidebar .companion{display:none}.sidebar progress{max-width:260px}.sidebar .quick-links{margin:12px 0}.nav-group{display:inline-block;vertical-align:top;width:32%;border:0;padding:8px 8px 4px 0}.nav-group>summary{font-size:.65rem}.nav-group nav{max-height:160px;overflow-y:auto}.nav-group nav a{font-size:.72rem;padding:6px 4px}.nav-no{display:none}main{margin:0;padding:28px 18px 45px}.hero h1{font-size:2.7rem}.lead{font-size:1.02rem}.metrics{gap:27px}.metrics strong{font-size:1.7rem}.route{grid-template-columns:1fr}.route a{padding:14px}.route a strong{margin-bottom:4px}.toolbar{padding:12px}.toolbar-row{grid-template-columns:1fr}.toolbar-actions{grid-column:auto;flex-wrap:wrap}.chapter{margin:30px 0 42px;border-radius:9px}.chapter-header{padding:21px 19px}.chapter-header h2{font-size:1.95rem}.chapter-deck{font-size:.94rem}.chapter-content{padding:5px 19px 20px}.concept{padding-left:12px}.chapter-content h3{font-size:.7rem}.example-header{padding:12px}.example-explanation{padding:2px 12px 9px}pre{font-size:.71rem;padding:16px}.chapter-footer{padding:13px 18px}.flow{grid-template-columns:1fr 1fr}.takeaway{padding:20px}.note{padding:13px 16px}}
+@media(max-width:420px){.nav-group{display:block;width:100%;border-top:1px solid #385261}.nav-group nav{max-height:105px}.flow{grid-template-columns:1fr}.chapter-header h2{font-size:1.7rem}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{@page{size:auto;margin:16mm}html{scroll-behavior:auto}body{font-size:10.5pt;background:white;color:#15252c}.sidebar,.toolbar,.skip,.chapter-footer,.empty,.no-print{display:none!important}main{margin:0;max-width:none;padding:0}.hero{padding-bottom:14pt}.hero h1{font-size:32pt}.lead{font-size:11.5pt}.metrics{margin:14pt 0}.metrics strong{font-size:21pt}.note{background:#f4f6f3;font-size:9pt}.intro{margin:15pt 0}.route{display:none}.chapter,.chapter[hidden]{display:block!important;box-shadow:none;margin:22pt 0;border-radius:0;break-before:page;overflow:visible}.chapter-header{padding:12pt 14pt;background:#f2f5f1;break-after:avoid}.chapter-header h2{font-size:23pt}.chapter-deck{font-size:10pt}.chapter-content{max-width:none;padding:4pt 14pt 15pt}.chapter-content h3{font-size:9pt;break-after:avoid;margin-top:18pt}.concept h4{font-size:11pt;break-after:avoid}.concept p{orphans:3;widows:3}.concept{margin:12pt 0;padding-left:10pt}.example{break-inside:auto}.example-header{break-after:avoid}.example-header span{font-size:8pt}pre{white-space:pre-wrap;overflow-wrap:anywhere;overflow:visible;background:#f2f4f2;color:#162c36;font-size:8pt;padding:11pt;break-inside:avoid}.example-explanation{font-size:9pt}.tradeoff{break-inside:avoid;background:#f7f5ed}.tradeoff p{font-size:9pt}.references{font-size:8pt}.table-scroll{overflow:visible}table{font-size:8.5pt}th,td{padding:7pt}tr{break-inside:avoid}.appendix{break-before:page}.appendix h2,.intro h2{font-size:22pt}.flow{grid-template-columns:repeat(2,1fr)}.flow li{break-inside:avoid}.takeaway{background:#f2f5f0;color:#173b3d;break-inside:avoid}.takeaway h3{color:#245e4c}a{color:#255546;text-decoration:none}.page-footer{font-size:8pt}}
+</style></head><body>
+<a class="skip" href="#main">Skip to study guide</a>
+<aside class="sidebar" aria-label="Study guide contents"><div class="brand">The full-stack study library</div><h2>Concepts to<br>production.</h2><p class="description">Explanations, use cases, and examples across the complete application lifecycle.</p><p id="progress-label">0 of 33 chapters read</p><progress id="read-progress" max="33" value="0" aria-labelledby="progress-label"></progress><div class="quick-links"><a href="#top">Overview</a><a href="#tool-map">Tool map</a></div><details class="nav-group" open><summary>Backend</summary><nav aria-label="Backend chapters"><a href="#csharp" data-nav="csharp"><span class="nav-no">01</span><span>Expert-level C#</span></a><a href="#dotnet" data-nav="dotnet"><span class="nav-no">02</span><span>.NET 8 / 9</span></a><a href="#aspnet" data-nav="aspnet"><span class="nav-no">03</span><span>ASP.NET Core</span></a><a href="#rest" data-nav="rest"><span class="nav-no">04</span><span>REST API development</span></a><a href="#microservices" data-nav="microservices"><span class="nav-no">05</span><span>Microservices Architecture</span></a><a href="#events" data-nav="events"><span class="nav-no">06</span><span>Event-Driven Architecture</span></a><a href="#ef" data-nav="ef"><span class="nav-no">07</span><span>Entity Framework Core</span></a><a href="#linq" data-nav="linq"><span class="nav-no">08</span><span>LINQ</span></a><a href="#sql" data-nav="sql"><span class="nav-no">09</span><span>SQL Server</span></a><a href="#nosql" data-nav="nosql"><span class="nav-no">10</span><span>NoSQL databases</span></a><a href="#di" data-nav="di"><span class="nav-no">11</span><span>Dependency Injection</span></a><a href="#clean" data-nav="clean"><span class="nav-no">12</span><span>Clean Architecture</span></a><a href="#ddd" data-nav="ddd"><span class="nav-no">13</span><span>Domain-Driven Design (DDD)</span></a><a href="#solid" data-nav="solid"><span class="nav-no">14</span><span>SOLID Principles</span></a><a href="#patterns" data-nav="patterns"><span class="nav-no">15</span><span>Design Patterns</span></a><a href="#auth" data-nav="auth"><span class="nav-no">16</span><span>Authentication &amp; Authorization</span></a></nav></details><details class="nav-group" open><summary>Frontend</summary><nav aria-label="Frontend chapters"><a href="#react" data-nav="react"><span class="nav-no">17</span><span>ReactJS</span></a><a href="#typescript" data-nav="typescript"><span class="nav-no">18</span><span>TypeScript</span></a><a href="#javascript" data-nav="javascript"><span class="nav-no">19</span><span>JavaScript (ES6+)</span></a><a href="#html" data-nav="html"><span class="nav-no">20</span><span>HTML5</span></a><a href="#css" data-nav="css"><span class="nav-no">21</span><span>CSS3</span></a><a href="#responsive" data-nav="responsive"><span class="nav-no">22</span><span>Responsive UI Development</span></a><a href="#state" data-nav="state"><span class="nav-no">23</span><span>State Management</span></a><a href="#api" data-nav="api"><span class="nav-no">24</span><span>API Integration</span></a></nav></details><details class="nav-group" open><summary>DevOps &amp; Cloud</summary><nav aria-label="DevOps &amp; Cloud chapters"><a href="#devops" data-nav="devops"><span class="nav-no">25</span><span>DevOps, Git &amp; operational foundations</span></a><a href="#cicd" data-nav="cicd"><span class="nav-no">26</span><span>CI/CD &amp; automated verification</span></a><a href="#docker" data-nav="docker"><span class="nav-no">27</span><span>Docker &amp; containers</span></a><a href="#kubernetes" data-nav="kubernetes"><span class="nav-no">28</span><span>Kubernetes &amp; GitOps</span></a><a href="#iac" data-nav="iac"><span class="nav-no">29</span><span>Infrastructure as Code (IaC)</span></a><a href="#cloud" data-nav="cloud"><span class="nav-no">30</span><span>Cloud computing foundations</span></a><a href="#providers" data-nav="providers"><span class="nav-no">31</span><span>AWS, Azure &amp; Google Cloud</span></a><a href="#observability" data-nav="observability"><span class="nav-no">32</span><span>Observability &amp; reliability</span></a><a href="#cloud-security" data-nav="cloud-security"><span class="nav-no">33</span><span>Cloud security, secrets &amp; cost control</span></a></nav></details><a class="companion" href="rdl-interview-study-guide.html">Open the companion interview Q&A →</a></aside>
+<main id="main"><header class="hero" id="top"><p class="eyebrow">An explanatory study guide · English edition</p><h1>Understand the stack.<br><span>Connect the ideas.</span></h1><p class="lead">Learn what each technology does, where it is useful, and how it works in practice—from a C# business rule to a React screen and a cloud deployment.</p>
+<div class="metrics"><div><strong>16</strong><span>Backend chapters</span></div><div><strong>8</strong><span>Frontend chapters</span></div><div><strong>9</strong><span>DevOps & cloud chapters</span></div></div>
+<div class="note"><p><strong>Reading approach:</strong> Each chapter explains the topic, its core concepts, use cases, a worked example, and design tradeoffs. The running example is an online ordering system. This is a concepts guide; the separate interview Q&A remains available from the sidebar.</p><p><strong>Scope and dates:</strong> Focused on the requested .NET 8/9 stack, with broader cloud and delivery concepts. Sources and version-sensitive details checked on October 7, 2026. Snippets are educational excerpts with stated assumptions, not complete production applications or deployment recipes.</p></div></header>
+<section class="intro" aria-labelledby="map-title"><p class="eyebrow">Three connected areas</p><h2 id="map-title">From business behavior to reliable delivery</h2><p>The backend enforces rules and owns durable data. The frontend makes those capabilities understandable and usable. DevOps and cloud practices build, deploy, secure, observe, and recover the resulting system.</p><div class="route"><a href="#csharp"><strong>01 — Backend</strong><span>Language, runtime, APIs, persistence, design, and security.</span></a><a href="#react"><strong>02 — Frontend</strong><span>Components, types, browser behavior, layout, state, and API calls.</span></a><a href="#devops"><strong>03 — DevOps & Cloud</strong><span>Delivery pipelines, containers, infrastructure, providers, and operations.</span></a></div></section>
+<div class="toolbar js-only" role="search" aria-label="Search the concepts guide"><div class="toolbar-row"><div class="field"><label for="search">Find a concept</label><input id="search" type="search" autocomplete="off" placeholder="Try: transactions, React, Docker, identity…"></div><div class="field"><label for="group">Area</label><select id="group"><option>All</option><option>Backend</option><option>Frontend</option><option>DevOps &amp; Cloud</option></select></div><div class="toolbar-actions"><button type="button" id="clear">Clear</button><button type="button" id="smaller" aria-label="Decrease reading text size">A−</button><button type="button" id="larger" aria-label="Increase reading text size">A+</button><button type="button" class="primary" id="print">Print full guide</button></div></div><div class="toolbar-meta"><p id="search-status" role="status" aria-live="polite">33 of 33 chapters shown</p><p id="font-status">Text: 17 px</p></div><div class="toolbar-meta"><p id="storage-note">Reading marks stay in this browser when storage is available. Printing includes every chapter, regardless of filters.</p></div></div>
+<noscript><p class="note">All chapters and examples work without JavaScript. Search, text-size controls, and saved reading marks require JavaScript.</p></noscript><p id="no-results" class="empty" hidden>No chapters match. Try fewer terms or clear the area filter.</p>
+<article class="chapter" id="csharp" data-group="Backend" aria-labelledby="csharp-title">
+<header class="chapter-header"><p class="eyebrow">Backend · chapter 01</p><h2 id="csharp-title">Expert-level C#</h2><p class="chapter-deck">The language used to express domain rules, coordinate work, and control performance in a .NET application.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>C# is a statically typed, general-purpose language that supports object-oriented, functional, and asynchronous programming. The compiler checks type relationships and turns source code into a form the .NET runtime can execute. Expert-level work means understanding the behavior behind the syntax: lifetime, allocation, equality, concurrency, failure, and the cost of an abstraction.</p>
+<p>In the ordering example, C# represents products, orders, and prices; coordinates database and payment calls; and expresses rules such as “a confirmed order cannot be edited.” Language features help make invalid operations harder to express, but business correctness still depends on the model and its boundaries.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Types, identity, and equality</h4><p>Classes are reference types; structs are value types. Assignment copies a reference or a value respectively, but that does not mean all structs live on the stack. Records generate value-oriented equality and convenient copying; nested mutable references are still shared. Use a class for an entity with a lifecycle and a carefully designed value type or record for a value such as a coordinate. Keep dictionary keys stable and keep equality consistent with GetHashCode.</p></section>
+<section class="concept"><h4>Generics and expressive contracts</h4><p>Generics preserve type relationships without casting everything to object. Constraints describe required capabilities. Covariance supports producers, such as IEnumerable&lt;string&gt; used as IEnumerable&lt;object&gt;; contravariance supports consumers. Nullable reference annotations communicate nullability and produce compiler warnings; they are not runtime validation. Pattern matching and discriminated result designs can make branching clearer than unchecked casts.</p></section>
+<section class="concept"><h4>Asynchronous I/O</h4><p>A Task represents eventual completion. An async method runs synchronously until an incomplete await, then resumes through a continuation; it does not automatically create a new thread. Awaiting database or HTTP I/O can free a request thread while waiting. CPU-heavy calculations still consume CPU. Propagate CancellationToken, avoid .Result/.Wait(), and bound concurrency rather than creating thousands of requests at once.</p></section>
+<section class="concept"><h4>Memory and resource ownership</h4><p>The garbage collector reclaims unreachable managed objects, while using and await using release owned resources deterministically. Long-lived event subscriptions, static collections, and unbounded caches can keep objects reachable and create leaks. Span&lt;T&gt; provides a restricted view of contiguous memory without copying; Memory&lt;T&gt; can survive async boundaries when its backing storage remains valid. Measure before introducing pooling or ValueTask.</p></section>
+<section class="concept"><h4>Concurrency and failure</h4><p>Prefer isolated state. Interlocked can update simple counters atomically; lock protects synchronous multi-step invariants; SemaphoreSlim supports asynchronous coordination. ConcurrentDictionary protects its own operations, not an entire business workflow. Exceptions should be caught where recovery or translation is meaningful; throw; preserves the original stack when rethrowing. Cancellation should not be disguised as a successful result.</p></section>
+<section class="concept"><h4>Modern language features</h4><p>C# 12, associated with .NET 8, adds primary constructors and collection expressions. C# 13, associated with .NET 9, adds params collections and support for System.Threading.Lock. Ref-like locals can be used in more async contexts in C# 13, but must not remain live across await. A feature's language version and its required runtime APIs are separate compatibility concerns.</p></section></div>
+
+<h3>Where it is useful</h3><p>C# is a strong fit for business APIs, workers, desktop applications, integrations, and services with complex domain rules. On the backend, focus first on safe asynchronous I/O, maintainable types, explicit ownership, and diagnostic skills; specialize in low-allocation techniques when measured workloads justify them.</p>
+<section class="example" aria-labelledby="csharp-example"><div class="example-header"><h3 id="csharp-example">A concrete example</h3><span>C# · method excerpt</span></div><pre tabindex="0" aria-label="C# · method excerpt example"><code>public async Task&lt;OrderDto?&gt; FindAsync(
+    int id, CancellationToken cancellationToken)
+{
+    return await db.Orders
+        .Where(order =&gt; order.Id == id)
+        .Select(order =&gt; new OrderDto(order.Id, order.Status))
+        .SingleOrDefaultAsync(cancellationToken);
+}</code></pre><p class="example-explanation">Assume db is a scoped EF Core context, OrderDto is defined, and EF extension methods are imported. The method projects the required fields, performs asynchronous I/O, returns null when absent, and forwards cancellation. It does not run two operations concurrently on the same context.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>A Task is not a thread, a record is not automatically deeply immutable, and a thread-safe collection does not make a multi-step payment operation safe. Choose the simplest correct implementation, then use traces, allocation metrics, and representative load to identify real bottlenecks.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/" target="_blank" rel="noopener noreferrer">Async programming</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-13" target="_blank" rel="noopener noreferrer">C# 13</a> · <a href="https://learn.microsoft.com/en-us/dotnet/standard/generics/covariance-and-contravariance" target="_blank" rel="noopener noreferrer">Generic variance</a> · <a href="https://learn.microsoft.com/en-us/dotnet/core/diagnostics/debug-memory-leak" target="_blank" rel="noopener noreferrer">Memory diagnostics</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="csharp"> Mark this chapter as read</label><a href="#dotnet">Next: .NET 8 / 9 →</a></footer>
+</article>
+<article class="chapter" id="dotnet" data-group="Backend" aria-labelledby="dotnet-title">
+<header class="chapter-header"><p class="eyebrow">Backend · chapter 02</p><h2 id="dotnet-title">.NET 8 / 9</h2><p class="chapter-deck">The runtime, standard libraries, and development tools that support C# applications.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>.NET is a platform, not a synonym for C#. The SDK builds and publishes projects; the runtime executes applications; the base libraries provide collections, networking, cryptography, serialization, and other capabilities. ASP.NET Core adds web application functionality, while EF Core is an object-relational mapper with its own packages and providers.</p>
+<p>A project target such as net8.0 identifies the APIs and runtime contract it targets. The installed SDK, compiler language version, package versions, and production runtime are related but distinct. Modern .NET is cross-platform and differs from the older Windows-focused .NET Framework.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Compilation and execution</h4><p>Typical builds produce intermediate language that the runtime's just-in-time compiler turns into machine code. Native AOT compiles ahead of time and can help startup and memory use, but restricts dynamic code generation and some reflection-heavy libraries. Compatibility must be checked for the actual application.</p></section>
+<section class="concept"><h4>Deployment models</h4><p>Framework-dependent deployments use a separately installed runtime. Self-contained deployments bundle the runtime for a target platform, increasing deployment size and making the application owner responsible for rebuilding to include runtime patches. Containers package either approach with an operating-system user space.</p></section>
+<section class="concept"><h4>Version-specific features</h4><p>C# 12 shipped with the .NET 8 SDK; C# 13 pairs with .NET 9. .NET 9 includes CountBy and AggregateBy LINQ methods, while ASP.NET Core 9 adds built-in OpenAPI document generation. OpenAPI document generation does not automatically install an interactive Swagger UI.</p></section>
+<section class="concept"><h4>Lifecycle and upgrades</h4><p>As checked on October 7, 2026, Microsoft's policy lists both .NET 8 LTS and .NET 9 STS ending support on November 10, 2026. This guide teaches the versions requested for the role; a new production decision should consider a supported release and an upgrade plan. Patch regularly, review breaking changes, and test serialization, authentication, EF behavior, and deployment images.</p></section></div>
+
+<h3>Where it is useful</h3><p>Use .NET when building APIs, scheduled workers, command-line tools, or other applications that benefit from the same libraries and tooling. A team can share language skills across services while choosing different deployment models for a long-running API and a short-lived worker.</p>
+<section class="example" aria-labelledby="dotnet-example"><div class="example-header"><h3 id="dotnet-example">A concrete example</h3><span>Terminal · illustrative workflow</span></div><pre tabindex="0" aria-label="Terminal · illustrative workflow example"><code>dotnet restore
+dotnet build --configuration Release --no-restore
+dotnet test --configuration Release --no-build
+dotnet publish src/Ordering.Api --configuration Release</code></pre><p class="example-explanation">These commands restore dependencies, compile, run already-built tests, and create deployable output. They assume a solution at the current directory and a project at src/Ordering.Api. A passing build alone does not prove an upgrade is behaviorally compatible.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>Do not select a runtime merely because its major number is higher or because it was once labeled LTS. Remaining support time, package compatibility, operational risk, and measured performance determine an upgrade's value.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core" target="_blank" rel="noopener noreferrer">.NET support policy</a> · <a href="https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-8/overview" target="_blank" rel="noopener noreferrer">.NET 8</a> · <a href="https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-9/overview" target="_blank" rel="noopener noreferrer">.NET 9</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="dotnet"> Mark this chapter as read</label><a href="#aspnet">Next: ASP.NET Core →</a></footer>
+</article>
+<article class="chapter" id="aspnet" data-group="Backend" aria-labelledby="aspnet-title">
+<header class="chapter-header"><p class="eyebrow">Backend · chapter 03</p><h2 id="aspnet-title">ASP.NET Core</h2><p class="chapter-deck">The web framework that turns incoming HTTP requests into application behavior.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>ASP.NET Core hosts HTTP APIs and web applications. It integrates a web server, routing, configuration, dependency injection, authentication, authorization, logging, and response formatting. Kestrel is its cross-platform web server; deployments may also place a reverse proxy or cloud gateway in front of it.</p>
+<p>The central idea is a request pipeline. Middleware runs in order and can inspect a request, call the next component, or stop processing. An endpoint then translates HTTP input into a use case. Keeping domain work outside the HTTP layer makes that same behavior reusable from a worker or another interface.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Middleware ordering</h4><p>Early middleware wraps later components. Exception handling needs to observe downstream failures. Routing identifies an endpoint; authentication establishes a principal; authorization evaluates access. CORS placement must match the framework's routing requirements. Static files placed before authorization may be publicly accessible.</p></section>
+<section class="concept"><h4>Endpoints and boundaries</h4><p>Controllers provide MVC conventions and filters. Minimal APIs offer concise endpoint definitions and route groups. Both support production services. Bind input to request DTOs, validate it, authorize the operation, call the application layer, and return a documented response rather than an EF entity graph.</p></section>
+<section class="concept"><h4>Configuration and lifetimes</h4><p>Configuration commonly combines files, environment variables, and external providers. Typed options make settings easier to validate. Request-scoped dependencies, including a typical DbContext, should not escape the request. HttpClientFactory can manage outbound HTTP handlers and client configuration.</p></section>
+<section class="concept"><h4>Errors and long-running work</h4><p>Centralized handlers can map known failures to Problem Details while recording internal diagnostics. Work that must survive a process restart belongs in a durable queue or persistent scheduler. A hosted BackgroundService handles process lifecycle, but an in-memory queue is still lost when the process ends.</p></section></div>
+
+<h3>Where it is useful</h3><p>ASP.NET Core fits public APIs, internal services, backend-for-frontend applications, webhooks, and server-rendered sites. For the ordering system it receives checkout requests, invokes the order use case, and returns order status while background workers coordinate slower operations.</p>
+<section class="example" aria-labelledby="aspnet-example"><div class="example-header"><h3 id="aspnet-example">A concrete example</h3><span>C# · endpoint excerpt</span></div><pre tabindex="0" aria-label="C# · endpoint excerpt example"><code>app.MapGet(&quot;/orders/{id:int}&quot;, async (
+    int id, OrderQueries queries, CancellationToken ct) =&gt;
+{
+    var order = await queries.FindAuthorizedAsync(id, ct);
+    return order is null ? Results.NotFound() : Results.Ok(order);
+}).RequireAuthorization();</code></pre><p class="example-explanation">Assume OrderQueries is registered and derives the caller's identity from trusted context to enforce ownership or tenant policy. RequireAuthorization checks endpoint access; the query must still enforce access to the particular record. ASP.NET Core supplies the request cancellation token.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>Avoid placing every rule in controllers or endpoints. In .NET 8/9, do not assume Minimal APIs provide the same automatic model-state validation as controllers decorated with ApiController; configure validation deliberately.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-9.0" target="_blank" rel="noopener noreferrer">Middleware</a> · <a href="https://learn.microsoft.com/en-us/aspnet/core/release-notes/aspnetcore-9.0?view=aspnetcore-9.0" target="_blank" rel="noopener noreferrer">ASP.NET Core 9 features</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="aspnet"> Mark this chapter as read</label><a href="#rest">Next: REST API development →</a></footer>
+</article>
+<article class="chapter" id="rest" data-group="Backend" aria-labelledby="rest-title">
+<header class="chapter-header"><p class="eyebrow">Backend · chapter 04</p><h2 id="rest-title">REST API development</h2><p class="chapter-deck">Designing resource-oriented HTTP contracts with predictable semantics.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>REST is an architectural style with constraints such as stateless interaction, a uniform interface, caching, and layered systems. Many practical “REST APIs” are resource-oriented HTTP APIs that adopt part of the style. JSON is a representation format; using JSON alone does not make an API RESTful.</p>
+<p>A good API presents stable concepts that clients understand. For example, /orders identifies a collection and /orders/42 identifies a particular order. Contracts include methods, status codes, payloads, authorization, pagination, errors, and compatibility rules.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Method semantics</h4><p>GET reads and should not cause requested business mutations. PUT replaces a representation at a known resource and is idempotent in intended effect. DELETE is also idempotent in effect, even if repeated responses differ. POST creates or invokes processing; PATCH performs partial updates and is not inherently idempotent.</p></section>
+<section class="concept"><h4>Responses and compatibility</h4><p>201 commonly signals creation with a Location header; 202 means accepted but unfinished; 204 has no response body. Distinguish invalid input, missing resources, access failures, and conflicts. Keep additive changes compatible and define how breaking changes are versioned and retired.</p></section>
+<section class="concept"><h4>Pagination and caching</h4><p>Bound response sizes and use stable ordering. Cursor/keyset pagination avoids some problems of large offsets. Cache-Control defines caching intent; ETag can support revalidation. Private data must not be cached publicly just because the URL looks identical.</p></section>
+<section class="concept"><h4>Concurrency and retries</h4><p>Use an ETag or version with If-Match to reject stale updates, often with 412. For retryable creation or payments, persist an idempotency key, request fingerprint, and outcome under a unique constraint. A client timeout does not prove the server failed to commit.</p></section></div>
+
+<h3>Where it is useful</h3><p>Use resource-oriented APIs when browsers, mobile clients, partners, or other services need a clear interoperable contract. Describe the contract with OpenAPI and test compatibility against real consumers.</p>
+<section class="example" aria-labelledby="rest-example"><div class="example-header"><h3 id="rest-example">A concrete example</h3><span>HTTP · conceptual exchange</span></div><pre tabindex="0" aria-label="HTTP · conceptual exchange example"><code>POST /orders
+Authorization: Bearer &lt;access-token&gt;
+Idempotency-Key: checkout-8f2a
+Content-Type: application/json
+
+{&quot;items&quot;:[{&quot;productId&quot;:17,&quot;quantity&quot;:2}]}
+
+HTTP/1.1 201 Created
+Location: /orders/42
+Content-Type: application/json
+
+{&quot;id&quot;:42,&quot;status&quot;:&quot;Pending&quot;}</code></pre><p class="example-explanation">Creating an order resource can return 201 even if its later fulfillment is pending. If the API instead accepts an unfinished operation before creating the resource, 202 with an operation-status URL may be clearer. The same logical retry reuses the key.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>A contract should make failures understandable. Do not return 200 for every error, expose unbounded collections, or use frontend behavior as a substitute for server authorization.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://www.rfc-editor.org/rfc/rfc9110.html" target="_blank" rel="noopener noreferrer">HTTP semantics</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="rest"> Mark this chapter as read</label><a href="#microservices">Next: Microservices Architecture →</a></footer>
+</article>
+<article class="chapter" id="microservices" data-group="Backend" aria-labelledby="microservices-title">
+<header class="chapter-header"><p class="eyebrow">Backend · chapter 05</p><h2 id="microservices-title">Microservices Architecture</h2><p class="chapter-deck">Organizing independently deployable services around cohesive business capabilities.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>A microservice owns a business capability, its implementation, and its contracts. A well-chosen boundary allows a team to change and deploy that capability with limited coordination. Services communicate over a network, which introduces latency, partial failure, authentication, and data-consistency concerns that local function calls do not have.</p>
+<p>For an ordering business, Catalog, Ordering, Payments, and Shipping might become service candidates. They should not become separate deployments automatically. A modular monolith can preserve those boundaries within one application until independent deployment or scaling has a clear benefit.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Ownership and boundaries</h4><p>A service owns its writes and data rules. Other services consume an API or published events instead of updating its tables. Separate physical database servers are not always necessary, but ownership must remain clear. Shared business schemas can force lockstep releases.</p></section>
+<section class="concept"><h4>Communication choices</h4><p>Synchronous HTTP or gRPC is useful when the caller needs an immediate answer. Events are useful when other capabilities react independently to committed facts. Long chains of synchronous calls multiply latency and make availability depend on every link.</p></section>
+<section class="concept"><h4>Resilience</h4><p>Use timeouts, bounded retries, jitter, concurrency limits, and circuit breakers according to failure semantics. A retry is safe only when the operation can tolerate repetition. A process-local lock cannot coordinate independent replicas.</p></section>
+<section class="concept"><h4>Distributed visibility</h4><p>Propagate trace context and record service-level metrics. Track latency percentiles, error rates, queue age, and saturation. Deployment independence also requires compatible contracts, automated verification, and clear operational ownership.</p></section></div>
+
+<h3>Where it is useful</h3><p>Microservices are useful when teams or capabilities genuinely need different release cycles, scaling characteristics, security boundaries, or fault isolation. They are expensive when a small team spends more time coordinating infrastructure than improving the product.</p>
+<section class="example" aria-labelledby="microservices-example"><div class="example-header"><h3 id="microservices-example">A concrete example</h3><span>Architecture · ordering system</span></div><pre tabindex="0" aria-label="Architecture · ordering system example"><code>Catalog API  -&gt; owns product descriptions
+Ordering API -&gt; owns orders and order status
+Payment API  -&gt; owns payment attempts and provider references
+
+Ordering publishes OrderSubmitted.
+Payments reacts and later publishes PaymentAuthorized.
+Ordering advances the workflow using durable state.</code></pre><p class="example-explanation">Each service keeps a local transaction boundary. The workflow explicitly models intermediate states rather than pretending that three databases and a payment provider share one atomic transaction.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>Splitting by table or technical layer often produces chatty, tightly coupled services. Start from business cohesion and transactional invariants, and be prepared to keep a modular monolith when that is the more economical design.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://learn.microsoft.com/en-us/azure/architecture/microservices/model/domain-analysis" target="_blank" rel="noopener noreferrer">Domain analysis for services</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="microservices"> Mark this chapter as read</label><a href="#events">Next: Event-Driven Architecture →</a></footer>
+</article>
+<article class="chapter" id="events" data-group="Backend" aria-labelledby="events-title">
+<header class="chapter-header"><p class="eyebrow">Backend · chapter 06</p><h2 id="events-title">Event-Driven Architecture</h2><p class="chapter-deck">Allowing independent components to react to facts through asynchronous messages.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>An event records something that happened, such as OrderSubmitted. A command requests an action, such as ReserveInventory. Event-driven architecture connects producers and consumers through these facts, often using a broker. Producers need not know every consumer, which makes independent reactions such as invoicing, analytics, and notifications easier to add.</p>
+<p>Asynchronous delivery changes the consistency model. A successful order request can be followed by a period in which downstream projections are still catching up. The UI and business workflow must represent pending states and define how failures are recovered.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Delivery and topology</h4><p>A queue often distributes work among competing consumers. Publish/subscribe gives independent subscriptions their own copy or view of the event stream. RabbitMQ and managed service buses commonly support work queues and routing; Kafka is centered on a retained partitioned log. These capabilities overlap, so choose by the required behavior.</p></section>
+<section class="concept"><h4>Transactional outbox</h4><p>Commit the business update and an outbox record together. A relay later publishes the record. If it crashes after publishing but before marking completion, the event may be delivered again. Consumer deduplication and idempotent business operations are therefore essential.</p></section>
+<section class="concept"><h4>Ordering and evolution</h4><p>Order is typically scoped to a partition or business key, not the entire system. Include stable event IDs, timestamps, business identifiers, and schema versions where appropriate. Add compatible fields and plan replay against older messages.</p></section>
+<section class="concept"><h4>Sagas and recovery</h4><p>A saga coordinates local transactions through durable workflow state. Compensation is a business action, such as releasing inventory or refunding payment, and may also fail. Dead-letter queues isolate repeated failures for investigation and controlled replay. Event sourcing, which stores events as the primary history of state, is a separate design choice.</p></section></div>
+
+<h3>Where it is useful</h3><p>Use events for decoupled reactions, absorbing bursts, integrating services, and background workflows. Prefer direct calls when a simple immediate interaction is enough and asynchronous state would make the business process harder to understand.</p>
+<section class="example" aria-labelledby="events-example"><div class="example-header"><h3 id="events-example">A concrete example</h3><span>Message · illustrative integration contract</span></div><pre tabindex="0" aria-label="Message · illustrative integration contract example"><code>{
+  &quot;eventId&quot;: &quot;evt-501&quot;,
+  &quot;type&quot;: &quot;OrderSubmitted&quot;,
+  &quot;schemaVersion&quot;: 1,
+  &quot;orderId&quot;: 42,
+  &quot;customerId&quot;: 7,
+  &quot;occurredAt&quot;: &quot;2026-10-07T16:00:00Z&quot;
+}</code></pre><p class="example-explanation">A consumer records eventId and its local business update atomically. For external effects, such as charging a card, it also needs provider-supported idempotency or reconciliation. Local deduplication alone cannot close every external crash window.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>Do not promise universal exactly-once behavior. State the broker guarantees, acknowledgement timing, duplicate policy, retry budget, and recovery process explicitly.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://learn.microsoft.com/en-us/azure/architecture/databases/guide/transactional-out-box-cosmos" target="_blank" rel="noopener noreferrer">Transactional outbox</a> · <a href="https://kafka.apache.org/intro" target="_blank" rel="noopener noreferrer">Kafka introduction</a> · <a href="https://www.rabbitmq.com/tutorials" target="_blank" rel="noopener noreferrer">RabbitMQ tutorials</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="events"> Mark this chapter as read</label><a href="#ef">Next: Entity Framework Core →</a></footer>
+</article>
+<article class="chapter" id="ef" data-group="Backend" aria-labelledby="ef-title">
+<header class="chapter-header"><p class="eyebrow">Backend · chapter 07</p><h2 id="ef-title">Entity Framework Core</h2><p class="chapter-deck">Mapping .NET objects and queries to a database while managing changes and transactions.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>Entity Framework Core is an object-relational mapper, or ORM. It maps classes to storage structures, translates supported LINQ expressions into database queries, tracks entity changes, and persists them. Providers implement the behavior for SQL Server and other stores; provider differences matter.</p>
+<p>DbContext is a short-lived unit of work. It knows the model, coordinates queries, and tracks entities. In a typical ASP.NET Core application it is scoped to a request, although a worker may create a context per message. It is not thread-safe and does not support concurrent operations on the same instance.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Model and mapping</h4><p>Entity classes describe data and possibly domain behavior. Configuration defines keys, relationships, column types, constraints, indexes, and conversions. Fluent configuration can keep persistence details outside the domain classes.</p></section>
+<section class="concept"><h4>Tracking and projections</h4><p>Tracking connects loaded entities to change detection. For read-only entities, AsNoTracking avoids that bookkeeping. A scalar DTO projection often avoids entity tracking already. Select the fields a screen needs rather than loading a large object graph.</p></section>
+<section class="concept"><h4>Query performance</h4><p>Inspect SQL, query counts, execution plans, and transferred rows. Lazy loading can create N+1 queries. Multiple collection Includes can multiply rows; split queries trade that expansion for additional queries and consistency considerations. Apply filtering and pagination before materializing.</p></section>
+<section class="concept"><h4>Saving and concurrency</h4><p>A supported provider normally makes a single SaveChanges atomic. For optimistic concurrency, configure a token such as SQL Server rowversion; conflicting updates produce DbUpdateConcurrencyException. The application decides whether to reject, reload, or merge.</p></section>
+<section class="concept"><h4>Schema evolution</h4><p>Migrations describe database changes over time. Review generated SQL and plan backward-compatible rollout steps. A migration may lock or rewrite a large table, so test representative data sizes and run it through controlled deployment rather than from every application replica.</p></section></div>
+
+<h3>Where it is useful</h3><p>EF Core is useful for business applications where most persistence can be expressed through a model and LINQ. Raw SQL or another data-access approach may still be appropriate for a specialized reporting query; using an ORM does not eliminate the need to understand SQL.</p>
+<section class="example" aria-labelledby="ef-example"><div class="example-header"><h3 id="ef-example">A concrete example</h3><span>C# · query excerpt</span></div><pre tabindex="0" aria-label="C# · query excerpt example"><code>var page = await db.Orders
+    .Where(o =&gt; o.CustomerId == authorizedCustomerId &amp;&amp; o.Id &gt; afterId)
+    .OrderBy(o =&gt; o.Id)
+    .Select(o =&gt; new OrderSummary(o.Id, o.Status, o.Total))
+    .Take(50)
+    .ToListAsync(ct);</code></pre><p class="example-explanation">Assume the caller's customer identity was established securely. The provider filters, orders, projects, and limits in the database. A cursor over Id is suitable only if ordering by Id matches the requirement. This avoids downloading every order and filtering in memory.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>EF is a productivity tool, not a performance guarantee. Do not share one context across threads, expose persistence entities directly as public contracts, or treat the in-memory test provider as proof of SQL Server behavior.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/" target="_blank" rel="noopener noreferrer">DbContext lifetime</a> · <a href="https://learn.microsoft.com/en-us/ef/core/performance/efficient-querying" target="_blank" rel="noopener noreferrer">Efficient queries</a> · <a href="https://learn.microsoft.com/en-us/ef/core/saving/concurrency" target="_blank" rel="noopener noreferrer">Concurrency</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="ef"> Mark this chapter as read</label><a href="#linq">Next: LINQ →</a></footer>
+</article>
+<article class="chapter" id="linq" data-group="Backend" aria-labelledby="linq-title">
+<header class="chapter-header"><p class="eyebrow">Backend · chapter 08</p><h2 id="linq-title">LINQ</h2><p class="chapter-deck">A composable query vocabulary for collections and query providers.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>Language Integrated Query brings operations such as filtering, projection, grouping, ordering, and aggregation into C#. The same-looking syntax can execute against an in-memory collection or be interpreted by a provider such as EF Core. Knowing where execution happens is essential.</p>
+<p>IEnumerable&lt;T&gt; exposes iteration. LINQ-to-Objects uses delegates to process .NET values. IQueryable&lt;T&gt; also carries an expression tree and provider; the provider may translate the expression into SQL. IQueryable does not, by itself, mean database access or asynchronous execution.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Composition and deferred execution</h4><p>Many operators build a query without executing it. Enumeration triggers the work. ToList materializes a snapshot in memory; Count and Any execute terminal operations. Enumerating an expensive query twice may repeat I/O or observe different data.</p></section>
+<section class="concept"><h4>Selecting and flattening</h4><p>Where filters; Select transforms each item; SelectMany flattens nested collections. GroupBy forms groups, while aggregates such as Sum and Count summarize. OrderBy plus ThenBy defines ordering; a second OrderBy establishes a new primary order.</p></section>
+<section class="concept"><h4>Existence and cardinality</h4><p>Any communicates an existence check. First requires at least one item; Single also asserts that no second match exists. OrDefault variants permit no result, but SingleOrDefault still rejects multiple results. Database uniqueness belongs in a constraint as well.</p></section>
+<section class="concept"><h4>Execution boundaries</h4><p>AsEnumerable switches later operators to in-memory LINQ without executing immediately. ToList executes and buffers. Unsupported operations in EF queries may fail translation; use deliberate boundaries only after filtering the amount of data appropriately.</p></section></div>
+
+<h3>Where it is useful</h3><p>Use LINQ to shape DTOs, filter collections, aggregate reports, and express database queries clearly. It is particularly helpful when a chain of small operations describes intent better than a loop with several mutable accumulators.</p>
+<section class="example" aria-labelledby="linq-example"><div class="example-header"><h3 id="linq-example">A concrete example</h3><span>C# · in-memory example</span></div><pre tabindex="0" aria-label="C# · in-memory example example"><code>var totals = orders
+    .Where(o =&gt; o.Status == &quot;Confirmed&quot;)
+    .GroupBy(o =&gt; o.CustomerId)
+    .Select(group =&gt; new {
+        CustomerId = group.Key,
+        Total = group.Sum(o =&gt; o.Total)
+    })
+    .OrderByDescending(row =&gt; row.Total)
+    .ToList();</code></pre><p class="example-explanation">Here orders is an in-memory sequence. Filtering keeps confirmed orders, grouping collects each customer's orders, projection calculates a total, and ToList executes the pipeline. With IQueryable, inspect whether the provider can translate the specific expression.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>Readable query syntax can hide expensive work. Avoid repeated enumeration, side effects inside query operators, and materializing before database filtering. Deferred execution is not always streaming: sorting must buffer its input.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://learn.microsoft.com/en-us/dotnet/standard/linq/deferred-execution-lazy-evaluation" target="_blank" rel="noopener noreferrer">Deferred execution</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="linq"> Mark this chapter as read</label><a href="#sql">Next: SQL Server →</a></footer>
+</article>
+<article class="chapter" id="sql" data-group="Backend" aria-labelledby="sql-title">
+<header class="chapter-header"><p class="eyebrow">Backend · chapter 09</p><h2 id="sql-title">SQL Server</h2><p class="chapter-deck">A relational database engine for structured data, constraints, transactions, and set-based queries.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>SQL Server stores related data in tables and provides T-SQL to query and change it. Primary keys identify rows, foreign keys enforce relationships, and unique/check constraints protect invariants even when several applications write concurrently. Normalization reduces conflicting copies of the same fact; denormalization can speed selected reads at the cost of synchronization.</p>
+<p>Transactions group changes so they commit or roll back together. ACID describes atomicity, consistency of enforced rules, isolation, and durability. A database transaction covers its own resources; it does not automatically include an email, message broker, or external payment.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Indexes and plans</h4><p>Indexes are additional access structures that can reduce reads for particular predicates and sort orders. Composite key order matters; included columns may cover a query. The optimizer selects a plan using statistics and estimates. Extra indexes consume storage and slow writes, so verify actual plans and logical reads.</p></section>
+<section class="concept"><h4>Sargable predicates</h4><p>A predicate that can use an index efficiently is often called sargable. Comparing OrderDate to a start/end range is usually friendlier than applying a function to every OrderDate value. Parameterize values to prevent injection; dynamic identifiers require separate allow-listing.</p></section>
+<section class="concept"><h4>Isolation and contention</h4><p>READ COMMITTED avoids dirty reads; SQL Server can implement it with locks or statement-level versions when RCSI is enabled. SNAPSHOT supplies a transaction-level versioned view. SERIALIZABLE prevents phantoms with stronger isolation. Deadlocks need short transactions, consistent access order, and bounded retries of the whole safe transaction.</p></section>
+<section class="concept"><h4>Operational correctness</h4><p>Backups must be paired with restore drills. Query Store helps investigate plan regressions. Monitor lock waits, storage, connection pressure, and slow queries. NOLOCK allows dirty and inconsistent reads and is not a general performance solution.</p></section></div>
+
+<h3>Where it is useful</h3><p>Choose relational storage for orders, inventory, invoices, and other data where relationships and multi-row invariants matter. SQL Server is also useful for set-based reporting, but large analytical workloads may need separate projections or warehouses.</p>
+<section class="example" aria-labelledby="sql-example"><div class="example-header"><h3 id="sql-example">A concrete example</h3><span>T-SQL · latest order per customer</span></div><pre tabindex="0" aria-label="T-SQL · latest order per customer example"><code>WITH Ranked AS (
+    SELECT OrderId, CustomerId, OrderDate, Total,
+           ROW_NUMBER() OVER (
+               PARTITION BY CustomerId
+               ORDER BY OrderDate DESC, OrderId DESC
+           ) AS rn
+    FROM dbo.Orders
+)
+SELECT OrderId, CustomerId, OrderDate, Total
+FROM Ranked
+WHERE rn = 1;</code></pre><p class="example-explanation">The window function numbers orders inside each customer group. OrderId breaks date ties deterministically. Filtering rn = 1 returns one latest order per customer with an order; include Customers through a suitable outer join when customers without orders are required.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>An index seek is not always better than a scan, and a transaction does not prevent every concurrency anomaly at every isolation level. Explain the required invariant, choose appropriate isolation or atomic statements, and inspect real plans.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-index-design-guide?view=sql-server-ver17" target="_blank" rel="noopener noreferrer">Index design</a> · <a href="https://learn.microsoft.com/en-us/sql/t-sql/statements/set-transaction-isolation-level-transact-sql?view=sql-server-ver17" target="_blank" rel="noopener noreferrer">Isolation levels</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="sql"> Mark this chapter as read</label><a href="#nosql">Next: NoSQL databases →</a></footer>
+</article>
+<article class="chapter" id="nosql" data-group="Backend" aria-labelledby="nosql-title">
+<header class="chapter-header"><p class="eyebrow">Backend · chapter 10</p><h2 id="nosql-title">NoSQL databases</h2><p class="chapter-deck">A family of data stores whose models are designed around different access and scaling needs.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>NoSQL is an umbrella term, not one database model. Document stores organize records as documents; key-value stores optimize access by a key; wide-column stores support partition-oriented patterns; graph stores focus on relationships and traversals. Examples include MongoDB, Redis, DynamoDB, Cassandra, and Neo4j, with capabilities that do not map neatly to one category.</p>
+<p>The design usually begins with access patterns: which data is read together, which changes must be atomic, how large each record can become, and how traffic distributes across keys. Flexible schema does not remove the need for validation, versioning, or migration.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Embedding versus references</h4><p>Embedding can fetch an aggregate in one read and keep related changes local. References better support independent lifecycles, shared objects, or unbounded growth. A customer document containing every lifetime order can eventually become too large or highly contended.</p></section>
+<section class="concept"><h4>Partitions and hot spots</h4><p>A partition key routes data and work. A good key balances traffic while supporting common lookups. A single very active tenant can create a hot partition even when total storage is modest. Cross-partition queries may add latency and cost.</p></section>
+<section class="concept"><h4>Consistency is product-specific</h4><p>Some NoSQL systems support strong reads, transactions, or conditional writes within defined boundaries. Others trade freshness for availability or scale. CAP concerns consistency and availability during a network partition; it is not a universal “choose any two” product-selection rule.</p></section>
+<section class="concept"><h4>Caching is a distinct role</h4><p>Redis can hold cached results, counters, or coordination data, but durability and eviction behavior must fit the use case. Cache-aside reads the cache, loads the source on a miss, and stores a bounded copy. Expiration and invalidation determine how stale that copy can become.</p></section></div>
+
+<h3>Where it is useful</h3><p>A product catalog may fit a document store when product attributes vary. A shopping-session lookup may fit a key-value store. A recommendation graph may fit a graph database. Retain relational order storage when its constraints and transaction model are valuable.</p>
+<section class="example" aria-labelledby="nosql-example"><div class="example-header"><h3 id="nosql-example">A concrete example</h3><span>JSON · product document</span></div><pre tabindex="0" aria-label="JSON · product document example"><code>{
+  &quot;id&quot;: &quot;product-17&quot;,
+  &quot;category&quot;: &quot;laptop&quot;,
+  &quot;name&quot;: &quot;TravelBook&quot;,
+  &quot;attributes&quot;: { &quot;memoryGb&quot;: 16, &quot;screenInches&quot;: 14 },
+  &quot;schemaVersion&quot;: 2
+}</code></pre><p class="example-explanation">Different categories can have different attributes while sharing stable identity and common fields. The application still validates required attributes and indexes the fields used by queries.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>Do not choose a store merely because the application uses JSON. Evaluate query flexibility, transactional scope, hot keys, data size, operational skills, and total cost with representative data.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://www.mongodb.com/docs/manual/data-modeling/" target="_blank" rel="noopener noreferrer">MongoDB modeling</a> · <a href="https://redis.io/docs/latest/" target="_blank" rel="noopener noreferrer">Redis documentation</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="nosql"> Mark this chapter as read</label><a href="#di">Next: Dependency Injection →</a></footer>
+</article>
+<article class="chapter" id="di" data-group="Backend" aria-labelledby="di-title">
+<header class="chapter-header"><p class="eyebrow">Backend · chapter 11</p><h2 id="di-title">Dependency Injection</h2><p class="chapter-deck">Supplying collaborators from outside a component so responsibilities and lifetimes stay explicit.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>A dependency is another component a class needs, such as a payment client or repository. Dependency injection supplies that collaborator instead of letting the class construct or locate it secretly. Constructor injection makes required collaborators visible. A container automates object composition, but manually calling a constructor is also dependency injection.</p>
+<p>Dependency inversion is a design principle: high-level policy should depend on an appropriate abstraction rather than a volatile implementation. DI is one technique for connecting that abstraction to a concrete adapter at the application's composition root.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Transient</h4><p>A new instance is created for each resolution. This works for lightweight, short-lived services. A transient retained by a singleton effectively lives longer, and disposable transients resolved from a long-lived scope may also remain retained.</p></section>
+<section class="concept"><h4>Scoped</h4><p>One instance is shared within an explicit scope. A web request usually defines one scope, which makes this a common lifetime for DbContext and related application services. Workers create scopes per unit of work.</p></section>
+<section class="concept"><h4>Singleton</h4><p>One instance is reused for the container lifetime. It must handle concurrent access when used by concurrent requests and must not capture request-specific state. A longer-lived component retaining a shorter-lived dependency is a captive dependency.</p></section>
+<section class="concept"><h4>Composition and ownership</h4><p>Register implementations centrally, validate options early, and let the container dispose services it owns. Avoid service-locator calls throughout domain code; they hide required dependencies. Explicit resolution inside a scope-creating worker is a legitimate composition boundary.</p></section></div>
+
+<h3>Where it is useful</h3><p>DI makes external effects replaceable in tests and allows infrastructure choices without rewriting business policy. For example, an order handler can receive an IPaymentGateway implemented by a real provider adapter in production and a controlled fake in a focused unit test.</p>
+<section class="example" aria-labelledby="di-example"><div class="example-header"><h3 id="di-example">A concrete example</h3><span>C# · registration and consumer</span></div><pre tabindex="0" aria-label="C# · registration and consumer example"><code>builder.Services.AddScoped&lt;IOrderRepository, EfOrderRepository&gt;();
+builder.Services.AddScoped&lt;CheckoutService&gt;();
+
+public sealed class CheckoutService(IOrderRepository orders)
+{
+    public Task&lt;Order?&gt; FindAsync(int id, CancellationToken ct)
+        =&gt; orders.FindAsync(id, ct);
+}</code></pre><p class="example-explanation">Assume the interface and implementation are defined and the implementation uses a scoped context. The constructor declares the dependency. Resolving CheckoutService within a request obtains services from that request scope.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>An interface for every class does not automatically improve design. Abstract meaningful variability or boundaries, and do not inject a scoped context into a singleton. DI controls construction, not transactionality or thread safety.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection/overview" target="_blank" rel="noopener noreferrer">.NET dependency injection</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="di"> Mark this chapter as read</label><a href="#clean">Next: Clean Architecture →</a></footer>
+</article>
+<article class="chapter" id="clean" data-group="Backend" aria-labelledby="clean-title">
+<header class="chapter-header"><p class="eyebrow">Backend · chapter 12</p><h2 id="clean-title">Clean Architecture</h2><p class="chapter-deck">Keeping business policy independent of delivery and infrastructure details.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>Clean Architecture organizes dependencies so business rules are not controlled by databases, web frameworks, or external providers. Inner layers represent policy; outer layers adapt technologies to that policy. The important property is the direction of source dependencies, not the number of projects or the names of folders.</p>
+<p>In the ordering example, the domain determines whether an order can be confirmed. The application layer coordinates confirmation. ASP.NET Core translates an HTTP request, and EF Core persists the result. Replacing an HTTP endpoint with a queue consumer should not require rewriting the order rule.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Domain</h4><p>Entities, value objects, and domain services express business concepts and invariants. They should not require HttpContext, a SQL connection, or a framework controller to enforce a rule.</p></section>
+<section class="concept"><h4>Application</h4><p>Use cases coordinate authorization, loading, domain behavior, saving, and integrations through defined boundaries. Request/response models can differ from persistence entities and public HTTP DTOs.</p></section>
+<section class="concept"><h4>Infrastructure and presentation</h4><p>Infrastructure implements persistence, messaging, filesystem, and external-service adapters. Presentation handles HTTP or other delivery protocols. The composition root supplies implementations to the use cases.</p></section>
+<section class="concept"><h4>Runtime flow versus dependency direction</h4><p>A use case may call a repository interface declared inward, while the outer adapter implements it. Runtime execution reaches the database even though source-code dependencies still point toward the core.</p></section></div>
+
+<h3>Where it is useful</h3><p>This separation helps applications with significant business behavior, multiple entry points, or infrastructure that changes independently. Unit tests can exercise domain decisions without a web server, while integration tests verify actual adapters.</p>
+<section class="example" aria-labelledby="clean-example"><div class="example-header"><h3 id="clean-example">A concrete example</h3><span>Architecture · source dependencies</span></div><pre tabindex="0" aria-label="Architecture · source dependencies example"><code>Domain:         Order.Confirm() enforces invariants
+Application:    ConfirmOrder handler uses IOrderRepository
+Infrastructure: EfOrderRepository implements IOrderRepository
+Presentation:   HTTP endpoint invokes ConfirmOrder
+Composition:    Dependency injection connects implementations</code></pre><p class="example-explanation">The interface belongs at the boundary that needs it. The domain does not import the EF implementation. Tests should check both the isolated rule and the real persistence behavior.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>Simple CRUD does not always need elaborate repositories, a mediator, and many projects. EF already supplies unit-of-work behavior; add abstractions when they clarify a boundary or isolate an actual source of change.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures" target="_blank" rel="noopener noreferrer">Application architectures</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="clean"> Mark this chapter as read</label><a href="#ddd">Next: Domain-Driven Design (DDD) →</a></footer>
+</article>
+<article class="chapter" id="ddd" data-group="Backend" aria-labelledby="ddd-title">
+<header class="chapter-header"><p class="eyebrow">Backend · chapter 13</p><h2 id="ddd-title">Domain-Driven Design (DDD)</h2><p class="chapter-deck">Building software models around business language, behavior, and consistency rules.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>DDD is an approach to understanding and modeling a complex business domain in collaboration with domain experts. Its strategic side identifies boundaries and relationships; its tactical side provides modeling tools such as entities, value objects, aggregates, and domain events. DDD is not simply using classes named Entity or Repository.</p>
+<p>The goal is a model that reflects how the business actually works. For example, a customer support team may call an order “cancelled,” while accounting distinguishes “voided before capture” from “refunded after capture.” Those distinctions affect behavior and should appear in the language and model.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Ubiquitous language and bounded contexts</h4><p>Use a shared vocabulary in conversations, code, and tests. A bounded context defines where a model has a specific meaning. Customer in Billing may mean a legal account, while Customer in Shipping may mean a recipient. Translate between contexts rather than forcing one universal class.</p></section>
+<section class="concept"><h4>Entities and value objects</h4><p>An entity retains identity as its attributes change. A value object is defined by its values and is normally immutable. Money should include amount and currency; adding two Money values may require matching currencies. A record can help with equality, but the business rules still need implementation.</p></section>
+<section class="concept"><h4>Aggregates and invariants</h4><p>An aggregate is a transaction-oriented consistency boundary controlled by one root. An Order root can prevent line edits after confirmation. Keep aggregates small enough to avoid contention and reference other aggregates by identity instead of loading enormous graphs.</p></section>
+<section class="concept"><h4>Services and events</h4><p>A domain service holds a business operation that does not belong naturally to one object. An application service orchestrates a use case. A domain event records a fact within the model; an integration event exposes a stable committed fact to other contexts. These contracts need not be identical.</p></section></div>
+
+<h3>Where it is useful</h3><p>DDD is especially useful when rules, terminology, and workflows are complex or frequently misunderstood. For a simple administrative CRUD screen, straightforward data-oriented code can be more economical than a rich domain model.</p>
+<section class="example" aria-labelledby="ddd-example"><div class="example-header"><h3 id="ddd-example">A concrete example</h3><span>C# · domain method excerpt</span></div><pre tabindex="0" aria-label="C# · domain method excerpt example"><code>public void Confirm()
+{
+    if (Status != OrderStatus.Draft)
+        throw new InvalidOperationException(&quot;Only drafts can be confirmed.&quot;);
+    if (_lines.Count == 0)
+        throw new InvalidOperationException(&quot;An order needs at least one line.&quot;);
+
+    Status = OrderStatus.Confirmed;
+}</code></pre><p class="example-explanation">Assume Order encapsulates its line collection and Status setter. Callers cannot bypass the state transition by changing public fields. Additional invariants, persistence concurrency, and event recording would be designed around the real business requirement.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>A bounded context is a candidate modeling boundary, not a mandatory microservice. Public setters everywhere and a giant service containing all rules often create an anemic model despite DDD terminology.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://learn.microsoft.com/en-us/azure/architecture/microservices/model/domain-analysis" target="_blank" rel="noopener noreferrer">Strategic domain analysis</a> · <a href="https://learn.microsoft.com/en-us/azure/architecture/microservices/model/tactical-domain-driven-design" target="_blank" rel="noopener noreferrer">Tactical DDD</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="ddd"> Mark this chapter as read</label><a href="#solid">Next: SOLID Principles →</a></footer>
+</article>
+<article class="chapter" id="solid" data-group="Backend" aria-labelledby="solid-title">
+<header class="chapter-header"><p class="eyebrow">Backend · chapter 14</p><h2 id="solid-title">SOLID Principles</h2><p class="chapter-deck">Five design principles for keeping behavior understandable as requirements change.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>SOLID groups five principles associated with object-oriented design. They help identify responsibilities, contracts, and dependencies that become fragile under change. They are reasoning tools rather than a requirement to add an interface, inheritance hierarchy, or extra layer to every feature.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>S — Single Responsibility</h4><p>A component should have one cohesive reason to change. Invoice calculation and SMTP transport change for different reasons, so separating them can reduce coupling. This does not mean one method per class; several methods can support one coherent responsibility.</p></section>
+<section class="concept"><h4>O — Open/Closed</h4><p>A design should support expected variation through extension without repeatedly editing stable logic. A tax Strategy can add a new jurisdiction without extending one enormous conditional. Anticipating every imaginary variation, however, creates unnecessary abstractions.</p></section>
+<section class="concept"><h4>L — Liskov Substitution</h4><p>An implementation must preserve the behavioral promises of its abstraction. A read-only repository that implements Save by always throwing violates a contract that promises saving. Substitutability includes allowed inputs, outcomes, side effects, and failures, not just matching signatures.</p></section>
+<section class="concept"><h4>I — Interface Segregation</h4><p>Clients should depend on the capabilities they use. Separate IOrderReader from IOrderWriter when callers have distinct needs. A small cohesive interface limits the changes a client must understand.</p></section>
+<section class="concept"><h4>D — Dependency Inversion</h4><p>High-level policy depends on an abstraction, while low-level details implement that abstraction. Checkout can depend on IPaymentGateway rather than one vendor's HTTP client. Dependency injection then provides the chosen implementation.</p></section></div>
+
+<h3>Where it is useful</h3><p>Use SOLID when reviewing a design that is difficult to extend or test. Name the actual change pressure: a new payment provider, a new pricing rule, or a reader that should not be able to write. Apply the principle that directly addresses that pressure.</p>
+<section class="example" aria-labelledby="solid-example"><div class="example-header"><h3 id="solid-example">A concrete example</h3><span>C# · capability-focused interfaces</span></div><pre tabindex="0" aria-label="C# · capability-focused interfaces example"><code>public interface IOrderReader
+{
+    Task&lt;Order?&gt; FindAsync(int id, CancellationToken ct);
+}
+
+public interface IOrderWriter
+{
+    Task SaveAsync(Order order, CancellationToken ct);
+}</code></pre><p class="example-explanation">A report can request only IOrderReader. A checkout use case can request a write capability as needed. The example illustrates interface segregation; the actual transaction boundary still needs an explicit design.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>Abstractions also cost navigation and maintenance. Prefer a clear concrete implementation until a real boundary or expected variation justifies extra structure. SOLID should make change easier, not make small features ceremonial.</p></aside>
+
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="solid"> Mark this chapter as read</label><a href="#patterns">Next: Design Patterns →</a></footer>
+</article>
+<article class="chapter" id="patterns" data-group="Backend" aria-labelledby="patterns-title">
+<header class="chapter-header"><p class="eyebrow">Backend · chapter 15</p><h2 id="patterns-title">Design Patterns</h2><p class="chapter-deck">Reusable design approaches for recurring coordination, creation, and behavior problems.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>A design pattern names a recurring solution shape so developers can discuss its intent and tradeoffs. Patterns are not libraries to install. A simple function may implement a Strategy; a class wrapping another service may implement a Decorator. The useful part is recognizing the problem and the consequences of the chosen structure.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Strategy and Factory</h4><p>Strategy supplies interchangeable behavior, such as shipping-price calculation. Factory centralizes construction when a type or its setup varies. DI often handles straightforward construction, so a custom factory is most valuable when runtime choices or lifetime rules require it.</p></section>
+<section class="concept"><h4>Adapter and Decorator</h4><p>Adapter translates a provider-specific contract into the application's contract. Decorator wraps the same abstraction to add behavior such as logging or caching. Retry decorators must respect idempotency; wrapping an unsafe payment call does not make repetition safe.</p></section>
+<section class="concept"><h4>Mediator and Observer</h4><p>Mediator routes interactions through a central abstraction, which can organize use-case handlers. Observer notifies subscribers of changes, which can decouple local reactions. In-process notifications do not survive a process crash and should not be confused with durable message delivery.</p></section>
+<section class="concept"><h4>Repository, Unit of Work, and CQRS</h4><p>Repository expresses access to a collection of domain objects. Unit of Work coordinates persistence changes; DbContext already provides much of that behavior. CQRS separates write behavior from read models and can use one database. It does not require event sourcing, a broker, or two stores.</p></section>
+<section class="concept"><h4>Resilience patterns</h4><p>Circuit Breaker temporarily stops calls to a failing dependency; Bulkhead limits one workload's consumption of shared resources; Retry repeats appropriate transient operations. These patterns complement timeouts and observability, rather than replacing them.</p></section></div>
+
+<h3>Where it is useful</h3><p>Use Strategy for changing business algorithms, Adapter for external integrations, Decorator for cross-cutting behavior, and CQRS when write rules and read shapes diverge. Explain the simpler alternative and why the pattern's extra structure is justified.</p>
+<section class="example" aria-labelledby="patterns-example"><div class="example-header"><h3 id="patterns-example">A concrete example</h3><span>C# · Strategy excerpt</span></div><pre tabindex="0" aria-label="C# · Strategy excerpt example"><code>public interface IShippingPrice
+{
+    decimal Calculate(decimal weightKg);
+}
+
+public sealed class StandardShipping : IShippingPrice
+{
+    public decimal Calculate(decimal weightKg) =&gt; 5m + 1.5m * weightKg;
+}
+
+// A checkout service receives the selected IShippingPrice.</code></pre><p class="example-explanation">The service can use a different pricing strategy without knowing its formula. Real pricing also needs units, currency, validation, effective dates, and rounding rules; the tiny example isolates the design structure.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>Naming a pattern does not establish a reliability guarantee. An in-memory mediator is not a message broker, and a local Unit of Work cannot atomically commit arbitrary remote systems.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs" target="_blank" rel="noopener noreferrer">CQRS</a> · <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker" target="_blank" rel="noopener noreferrer">Circuit Breaker</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="patterns"> Mark this chapter as read</label><a href="#auth">Next: Authentication &amp; Authorization →</a></footer>
+</article>
+<article class="chapter" id="auth" data-group="Backend" aria-labelledby="auth-title">
+<header class="chapter-header"><p class="eyebrow">Backend · chapter 16</p><h2 id="auth-title">Authentication &amp; Authorization</h2><p class="chapter-deck">Establishing identity and enforcing which operations that identity may perform.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>Authentication answers who the caller is. Authorization determines whether that caller may perform an action on a resource. A successful login does not grant access to every record. The API must enforce operation, tenant, and ownership rules using trusted identity information.</p>
+<p>OAuth 2.0, OpenID Connect, and JWT solve different parts of this problem. OAuth 2.0 defines delegated authorization flows and access tokens. OIDC adds an identity layer for login, including ID tokens. JWT is a structured token format; it is neither a login protocol nor a requirement for every OAuth access token.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Actors and token purpose</h4><p>A client requests access; an authorization server authenticates and issues tokens; a resource server, such as the ordering API, accepts appropriate access tokens. An ID token tells the client about authentication and should not be used as the API access token.</p></section>
+<section class="concept"><h4>Authorization Code with PKCE</h4><p>A browser app redirects to the identity provider, receives a short-lived authorization code, and exchanges it with a matching code verifier. PKCE helps bind the exchange to the original client instance. Use provider libraries, exact redirect matching, and appropriate state/nonce protections. Public browser apps cannot keep a client secret.</p></section>
+<section class="concept"><h4>JWT validation</h4><p>A signed JWT is usually readable, so avoid treating claims as encrypted secrets. Validate the signature, allowed algorithms, issuer, audience, lifetime, and expected token profile using trusted metadata and established middleware. Decoding a token is not validation. Plan key rotation.</p></section>
+<section class="concept"><h4>Policies and resources</h4><p>Scopes express delegated capabilities; roles can express organizational privileges; claims supply attributes. Policies combine these with resource rules. An authenticated customer should access only authorized orders. Return 401 for missing/invalid authentication and usually 403 for a valid caller without permission; deliberate resource concealment can use 404.</p></section>
+<section class="concept"><h4>Browser sessions and attacks</h4><p>A backend-for-frontend can keep provider tokens server-side and use an HttpOnly, Secure cookie session. Cookie-authenticated mutations need CSRF defenses. Browser-held tokens need an explicit XSS and renewal threat model. CORS restricts browser response access; it is not authentication or a general CSRF defense.</p></section>
+<section class="concept"><h4>Expiry and logout</h4><p>A self-contained access token may remain usable until expiry unless the resource checks revocation or session state. Protect refresh tokens with provider-supported rotation or sender constraints as appropriate. Logout, session invalidation, token revocation, and cookie removal are related but different operations.</p></section></div>
+
+<h3>Where it is useful</h3><p>Use OIDC for interactive user login, OAuth access tokens for protected APIs, and workload identities or suitable service-to-service flows for automation. Keep authorization decisions near the protected resource, even when the frontend also hides unavailable actions.</p>
+<section class="example" aria-labelledby="auth-example"><div class="example-header"><h3 id="auth-example">A concrete example</h3><span>Flow · SPA with an identity provider</span></div><pre tabindex="0" aria-label="Flow · SPA with an identity provider example"><code>1. Browser -&gt; identity provider: authorization request + PKCE challenge
+2. User authenticates at the provider
+3. Provider -&gt; registered callback: authorization code
+4. Client -&gt; provider: code + verifier
+5. Client -&gt; Orders API: access token for that API
+6. API validates token, then checks order ownership/tenant policy</code></pre><p class="example-explanation">This summarizes a browser-client flow; a BFF can instead perform the token exchange and storage on the server. An access token's audience must match the API, and the server still needs record-level authorization.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>Use a mature identity provider and established libraries. Avoid hand-built token validation, passwords in custom OAuth flows, secrets in frontend bundles, and treating a hidden button as an access boundary.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://www.rfc-editor.org/rfc/rfc9700.html" target="_blank" rel="noopener noreferrer">OAuth security BCP</a> · <a href="https://openid.net/specs/openid-connect-core-1_0.html" target="_blank" rel="noopener noreferrer">OIDC Core</a> · <a href="https://learn.microsoft.com/en-us/aspnet/core/security/authentication/configure-jwt-bearer-authentication?view=aspnetcore-9.0" target="_blank" rel="noopener noreferrer">JWT bearer authentication</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="auth"> Mark this chapter as read</label><a href="#react">Next: ReactJS →</a></footer>
+</article>
+<article class="chapter" id="react" data-group="Frontend" aria-labelledby="react-title">
+<header class="chapter-header"><p class="eyebrow">Frontend · chapter 17</p><h2 id="react-title">ReactJS</h2><p class="chapter-deck">A component-based library for describing user interfaces as a function of state.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>React organizes a UI into reusable components. A component receives props, can hold state, and returns a description of the interface. When relevant state changes, React renders again and commits the necessary DOM updates. Rendering is a calculation of the next UI, not automatically a replacement of the whole page.</p>
+<p>In an order dashboard, OrderList owns the displayed collection, OrderRow presents one item, and FilterBar captures filter choices. The design starts with component responsibilities and a minimal source of truth rather than manually synchronizing many DOM elements.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Props, state, and identity</h4><p>Props come from a parent; state belongs to a component or shared owner. Treat both as immutable snapshots. Stable list keys preserve the correct component state during insertion and reordering. Random keys force remounts; index keys can misassociate state when positions change.</p></section>
+<section class="concept"><h4>Updates and closures</h4><p>Event handlers see the snapshot from the render that created them. When an update depends on the previous value, use a functional updater such as setCount(c =&gt; c + 1). React may batch updates. A ref stores a mutable value without triggering a render, which is useful for handles but not as the main storage for visible state.</p></section>
+<section class="concept"><h4>Effects and external systems</h4><p>useEffect synchronizes with subscriptions, timers, or other external systems. Derived values usually belong in rendering, and user-triggered work often belongs in event handlers. Dependencies describe reactive inputs; cleanup stops obsolete work. Development Strict Mode can run an extra setup/cleanup cycle to reveal lifecycle bugs.</p></section>
+<section class="concept"><h4>Performance and composition</h4><p>Measure with the React Profiler. Keep state close to its consumers, avoid unnecessary effects, and virtualize large lists where needed. memo, useMemo, and useCallback can reduce specific costs; they are not correctness mechanisms. React Compiler availability depends on project setup, so do not assume every application uses it.</p></section></div>
+
+<h3>Where it is useful</h3><p>React fits interactive dashboards, forms, commerce interfaces, and other applications with changing UI state. It can be used within client-rendered or server-rendered architectures; routing, data loading, and rendering strategy depend on the framework and project.</p>
+<section class="example" aria-labelledby="react-example"><div class="example-header"><h3 id="react-example">A concrete example</h3><span>TSX · small interactive component</span></div><pre tabindex="0" aria-label="TSX · small interactive component example"><code>import { useState } from &quot;react&quot;;
+
+export function QuantityPicker() {
+  const [quantity, setQuantity] = useState(1);
+
+  return (
+    &lt;div&gt;
+      &lt;p aria-live=&quot;polite&quot;&gt;Quantity: {quantity}&lt;/p&gt;
+      &lt;button type=&quot;button&quot;
+        onClick={() =&gt; setQuantity(q =&gt; q + 1)}&gt;
+        Add one
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre><p class="example-explanation">The event schedules a new state value. React renders the new quantity and updates the paragraph. The updater form remains correct when updates are queued. A real product also needs upper bounds and server-side inventory validation.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>Avoid using effects to mirror every prop into state, mutating state objects in place, or optimizing all callbacks before profiling. Components should remain understandable without relying on memoization for correctness.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://react.dev/learn/thinking-in-react" target="_blank" rel="noopener noreferrer">Thinking in React</a> · <a href="https://react.dev/learn/state-as-a-snapshot" target="_blank" rel="noopener noreferrer">State snapshots</a> · <a href="https://react.dev/reference/react/useEffect" target="_blank" rel="noopener noreferrer">Effects</a> · <a href="https://react.dev/reference/react/memo" target="_blank" rel="noopener noreferrer">Memoization</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="react"> Mark this chapter as read</label><a href="#typescript">Next: TypeScript →</a></footer>
+</article>
+<article class="chapter" id="typescript" data-group="Frontend" aria-labelledby="typescript-title">
+<header class="chapter-header"><p class="eyebrow">Frontend · chapter 18</p><h2 id="typescript-title">TypeScript</h2><p class="chapter-deck">A static type system that makes JavaScript contracts easier to express and check.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>TypeScript adds compile-time types to JavaScript. It helps the editor and compiler detect incompatible values, missing cases, and incorrect API usage before code runs. The resulting application still executes as JavaScript; types are erased, so a network response is not validated merely because it is assigned a TypeScript type.</p>
+<p>For the order dashboard, types describe an OrderSummary, a filter configuration, and the legal states of a request. They are especially valuable at component boundaries and when refactoring shared models.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Structural typing</h4><p>Compatibility depends largely on shape rather than a declared inheritance relationship. Interfaces describe object contracts and support declaration merging; type aliases also describe unions, tuples, and other compositions. Both can represent many object shapes.</p></section>
+<section class="concept"><h4>unknown, any, and narrowing</h4><p>any disables many useful checks. unknown requires proof before use, making it a better starting point for untrusted values. Narrow through typeof, property checks, discriminants, or validated schemas. A type assertion with as tells the compiler what to assume; it does not transform or verify the value.</p></section>
+<section class="concept"><h4>Unions and impossible states</h4><p>A discriminated union connects a status to the fields allowed in that status. This prevents contradictions such as “success with no data.” never can enforce exhaustive handling when every possible union member must be covered.</p></section>
+<section class="concept"><h4>Generics and utility types</h4><p>Generics preserve relationships between values and types. keyof constrains property names; Pick, Omit, Partial, and Readonly reshape contracts. These operations are static and often shallow: Readonly does not freeze an object, and Omit does not remove fields at runtime.</p></section></div>
+
+<h3>Where it is useful</h3><p>Use TypeScript to make large React applications easier to change, improve shared API contracts, and catch invalid state transitions. Enable strict checking and combine generated or handwritten types with runtime validation where data crosses a trust boundary.</p>
+<section class="example" aria-labelledby="typescript-example"><div class="example-header"><h3 id="typescript-example">A concrete example</h3><span>TypeScript · request state</span></div><pre tabindex="0" aria-label="TypeScript · request state example"><code>type OrderSummary = { id: number; status: string };
+
+type OrdersState =
+  | { status: &quot;loading&quot; }
+  | { status: &quot;success&quot;; data: OrderSummary[] }
+  | { status: &quot;error&quot;; message: string };
+
+function describe(state: OrdersState): string {
+  if (state.status === &quot;success&quot;) {
+    return `${state.data.length} orders`;
+  }
+  return state.status === &quot;error&quot; ? state.message : &quot;Loading…&quot;;
+}</code></pre><p class="example-explanation">Checking status narrows the type, so data is available only in the success branch and message only in the error branch. The union models application state; a parser must still validate incoming JSON.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>Complex generic types can become harder to maintain than clear explicit types. Avoid using any or non-null assertions to conceal uncertainty; represent the actual cases or validate the boundary.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html" target="_blank" rel="noopener noreferrer">Narrowing</a> · <a href="https://www.typescriptlang.org/docs/handbook/2/generics.html" target="_blank" rel="noopener noreferrer">Generics</a> · <a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html" target="_blank" rel="noopener noreferrer">Everyday types</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="typescript"> Mark this chapter as read</label><a href="#javascript">Next: JavaScript (ES6+) →</a></footer>
+</article>
+<article class="chapter" id="javascript" data-group="Frontend" aria-labelledby="javascript-title">
+<header class="chapter-header"><p class="eyebrow">Frontend · chapter 19</p><h2 id="javascript-title">JavaScript (ES6+)</h2><p class="chapter-deck">The runtime language behind browser interaction, asynchronous work, and TypeScript output.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>JavaScript is a dynamic language used by browsers and runtimes such as Node.js. ES6, also called ECMAScript 2015, introduced features such as let/const, classes, arrow functions, promises, destructuring, and modules. “ES6+” broadly includes later additions such as async/await, optional chaining, and nullish coalescing.</p>
+<p>Understanding JavaScript prevents subtle bugs that TypeScript alone cannot catch. The event loop, closures, object identity, and shallow copying directly affect React state and API integration.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Jobs, tasks, and microtasks</h4><p>The current JavaScript job runs to completion. Promise reactions run as microtasks after the stack clears, before the next task such as a timer callback. Long synchronous work blocks interaction. await suspends an async function around a promise; it does not move expensive computation to another CPU thread.</p></section>
+<section class="concept"><h4>Lexical scope and closures</h4><p>A closure retains access to its surrounding lexical environment. Callbacks can therefore keep values alive or observe a value from an earlier render. let and const are block-scoped; var is function-scoped. const prevents reassignment of the binding, not mutation of a referenced object.</p></section>
+<section class="concept"><h4>Functions and this</h4><p>Arrow functions capture this lexically. Regular functions normally receive this according to how they are called; extracting a method may lose its original receiver. bind creates a function with a chosen receiver.</p></section>
+<section class="concept"><h4>Objects and modern operators</h4><p>Spread makes shallow copies, so nested references remain shared. === compares objects by identity. Optional chaining stops on null/undefined; ?? supplies a fallback only for those values, unlike || which also replaces 0, false, and an empty string. ES modules make imports and exports explicit.</p></section></div>
+
+<h3>Where it is useful</h3><p>Use these mechanics when handling timers, callbacks, asynchronous requests, immutable state updates, and shared modules. A stale search result or mutated nested React object is often a JavaScript behavior problem before it is a framework problem.</p>
+<section class="example" aria-labelledby="javascript-example"><div class="example-header"><h3 id="javascript-example">A concrete example</h3><span>JavaScript · execution order</span></div><pre tabindex="0" aria-label="JavaScript · execution order example"><code>console.log(&quot;A&quot;);
+setTimeout(() =&gt; console.log(&quot;B&quot;), 0);
+Promise.resolve().then(() =&gt; console.log(&quot;C&quot;));
+console.log(&quot;D&quot;);
+
+// Output: A, D, C, B</code></pre><p class="example-explanation">A and D run on the current stack, C runs as a promise microtask, and B runs in a later timer task. The timer's zero delay is not a promise of immediate execution.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>Promise.all coordinates promises and rejects when one rejects, but does not cancel the other operations. Debounce controls how often work starts; cancellation and response identity control what obsolete work may update.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model" target="_blank" rel="noopener noreferrer">Execution model</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures" target="_blank" rel="noopener noreferrer">Closures</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="javascript"> Mark this chapter as read</label><a href="#html">Next: HTML5 →</a></footer>
+</article>
+<article class="chapter" id="html" data-group="Frontend" aria-labelledby="html-title">
+<header class="chapter-header"><p class="eyebrow">Frontend · chapter 20</p><h2 id="html-title">HTML5</h2><p class="chapter-deck">The semantic document structure that browsers and assistive technology interpret.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>HTML defines the meaning and structure of content: headings, paragraphs, navigation, links, forms, tables, images, and media. CSS controls presentation, while JavaScript adds behavior. React still produces HTML, so native semantics matter regardless of framework.</p>
+<p>“HTML5” remains common job-description language, although HTML is maintained as an evolving standard. A well-structured page provides useful behavior before custom JavaScript: links navigate, buttons activate, labels identify inputs, and forms can submit.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Semantic structure</h4><p>Use a logical heading hierarchy and landmarks such as header, nav, main, and footer. Use links for navigation and buttons for actions. A div with a click handler does not automatically gain keyboard behavior or an accessible role.</p></section>
+<section class="concept"><h4>Forms and validation</h4><p>Associate labels with controls, select useful input types and autocomplete values, and set button types deliberately. Native validation improves feedback but is bypassable, so validate and authorize on the server. Error messages should identify the problem and remain connected to the relevant control.</p></section>
+<section class="concept"><h4>Accessible content</h4><p>Informative images need meaningful alternative text; decorative images generally use empty alt. Data tables need header relationships. Keyboard focus must remain visible and logical. ARIA fills semantic gaps when necessary, but native HTML is usually the better starting point.</p></section>
+<section class="concept"><h4>Loading and resilience</h4><p>The viewport meta tag supports responsive layout. Image dimensions reduce layout shift. Deferred classic scripts preserve their relative execution order after parsing; async scripts run when ready and may reorder. Module scripts have deferred-by-default behavior. Lazy-load suitable offscreen media, not every important initial image.</p></section></div>
+
+<h3>Where it is useful</h3><p>Semantic HTML improves keyboard access, screen-reader interpretation, browser behavior, search understanding, and maintainability. It is essential for checkout forms, navigation, account screens, and data-heavy dashboards.</p>
+<section class="example" aria-labelledby="html-example"><div class="example-header"><h3 id="html-example">A concrete example</h3><span>HTML · labeled form</span></div><pre tabindex="0" aria-label="HTML · labeled form example"><code>&lt;form&gt;
+  &lt;label for=&quot;email&quot;&gt;Email address&lt;/label&gt;
+  &lt;input id=&quot;email&quot; name=&quot;email&quot; type=&quot;email&quot;
+         autocomplete=&quot;email&quot; required
+         aria-describedby=&quot;email-help&quot;&gt;
+  &lt;p id=&quot;email-help&quot;&gt;Use the address linked to your account.&lt;/p&gt;
+  &lt;button type=&quot;submit&quot;&gt;Continue&lt;/button&gt;
+&lt;/form&gt;</code></pre><p class="example-explanation">The label identifies the input, the description supplies context, and the button submits the form. In JSX, use htmlFor rather than for. This excerpt does not configure a submission endpoint or server validation.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>A placeholder is not a substitute for a label, and type=email does not prove ownership of an address. Accessibility is a property of structure and interaction throughout development, not just an automated final score.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements" target="_blank" rel="noopener noreferrer">HTML element reference</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/form" target="_blank" rel="noopener noreferrer">Form element</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script" target="_blank" rel="noopener noreferrer">Script loading</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="html"> Mark this chapter as read</label><a href="#css">Next: CSS3 →</a></footer>
+</article>
+<article class="chapter" id="css" data-group="Frontend" aria-labelledby="css-title">
+<header class="chapter-header"><p class="eyebrow">Frontend · chapter 21</p><h2 id="css-title">CSS3</h2><p class="chapter-deck">The rules that control layout, typography, spacing, color, and responsive presentation.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>CSS describes how HTML is presented. Selectors target elements, declarations assign properties, and the cascade resolves conflicts. Modern CSS is developed in modules rather than one single “CSS3” release, so the practical skill is understanding the layout and rendering model plus browser support for the features used.</p>
+<p>A maintainable interface uses consistent spacing, colors, typography, and component styles. CSS custom properties can represent design tokens, while a naming or scoping convention keeps unrelated components from accidentally affecting each other.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Cascade and inheritance</h4><p>Origin, importance, layers, specificity, and source order participate in resolving declarations. Specificity is not the only criterion. Some properties inherit from ancestors; others do not. Repeated !important declarations often conceal an unclear layering strategy.</p></section>
+<section class="concept"><h4>Box model and sizing</h4><p>An element has content, padding, border, and margin. border-box includes padding and border inside the declared width, but not margin. Intrinsic minimum sizes can cause overflow; min-width: 0 is often needed for a shrinking flex or grid child.</p></section>
+<section class="concept"><h4>Flexbox and Grid</h4><p>Flexbox arranges content primarily along one dimension and is useful for toolbars or variable-width rows. Grid coordinates rows and columns, making it useful for page regions and aligned cards. They can be combined rather than treated as competing frameworks.</p></section>
+<section class="concept"><h4>Positioning and stacking</h4><p>Absolute positioning refers to a containing block; fixed and sticky positioning follow different rules. Sticky elements need an inset and appropriate scrolling space. z-index is scoped by stacking contexts; a very large child value cannot escape its ancestor's context.</p></section>
+<section class="concept"><h4>Motion and interaction</h4><p>Use visible focus styles, sufficient contrast, and feedback beyond color alone. Transform and opacity animations can often avoid layout work, but measure actual behavior. Respect reduced-motion preferences for nonessential movement.</p></section></div>
+
+<h3>Where it is useful</h3><p>CSS creates product grids, navigation, responsive forms, dialogs, and dense dashboards. Frameworks such as utility or component libraries can accelerate development, but knowing CSS remains necessary to diagnose layout conflicts and accessibility problems.</p>
+<section class="example" aria-labelledby="css-example"><div class="example-header"><h3 id="css-example">A concrete example</h3><span>CSS · flexible cards</span></div><pre tabindex="0" aria-label="CSS · flexible cards example"><code>:root {
+  --space: 1rem;
+  --accent: #006c68;
+}
+
+* { box-sizing: border-box; }
+
+.cards {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: var(--space);
+}
+
+.card { min-width: 0; }</code></pre><p class="example-explanation">The grid creates as many suitably sized columns as fit. The inner min prevents the minimum card width from exceeding a narrow container. gap controls spacing without extra margins on each edge.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>Do not mask overflow by clipping content or use escalating specificity as the default fix. Inspect computed styles, containing blocks, and stacking contexts, then correct the cause.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade/Introduction" target="_blank" rel="noopener noreferrer">Cascade</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Flexible_box_layout/Basic_concepts" target="_blank" rel="noopener noreferrer">Flexbox</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Positioned_layout/Stacking_context" target="_blank" rel="noopener noreferrer">Stacking contexts</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="css"> Mark this chapter as read</label><a href="#responsive">Next: Responsive UI Development →</a></footer>
+</article>
+<article class="chapter" id="responsive" data-group="Frontend" aria-labelledby="responsive-title">
+<header class="chapter-header"><p class="eyebrow">Frontend · chapter 22</p><h2 id="responsive-title">Responsive UI Development</h2><p class="chapter-deck">Adapting content and interaction to available space, input methods, and user preferences.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>Responsive design makes an interface usable across viewport sizes and device conditions. It is more than shrinking a desktop page: navigation, data density, text wrapping, and actions must still support the user's task. A narrow layout is a useful starting point because it exposes the essential content.</p>
+<p>Breakpoints should follow content needs. A three-column layout may become awkward at a particular width because labels no longer fit, not because a named phone model has that width. Components embedded in sidebars may need to respond to their container rather than the whole viewport.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Fluid layout</h4><p>Use flexible tracks, relative units, sensible minimums/maximums, and readable line lengths. clamp can bound a fluid size. Avoid fixed heights for text that may grow through translation or zoom.</p></section>
+<section class="concept"><h4>Media and container queries</h4><p>Media queries can respond to viewport width, pointer capability, or user preferences. Container queries adapt a component to an ancestor's available size after that ancestor is configured as a query container. Feature support should match the browser target.</p></section>
+<section class="concept"><h4>Media performance</h4><p>Use responsive image sources where appropriate and reserve space to reduce layout shift. A mobile screen should not download a needlessly large image. Lazy-loading offscreen assets differs from delaying the main above-the-fold content.</p></section>
+<section class="concept"><h4>Input and accessibility</h4><p>Touch needs adequate target size and spacing. Hover-only actions exclude some users. Test keyboard operation, visible focus, orientation changes, long labels, and browser zoom. Reduced-motion preferences should influence nonessential animation.</p></section></div>
+
+<h3>Where it is useful</h3><p>Responsive techniques are essential for customer-facing sites and also for enterprise dashboards used in split windows, tablets, or magnified desktop views. Keep important actions available on every supported layout.</p>
+<section class="example" aria-labelledby="responsive-example"><div class="example-header"><h3 id="responsive-example">A concrete example</h3><span>CSS · responsive page shell</span></div><pre tabindex="0" aria-label="CSS · responsive page shell example"><code>.page {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  max-width: 75rem;
+  margin-inline: auto;
+  padding: 1rem;
+}
+
+@media (min-width: 60rem) {
+  .page { grid-template-columns: 15rem minmax(0, 1fr); }
+}</code></pre><p class="example-explanation">The default stacks content. Once enough space exists, a navigation column appears next to the main content. minmax(0, 1fr) lets the main track shrink without its content's intrinsic width forcing the entire page wider.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>Some tables should remain tables inside a labeled scrolling region; converting every row to a card can destroy useful comparisons. Hiding data is not a substitute for designing access to it.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Responsive_Design" target="_blank" rel="noopener noreferrer">Responsive design</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="responsive"> Mark this chapter as read</label><a href="#state">Next: State Management →</a></footer>
+</article>
+<article class="chapter" id="state" data-group="Frontend" aria-labelledby="state-title">
+<header class="chapter-header"><p class="eyebrow">Frontend · chapter 23</p><h2 id="state-title">State Management</h2><p class="chapter-deck">Choosing where data lives, how it changes, and which parts of the interface observe it.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>State is information that can change and affect behavior or rendering. Different kinds of state need different owners: a dialog's open flag is local UI state; search filters may belong in the URL; a cart shared across routes may be shared client state; orders loaded from an API are server state with a separate authoritative owner.</p>
+<p>The central design problem is avoiding competing sources of truth. Storing the same fetched orders in a query cache, Context, and Redux slice creates synchronization work with little benefit unless each representation has a deliberate purpose.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Local state and reducers</h4><p>useState fits simple component state. useReducer can express related transitions with one update function. Lift state to the nearest shared owner instead of moving everything to a global store. Derive totals and filtered views when they can be calculated reliably.</p></section>
+<section class="concept"><h4>Context API</h4><p>Context distributes a value through a subtree, which suits theme, locale, or stable application services. Consumers update when the provided value changes. A giant context with frequently recreated objects can trigger broad rerenders; split responsibilities and stabilize values where useful.</p></section>
+<section class="concept"><h4>Redux Toolkit</h4><p>Redux centralizes shared state transitions through actions and reducers. Redux Toolkit is the standard modern tooling for Redux and uses Immer for draft-style immutable updates. Reducers should remain free of side effects. Selectors derive data, and serializable state supports debugging and replay.</p></section>
+<section class="concept"><h4>Server-state tools</h4><p>RTK Query and TanStack Query manage fetched data, caching, loading, invalidation, and mutation lifecycles. Cache keys must include the inputs and identity boundaries that determine a result. Freshness, retries, and optimistic updates still require application decisions.</p></section></div>
+
+<h3>Where it is useful</h3><p>Use local state for a selected tab, Context for theme, Redux Toolkit for complex shared client workflows, and a query library for API data. A state store is valuable when it simplifies ownership and transitions, not simply because the application is large.</p>
+<section class="example" aria-labelledby="state-example"><div class="example-header"><h3 id="state-example">A concrete example</h3><span>TypeScript · pure reducer</span></div><pre tabindex="0" aria-label="TypeScript · pure reducer example"><code>type State = { quantity: number };
+type Action = { type: &quot;add&quot; } | { type: &quot;reset&quot; };
+
+function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case &quot;add&quot;: return { quantity: state.quantity + 1 };
+    case &quot;reset&quot;: return { quantity: 1 };
+  }
+}</code></pre><p class="example-explanation">Each action produces the next state without fetching, mutating external objects, or reading the clock. Async work belongs outside the reducer. The same ownership principles apply when a library provides more tooling.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>Do not put API calls inside reducers, persist sensitive state without a reason, or assume Context is a complete caching system. On logout or tenant changes, clear or segregate private cached data.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://react.dev/reference/react/useContext" target="_blank" rel="noopener noreferrer">React Context</a> · <a href="https://redux.js.org/toolkit/introduction/getting-started" target="_blank" rel="noopener noreferrer">Redux Toolkit</a> · <a href="https://redux.js.org/usage/side-effects-approaches" target="_blank" rel="noopener noreferrer">Redux side effects</a> · <a href="https://tanstack.com/query/latest/docs/framework/react/overview" target="_blank" rel="noopener noreferrer">TanStack Query</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="state"> Mark this chapter as read</label><a href="#api">Next: API Integration →</a></footer>
+</article>
+<article class="chapter" id="api" data-group="Frontend" aria-labelledby="api-title">
+<header class="chapter-header"><p class="eyebrow">Frontend · chapter 24</p><h2 id="api-title">API Integration</h2><p class="chapter-deck">Turning remote contracts into reliable data flows and understandable user feedback.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>Frontend API integration includes request construction, authentication, cancellation, parsing, validation, caching, error handling, and UI state. The browser communicates with an unreliable remote system: requests can fail, responses can arrive out of order, and a timeout can occur after the server already completed a write.</p>
+<p>A useful API client centralizes transport conventions without hiding important behavior. Components should distinguish loading, empty results, success, validation errors, forbidden access, and unexpected failure.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Transport and validation</h4><p>fetch resolves for HTTP failures such as 404 and 500, so check response.ok. Network errors reject. A 204 response has no JSON body. Treat decoded data as unknown until a schema or checks establish its shape; TypeScript generics do not validate runtime JSON.</p></section>
+<section class="concept"><h4>Request lifecycle</h4><p>Use AbortController for obsolete reads and time limits where appropriate. For search results, a request ID or active guard prevents stale responses from updating the UI. Debounce limits request frequency but does not solve response ordering by itself.</p></section>
+<section class="concept"><h4>Caching and mutations</h4><p>A query cache should reflect query parameters and user/tenant boundaries. After a mutation, invalidate or update affected entries. Optimistic changes need rollback or reconciliation and must account for overlapping operations.</p></section>
+<section class="concept"><h4>Authentication and retries</h4><p>Use the application's approved cookie or bearer-token model. Coordinate refresh so concurrent failures do not create a renewal storm. Retry transient operations within a budget, preserving idempotency keys for writes. A 403 normally needs an access decision, not repeated token refresh.</p></section>
+<section class="concept"><h4>Contract evolution</h4><p>OpenAPI-based clients can reduce mismatches, but they still need compatible server contracts and sensible runtime behavior. Display safe error messages, preserve form input, and use correlation identifiers to connect a user's problem to server diagnostics.</p></section></div>
+
+<h3>Where it is useful</h3><p>These practices apply to order lists, checkout forms, dashboards, uploads, and any UI that depends on remote data. The level of optimistic behavior should match business risk: changing a label differs from charging a card.</p>
+<section class="example" aria-labelledby="api-example"><div class="example-header"><h3 id="api-example">A concrete example</h3><span>TypeScript · validated response excerpt</span></div><pre tabindex="0" aria-label="TypeScript · validated response excerpt example"><code>type OrderSummary = { id: number; status: string };
+
+function isOrder(value: unknown): value is OrderSummary {
+  return typeof value === &quot;object&quot; &amp;&amp; value !== null
+    &amp;&amp; &quot;id&quot; in value &amp;&amp; typeof value.id === &quot;number&quot;
+    &amp;&amp; &quot;status&quot; in value &amp;&amp; typeof value.status === &quot;string&quot;;
+}
+
+async function loadOrder(id: number, signal: AbortSignal) {
+  const response = await fetch(`/api/orders/${id}`, { signal });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+  const value: unknown = await response.json();
+  if (!isOrder(value)) throw new Error(&quot;Invalid order response&quot;);
+  return value;
+}</code></pre><p class="example-explanation">This assumes a same-origin API and the surrounding application's authentication. The shape check covers the fields used here; a richer contract should validate additional rules. Callers still need loading/error handling and protection against obsolete results.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>Cancellation does not guarantee that a server mutation never happened. Disable accidental repeated UI submission, but rely on server-side idempotency and authorization for correctness.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch" target="_blank" rel="noopener noreferrer">Fetch API</a> · <a href="https://react.dev/reference/react/useEffect" target="_blank" rel="noopener noreferrer">Effect cleanup</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="api"> Mark this chapter as read</label><a href="#devops">Next: DevOps, Git &amp; operational foundations →</a></footer>
+</article>
+<article class="chapter" id="devops" data-group="DevOps &amp; Cloud" aria-labelledby="devops-title">
+<header class="chapter-header"><p class="eyebrow">DevOps &amp; Cloud · chapter 25</p><h2 id="devops-title">DevOps, Git &amp; operational foundations</h2><p class="chapter-deck">Connecting development and operations through small changes, automation, shared ownership, and feedback.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>DevOps is a way of delivering and operating software collaboratively. Developers and operators share responsibility for change quality, deployment, reliability, and recovery. Tools support this work, but installing a pipeline does not by itself create good delivery practices.</p>
+<p>The useful unit of progress is a small, reviewable change that can be tested, released, observed, and recovered. For the ordering system, the team should know which revision is running, what changed, whether customers can check out, and how to recover from an unsuccessful release.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Git and collaborative change</h4><p>Git stores versioned snapshots and supports branches, merging, and history inspection. Pull/merge requests add review and automated checks. Short-lived branches reduce integration drift; longer release branches can be appropriate when support obligations require them. Understand merge conflicts rather than accepting one side blindly.</p></section>
+<section class="concept"><h4>Linux, shells, and processes</h4><p>Cloud workloads often run on Linux. Know paths, permissions, environment variables, process exit codes, signals, logs, and basic shell composition. Bash and PowerShell automate different environments. Graceful termination lets a service stop accepting work and finish or release in-flight jobs.</p></section>
+<section class="concept"><h4>Networking essentials</h4><p>DNS maps names to addresses; TCP establishes transport; TLS encrypts and authenticates the connection; HTTP defines request/response semantics. Learn ports, load balancers, reverse proxies, subnets, routing, and firewall/security-group rules. curl and DNS tools help distinguish application failures from connectivity failures.</p></section>
+<section class="concept"><h4>Feedback and ownership</h4><p>Track delivery lead time, deployment frequency, failed changes, recovery, and user-facing service health according to team definitions. Use incident reviews to improve systems and runbooks. A runbook is an actionable recovery procedure, not just a screenshot of a dashboard.</p></section></div>
+
+<h3>Where it is useful</h3><p>These foundations help any full-stack developer diagnose production behavior and collaborate effectively with platform teams. They matter even when a managed cloud service hides the operating system, because identity, networking, configuration, and deployment still exist.</p>
+<section class="example" aria-labelledby="devops-example"><div class="example-header"><h3 id="devops-example">A concrete example</h3><span>Terminal · read-only inspection examples</span></div><pre tabindex="0" aria-label="Terminal · read-only inspection examples example"><code>git status
+git log -5 --oneline
+git diff
+curl -I https://example.com
+# On an appropriate Linux host:
+ps -ef</code></pre><p class="example-explanation">These illustrate inspecting source state, recent history, differences, HTTP headers, and processes. Commands and access should match the actual environment. Production diagnostics should avoid exposing secrets or collecting unnecessary customer data.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>Avoid equating DevOps with one job title or making one person the only deployment expert. Automation should make the normal path repeatable, while ownership and recovery remain clear.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control" target="_blank" rel="noopener noreferrer">Git and version control</a> · <a href="https://learn.microsoft.com/en-us/azure/well-architected/" target="_blank" rel="noopener noreferrer">Cloud operational excellence</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="devops"> Mark this chapter as read</label><a href="#cicd">Next: CI/CD &amp; automated verification →</a></footer>
+</article>
+<article class="chapter" id="cicd" data-group="DevOps &amp; Cloud" aria-labelledby="cicd-title">
+<header class="chapter-header"><p class="eyebrow">DevOps &amp; Cloud · chapter 26</p><h2 id="cicd-title">CI/CD &amp; automated verification</h2><p class="chapter-deck">Converting source changes into tested, traceable artifacts and controlled releases.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>Continuous integration means integrating changes frequently and automatically checking them. Continuous delivery keeps a change ready for release, often with an explicit production approval. Continuous deployment automatically releases qualifying changes. The pipeline should encode a repeatable path from source to an identifiable artifact.</p>
+<p>For a .NET/React system, the pipeline builds both applications, runs suitable tests, checks dependencies, packages output, and deploys the same immutable artifact through environments. Rebuilding separately for each environment can introduce differences that were never tested.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Tools and execution</h4><p>GitHub Actions uses event-triggered workflows, jobs, steps, and runners. Azure Pipelines integrates with Azure DevOps and supports varied repositories and targets. GitLab CI/CD defines pipelines in repository YAML and runs jobs on runners. Jenkins uses extensible pipeline automation, commonly a Jenkinsfile, with more self-managed operational responsibility.</p></section>
+<section class="concept"><h4>Verification layers</h4><p>Unit tests check isolated logic; integration tests exercise real boundaries such as SQL Server; contract tests check consumers and providers; end-to-end tests validate user journeys. For .NET, xUnit/NUnit/MSTest are familiar options; React projects often use Vitest or Jest with Testing Library, and browser workflows can use Playwright or Cypress. Match tools to the project rather than adding every layer indiscriminately.</p></section>
+<section class="concept"><h4>Artifact and dependency integrity</h4><p>Use lockfiles where supported, build with controlled SDKs, and identify artifacts by immutable versions or digests. Scan dependencies, containers, and source for appropriate risks. A software bill of materials inventories components. Treat external pull-request code as untrusted and do not expose deployment credentials to it.</p></section>
+<section class="concept"><h4>Release safety</h4><p>Rolling deployments replace instances gradually; blue/green keeps old and new environments for a traffic switch; canary releases expose a limited share first. Feature flags separate deployment from exposure. Backward-compatible database changes allow old and new application versions to coexist.</p></section></div>
+
+<h3>Where it is useful</h3><p>CI/CD reduces manual deployment variance and provides evidence for a release. A useful first pipeline builds, tests, and packages a small application; add environment controls, supply-chain checks, and advanced rollout patterns as risk and scale justify them.</p>
+<section class="example" aria-labelledby="cicd-example"><div class="example-header"><h3 id="cicd-example">A concrete example</h3><span>Pipeline · conceptual stages</span></div><pre tabindex="0" aria-label="Pipeline · conceptual stages example"><code>Pull request
+  -&gt; restore dependencies
+  -&gt; compile / type-check / lint
+  -&gt; unit + integration tests
+  -&gt; dependency and secret checks
+
+Approved revision
+  -&gt; publish versioned application or container
+  -&gt; deploy to test environment
+  -&gt; smoke / contract checks
+  -&gt; production gate and gradual rollout
+  -&gt; observe service health</code></pre><p class="example-explanation">The pipeline's actual syntax differs by platform. Use short-lived workload credentials for cloud deployment when available. A rollback plan must account for database compatibility; redeploying old code does not undo a destructive schema change.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>A green pipeline proves only what its checks cover. Slow or flaky suites can undermine confidence, while indiscriminate retries can conceal defects. Optimize feedback time without dropping meaningful verification.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://docs.github.com/en/actions/get-started/understand-github-actions" target="_blank" rel="noopener noreferrer">GitHub Actions</a> · <a href="https://learn.microsoft.com/en-us/azure/devops/pipelines/get-started/what-is-azure-pipelines?view=azure-devops" target="_blank" rel="noopener noreferrer">Azure Pipelines</a> · <a href="https://docs.gitlab.com/ci/" target="_blank" rel="noopener noreferrer">GitLab CI/CD</a> · <a href="https://www.jenkins.io/doc/book/pipeline/" target="_blank" rel="noopener noreferrer">Jenkins Pipeline</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="cicd"> Mark this chapter as read</label><a href="#docker">Next: Docker &amp; containers →</a></footer>
+</article>
+<article class="chapter" id="docker" data-group="DevOps &amp; Cloud" aria-labelledby="docker-title">
+<header class="chapter-header"><p class="eyebrow">DevOps &amp; Cloud · chapter 27</p><h2 id="docker-title">Docker &amp; containers</h2><p class="chapter-deck">Packaging an application and its user-space dependencies into a repeatable runtime unit.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>A container runs isolated processes from an image. The image contains filesystem layers and metadata; the container adds runtime state. Containers normally share the host kernel, so they are not simply lightweight virtual machines with independent operating-system kernels. Docker provides familiar tools for building, running, and distributing container images.</p>
+<p>For a .NET API, the image can package the published app and the appropriate runtime. Docker Compose can describe a local combination of API, database, and broker. A registry stores images for deployment; examples include Docker Hub, GitHub Container Registry, Azure Container Registry, and Amazon ECR.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Build versus run</h4><p>A Dockerfile describes image construction. A running container can be recreated from that image with environment-specific configuration. Build arguments, environment variables, and secrets have different lifetimes; do not bake credentials into layers or source copied into the image.</p></section>
+<section class="concept"><h4>Multi-stage builds</h4><p>Use a larger SDK stage to compile and a smaller runtime stage to execute. Copy only published output into the final image. A .dockerignore file limits build context, excluding local outputs, version-control data, and secrets as appropriate.</p></section>
+<section class="concept"><h4>State and networking</h4><p>A container's writable filesystem is not the right durable location for important business data. Use volumes or managed storage where needed. Exposing a port in image metadata does not itself publish it externally; runtime networking determines reachability.</p></section>
+<section class="concept"><h4>Security and maintenance</h4><p>Run as a non-root user where feasible, minimize the image contents, scan dependencies, and rebuild for security patches. Pin production artifacts by immutable digest and use a deliberate process to refresh base images; mutable tags alone do not identify exact contents.</p></section></div>
+
+<h3>Where it is useful</h3><p>Containers help keep runtime dependencies consistent between environments and make deployment units easier to move. They fit APIs, workers, and scheduled jobs. Managed container platforms can run them without requiring the application team to administer a Kubernetes cluster.</p>
+<section class="example" aria-labelledby="docker-example"><div class="example-header"><h3 id="docker-example">A concrete example</h3><span>Dockerfile · single-project .NET 8 example</span></div><pre tabindex="0" aria-label="Dockerfile · single-project .NET 8 example example"><code>FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+COPY *.csproj ./
+RUN dotnet restore
+COPY . .
+RUN dotnet publish -c Release -o /out --no-restore /p:UseAppHost=false
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+COPY --from=build /out .
+ENV ASPNETCORE_HTTP_PORTS=8080
+EXPOSE 8080
+USER app
+ENTRYPOINT [&quot;dotnet&quot;, &quot;Ordering.Api.dll&quot;]</code></pre><p class="example-explanation">Assumes one Ordering.Api project in the build root and a compatible .NET 8 Linux base image with the app user. Multi-project solutions need different copy/restore paths. Version 8 illustrates the requested stack; follow the runtime lifecycle note and pin reviewed image digests for production.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>A container image improves packaging consistency, not application correctness or automatic security. The application still needs health checks, bounded resources, externalized configuration, persistence, and graceful shutdown.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/" target="_blank" rel="noopener noreferrer">Container concepts</a> · <a href="https://docs.docker.com/build/building/multi-stage/" target="_blank" rel="noopener noreferrer">Multi-stage builds</a> · <a href="https://learn.microsoft.com/en-us/dotnet/core/docker/build-container" target="_blank" rel="noopener noreferrer">.NET containers</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="docker"> Mark this chapter as read</label><a href="#kubernetes">Next: Kubernetes &amp; GitOps →</a></footer>
+</article>
+<article class="chapter" id="kubernetes" data-group="DevOps &amp; Cloud" aria-labelledby="kubernetes-title">
+<header class="chapter-header"><p class="eyebrow">DevOps &amp; Cloud · chapter 28</p><h2 id="kubernetes-title">Kubernetes &amp; GitOps</h2><p class="chapter-deck">Reconciling container workloads toward a declared desired state across a cluster.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>Kubernetes orchestrates containerized workloads. You declare the desired state, such as three API replicas, and controllers work to reconcile actual state with that declaration. It can replace failed instances, manage rollouts, and connect workloads to networking and storage. It does not decide the correct architecture or make business operations idempotent.</p>
+<p>Managed Kubernetes services include Azure Kubernetes Service (AKS), Amazon Elastic Kubernetes Service (EKS), and Google Kubernetes Engine (GKE). Providers manage some infrastructure, but application teams still need to understand configuration, access, upgrades, resource limits, and workload behavior.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Core objects</h4><p>A Pod is the smallest scheduled workload unit and contains one or more closely related containers. A Deployment manages replicated, usually stateless Pods and rollout history. A Service provides stable network access to changing Pods. External routing can use supported Gateway or Ingress infrastructure.</p></section>
+<section class="concept"><h4>Health and capacity</h4><p>Readiness determines whether an instance should receive traffic; liveness can trigger restart; startup probes allow slow initialization. Resource requests inform scheduling, while limits constrain usage. Bad probes or overly tight limits can create a restart loop rather than improve availability.</p></section>
+<section class="concept"><h4>Configuration and persistence</h4><p>ConfigMaps hold non-secret configuration. Kubernetes Secrets require appropriate access control and encryption configuration; base64 encoding is not encryption. PersistentVolumes and claims handle storage abstractions, but databases still need suitable backup, consistency, and recovery design.</p></section>
+<section class="concept"><h4>Helm and GitOps</h4><p>Helm packages Kubernetes resources with values/templates. GitOps keeps declared configuration in version control and uses a controller such as Argo CD or Flux to reconcile the cluster. This can detect drift and provide reviewable deployment intent, but secrets and permissions still need separate controls.</p></section></div>
+
+<h3>Where it is useful</h3><p>Kubernetes is useful for organizations operating many services with platform expertise and requirements for consistent orchestration. A few straightforward APIs may fit App Service, Container Apps, ECS/Fargate, or Cloud Run with less operational effort.</p>
+<section class="example" aria-labelledby="kubernetes-example"><div class="example-header"><h3 id="kubernetes-example">A concrete example</h3><span>YAML · Deployment fragment</span></div><pre tabindex="0" aria-label="YAML · Deployment fragment example"><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ordering-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels: { app: ordering-api }
+  template:
+    metadata:
+      labels: { app: ordering-api }
+    spec:
+      containers:
+        - name: api
+          image: registry.example.com/ordering-api:1.0
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet: { path: /health/ready, port: 8080 }
+          resources:
+            requests: { cpu: &quot;100m&quot;, memory: &quot;128Mi&quot; }
+            limits: { cpu: &quot;500m&quot;, memory: &quot;256Mi&quot; }</code></pre><p class="example-explanation">The registry address is illustrative and the app must implement the health endpoint. The resource values are examples to measure, not production sizing advice. A Service, routing, workload identity, secrets, and other deployment controls are intentionally outside this fragment.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>Do not choose Kubernetes solely to make a project appear cloud-native. Account for upgrades, networking, policy, storage, observability, and incident response. Autoscaling an API can overwhelm a database unless downstream capacity is considered.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://kubernetes.io/docs/concepts/overview/" target="_blank" rel="noopener noreferrer">Kubernetes overview</a> · <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/" target="_blank" rel="noopener noreferrer">Deployments</a> · <a href="https://argo-cd.readthedocs.io/en/stable/" target="_blank" rel="noopener noreferrer">Argo CD</a> · <a href="https://helm.sh/docs/" target="_blank" rel="noopener noreferrer">Helm</a> · <a href="https://fluxcd.io/flux/" target="_blank" rel="noopener noreferrer">Flux</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="kubernetes"> Mark this chapter as read</label><a href="#iac">Next: Infrastructure as Code (IaC) →</a></footer>
+</article>
+<article class="chapter" id="iac" data-group="DevOps &amp; Cloud" aria-labelledby="iac-title">
+<header class="chapter-header"><p class="eyebrow">DevOps &amp; Cloud · chapter 29</p><h2 id="iac-title">Infrastructure as Code (IaC)</h2><p class="chapter-deck">Defining infrastructure in versioned, reviewable files instead of relying on manual portal changes.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>Infrastructure as code describes resources such as networks, application hosts, databases, identities, and monitoring configuration using machine-readable definitions. A provisioning tool compares the desired configuration with known or observed state and proposes or performs changes. This makes environments easier to reproduce and differences easier to review.</p>
+<p>The ordering application's test and production environments can share modules while using different capacity, retention, and access settings. Reuse does not mean the environments should have identical privileges or data.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Terraform and OpenTofu</h4><p>Terraform uses providers and a declarative configuration language to manage many platforms. Its state maps declared resources to remote objects and may contain sensitive values. OpenTofu is an open-source alternative in the same broad ecosystem; verify provider, state, and feature compatibility before migration.</p></section>
+<section class="concept"><h4>Bicep and provider-native tooling</h4><p>Bicep is a declarative language for Azure resources and integrates with Azure Resource Manager. AWS CloudFormation is a provider-native option for AWS. Native tools can align closely with platform features, while cross-platform tools can standardize workflow across providers.</p></section>
+<section class="concept"><h4>Pulumi and Ansible</h4><p>Pulumi expresses infrastructure using languages such as TypeScript, Python, and C#, with an infrastructure engine managing resources. Ansible is commonly used for configuration management and automation through playbooks; it can complement provisioning by configuring operating systems and software.</p></section>
+<section class="concept"><h4>Safe change management</h4><p>Review plans, understand create/update/replacement behavior, and protect state with access controls, locking where supported, encryption, and versioning. Separate environments and avoid leaking secrets into plans or logs. Manual changes create drift that must be reconciled deliberately.</p></section></div>
+
+<h3>Where it is useful</h3><p>IaC is valuable when an environment needs to be recreated, audited, scaled, or managed by more than one person. Start with a small set of owned resources and sensible modules; avoid one giant configuration that gives every change an enormous blast radius.</p>
+<section class="example" aria-labelledby="iac-example"><div class="example-header"><h3 id="iac-example">A concrete example</h3><span>Terraform HCL · resource fragment</span></div><pre tabindex="0" aria-label="Terraform HCL · resource fragment example"><code>resource &quot;azurerm_resource_group&quot; &quot;ordering&quot; {
+  name     = &quot;rg-ordering-study&quot;
+  location = &quot;westus2&quot;
+
+  tags = {
+    application = &quot;ordering&quot;
+    environment = &quot;study&quot;
+  }
+}</code></pre><p class="example-explanation">This fragment assumes a configured AzureRM provider, authentication, and an appropriate subscription. It illustrates declarative intent; it is not a complete environment. A normal workflow initializes providers, reviews a plan, and applies only the reviewed change through the team's controls.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>An IaC file can request destructive replacement just as a portal action can. “Declared in code” does not mean safe by default, and marking a variable sensitive does not guarantee it is absent from state.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://developer.hashicorp.com/terraform/intro" target="_blank" rel="noopener noreferrer">Terraform</a> · <a href="https://opentofu.org/docs/intro/" target="_blank" rel="noopener noreferrer">OpenTofu</a> · <a href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview" target="_blank" rel="noopener noreferrer">Bicep</a> · <a href="https://www.pulumi.com/docs/iac/concepts/" target="_blank" rel="noopener noreferrer">Pulumi</a> · <a href="https://docs.ansible.com/projects/ansible/latest/getting_started/introduction.html" target="_blank" rel="noopener noreferrer">Ansible</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="iac"> Mark this chapter as read</label><a href="#cloud">Next: Cloud computing foundations →</a></footer>
+</article>
+<article class="chapter" id="cloud" data-group="DevOps &amp; Cloud" aria-labelledby="cloud-title">
+<header class="chapter-header"><p class="eyebrow">DevOps &amp; Cloud · chapter 30</p><h2 id="cloud-title">Cloud computing foundations</h2><p class="chapter-deck">Using managed compute, storage, networking, and identity with explicit responsibility boundaries.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>Cloud computing provides infrastructure and higher-level services on demand. The main benefits are flexible capacity, managed capabilities, and access to regional infrastructure; the tradeoffs include service constraints, ongoing cost, network dependence, and provider-specific behavior. Cloud hosting does not automatically make an application scalable or resilient.</p>
+<p>Choose a hosting model according to how much control the workload needs and how much operational work the team can own. A web API rarely needs a virtual machine solely because the team is familiar with installing a server manually.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>IaaS, PaaS, SaaS, and serverless</h4><p>Infrastructure as a Service supplies resources such as virtual machines and networks that you configure. Platform as a Service manages more of the hosting environment. Software as a Service delivers a complete product. Serverless emphasizes managed execution and scaling, often with usage-oriented billing; servers still exist and quotas, startup behavior, and cost still matter.</p></section>
+<section class="concept"><h4>Regions and availability zones</h4><p>A region is a geographic deployment area; zones provide distinct failure domains within a region where supported. Multiple instances in one failure domain do not protect against every outage. Multi-region design adds replication, traffic management, and consistency complexity.</p></section>
+<section class="concept"><h4>Network and identity boundaries</h4><p>A virtual network or VPC defines private networking. Subnets, routes, firewalls/security groups, private endpoints, and DNS determine connectivity. IAM governs who or what can act. A service may be privately reachable but still require authentication and authorization.</p></section>
+<section class="concept"><h4>Scaling and durable state</h4><p>Vertical scaling increases one instance's capacity; horizontal scaling adds instances. Stateless request handlers make replication easier, while sessions, files, and business data need appropriate external storage. Autoscaling must consider database connections, queue depth, downstream limits, and warm-up behavior.</p></section>
+<section class="concept"><h4>Shared responsibility</h4><p>The provider protects parts of the platform, while the customer remains responsible for application behavior, access configuration, data, and the relevant parts of the workload. Moving from VMs to managed services shifts responsibilities but does not remove them.</p></section></div>
+
+<h3>Where it is useful</h3><p>A typical small-to-medium web system can use a managed application/container service, managed SQL database, object storage, a queue, and centralized telemetry. This can provide a strong operational base without a self-managed cluster.</p>
+<section class="example" aria-labelledby="cloud-example"><div class="example-header"><h3 id="cloud-example">A concrete example</h3><span>Architecture · basic cloud layout</span></div><pre tabindex="0" aria-label="Architecture · basic cloud layout example"><code>User
+  -&gt; DNS + TLS endpoint
+  -&gt; CDN / frontend hosting
+  -&gt; managed API hosting
+       -&gt; managed relational database
+       -&gt; object storage
+       -&gt; durable queue -&gt; worker
+
+Identity, secrets, telemetry, and backups support every layer.</code></pre><p class="example-explanation">Static React assets may be cached at the edge, while authenticated API responses need deliberate private caching rules. Database access can use private networking and workload identity where supported. Each service needs configuration and a recovery plan.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>A cloud provider's service availability target is not automatically your application's end-to-end availability. Combine dependency behavior, recovery procedures, backups, and customer-facing objectives.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://docs.aws.amazon.com/whitepapers/latest/aws-overview/types-of-cloud-computing.html" target="_blank" rel="noopener noreferrer">Cloud service models</a> · <a href="https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility" target="_blank" rel="noopener noreferrer">Shared responsibility</a> · <a href="https://learn.microsoft.com/en-us/azure/well-architected/" target="_blank" rel="noopener noreferrer">Well-Architected Framework</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="cloud"> Mark this chapter as read</label><a href="#providers">Next: AWS, Azure &amp; Google Cloud →</a></footer>
+</article>
+<article class="chapter" id="providers" data-group="DevOps &amp; Cloud" aria-labelledby="providers-title">
+<header class="chapter-header"><p class="eyebrow">DevOps &amp; Cloud · chapter 31</p><h2 id="providers-title">AWS, Azure &amp; Google Cloud</h2><p class="chapter-deck">Recognizing the major platforms and mapping service categories across them.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>AWS, Microsoft Azure, and Google Cloud are major public-cloud platforms to recognize in interviews. Learn the categories first—compute, identity, storage, data, messaging, and observability—then map them to provider names. The service comparison below is a study map; the products are not exact substitutes in behavior, pricing, quotas, or regional availability.</p>
+<p>For this C#/.NET profile, Azure is a practical platform to study in depth because of its .NET tooling and enterprise integrations. AWS and Google Cloud can also run .NET and React effectively. Employer infrastructure, team expertise, data location, and required services matter more than language branding.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Azure path</h4><p>App Service hosts web applications with substantial platform management. Container Apps runs containerized APIs and workers with managed scaling. Azure SQL supplies managed relational options; Service Bus supports messaging; Key Vault manages secrets and keys; Azure Monitor and Application Insights support operations. Choose AKS when Kubernetes capabilities justify cluster responsibility.</p></section>
+<section class="concept"><h4>AWS path</h4><p>EC2 provides VMs. ECS orchestrates containers and can use Fargate to avoid managing the underlying compute hosts. EKS supplies managed Kubernetes. RDS offers managed relational engines, while S3 provides object storage. SQS handles queues; SNS and EventBridge address other messaging/event-routing needs. IAM controls access.</p></section>
+<section class="concept"><h4>Google Cloud path</h4><p>Compute Engine provides VMs; Cloud Run offers managed container execution; GKE provides managed Kubernetes. Cloud SQL supplies managed relational engines, Cloud Storage stores objects, and Pub/Sub supports messaging. IAM, Secret Manager, and Cloud Monitoring/Logging support access and operations.</p></section>
+<section class="concept"><h4>Selecting a first deployment model</h4><p>For a straightforward API, compare managed application hosting or containers before Kubernetes. For event-triggered short work, evaluate functions against runtime, timeout, concurrency, and startup constraints. For specialized OS or software requirements, a VM may provide needed control.</p></section></div>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Common service categories — comparable roles, not one-to-one equivalence"><table><caption>Common service categories — comparable roles, not one-to-one equivalence</caption><thead><tr><th scope="col">Need</th><th scope="col">Azure</th><th scope="col">AWS</th><th scope="col">Google Cloud</th></tr></thead><tbody><tr><th scope="row">Virtual machines</th><td>Virtual Machines</td><td>EC2</td><td>Compute Engine</td></tr><tr><th scope="row">Managed containers</th><td>Container Apps</td><td>ECS + Fargate</td><td>Cloud Run</td></tr><tr><th scope="row">Managed Kubernetes</th><td>AKS</td><td>EKS</td><td>GKE</td></tr><tr><th scope="row">Functions</th><td>Azure Functions</td><td>Lambda</td><td>Cloud Run functions</td></tr><tr><th scope="row">Managed relational data</th><td>Azure SQL</td><td>RDS</td><td>Cloud SQL</td></tr><tr><th scope="row">Object storage</th><td>Blob Storage</td><td>S3</td><td>Cloud Storage</td></tr><tr><th scope="row">Messaging</th><td>Service Bus</td><td>SQS / SNS</td><td>Pub/Sub</td></tr><tr><th scope="row">Secrets</th><td>Key Vault</td><td>Secrets Manager</td><td>Secret Manager</td></tr><tr><th scope="row">Observability</th><td>Azure Monitor</td><td>CloudWatch</td><td>Cloud Monitoring / Logging</td></tr></tbody></table></div>
+<h3>Where it is useful</h3><p>Be able to describe one complete provider path and translate the main capabilities to another. For example, know how an API obtains a workload identity, connects to its database, receives configuration, publishes a message, and produces a trace.</p>
+<section class="example" aria-labelledby="providers-example"><div class="example-header"><h3 id="providers-example">A concrete example</h3><span>Deployment choice · example starting points</span></div><pre tabindex="0" aria-label="Deployment choice · example starting points example"><code>Azure:       React hosting + Container Apps + Azure SQL + Service Bus
+AWS:         React hosting + ECS/Fargate + RDS + SQS
+Google Cloud: React hosting + Cloud Run + Cloud SQL + Pub/Sub</code></pre><p class="example-explanation">These are illustrative combinations, not prescribed deployments. SQL engine compatibility, private networking, identity integration, scaling limits, regional support, and messaging semantics must be verified for the actual workload.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>The 2025 Stack Overflow Developer Survey is useful adoption context and highlights Docker and the major cloud ecosystems. It is a respondent survey, not a universal employer ranking. The tools here are a practical shortlist of widely encountered options; no unsupported market-share order is implied.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://docs.cloud.google.com/docs/get-started/aws-azure-gcp-service-comparison" target="_blank" rel="noopener noreferrer">Cloud service comparison</a> · <a href="https://learn.microsoft.com/en-us/azure/container-apps/overview" target="_blank" rel="noopener noreferrer">Azure Container Apps</a> · <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html" target="_blank" rel="noopener noreferrer">Amazon ECS</a> · <a href="https://docs.cloud.google.com/run/docs/overview/what-is-cloud-run" target="_blank" rel="noopener noreferrer">Cloud Run</a> · <a href="https://survey.stackoverflow.co/2025/technology" target="_blank" rel="noopener noreferrer">Developer survey adoption context</a> · <a href="https://docs.cloud.google.com/functions/docs/concepts/overview" target="_blank" rel="noopener noreferrer">Cloud Run functions</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="providers"> Mark this chapter as read</label><a href="#observability">Next: Observability &amp; reliability →</a></footer>
+</article>
+<article class="chapter" id="observability" data-group="DevOps &amp; Cloud" aria-labelledby="observability-title">
+<header class="chapter-header"><p class="eyebrow">DevOps &amp; Cloud · chapter 32</p><h2 id="observability-title">Observability &amp; reliability</h2><p class="chapter-deck">Understanding system behavior from telemetry and designing recovery around user-facing goals.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>Observability is the ability to understand what is happening inside a system from its outputs. Logging alone is rarely enough for distributed applications. A slow checkout may involve browser timing, API queueing, SQL locks, and a payment dependency; correlated signals make that path visible.</p>
+<p>Reliability turns those observations into explicit service goals and recovery behavior. The ordering system should define what a successful checkout means, how quickly it should complete, and what the team does when those expectations are not met.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Logs, metrics, and traces</h4><p>Logs record discrete events with structured fields. Metrics summarize numeric behavior over time, such as request rates, errors, queue age, and resource saturation. Traces connect spans across a request or workflow. Propagated trace identifiers let an engineer connect a user report to the relevant operations.</p></section>
+<section class="concept"><h4>Tools and responsibilities</h4><p>OpenTelemetry provides vendor-neutral instrumentation and telemetry collection/export conventions; it is not itself a complete telemetry storage backend. Prometheus commonly collects and queries metrics. Grafana visualizes data from connected sources and supports dashboards/alerting. Cloud-native tools and products such as Datadog or Elastic provide other collection, storage, and analysis paths.</p></section>
+<section class="concept"><h4>SLIs, SLOs, and alerting</h4><p>A service-level indicator is a measurement, such as the fraction of valid requests succeeding. A service-level objective is a target over a period. An error budget represents the allowed shortfall. An SLA is a contractual commitment. Alert on actionable customer impact and sustained budget consumption rather than every harmless fluctuation.</p></section>
+<section class="concept"><h4>Latency and diagnosis</h4><p>Use percentiles such as p95/p99 because averages hide slow tails. Separate network, queueing, CPU, GC, SQL, and dependency time. Establish a baseline, form a hypothesis, make a targeted change, and compare equivalent workloads.</p></section>
+<section class="concept"><h4>Recovery and continuity</h4><p>Recovery time objective (RTO) is the target time to restore service; recovery point objective (RPO) is the tolerated data-loss window. Backups support recovery only when restoration is practiced. Readiness, graceful shutdown, durable queues, and idempotent workers make deploys and failures less disruptive.</p></section></div>
+
+<h3>Where it is useful</h3><p>Instrument important user journeys early. For checkout, capture request duration, rejected/failed operations, payment outcomes, queue lag, and trace links across API and worker boundaries without logging credentials or unnecessary personal data.</p>
+<section class="example" aria-labelledby="observability-example"><div class="example-header"><h3 id="observability-example">A concrete example</h3><span>Telemetry · an actionable incident view</span></div><pre tabindex="0" aria-label="Telemetry · an actionable incident view example"><code>Symptom: checkout p95 rises from 250 ms to 2 s
+Metrics: database connection wait increases
+Trace: most time is before the SQL command starts
+Logs: no new business-validation failures
+Change: a release increased request fan-out
+Response: limit concurrency and verify connection pressure recovers</code></pre><p class="example-explanation">These signals support a specific hypothesis rather than assuming the query itself is slow. Follow the release with comparable latency and error measurements; scaling API replicas blindly could increase pressure on the same database.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>Telemetry has cost and privacy consequences. Avoid unbounded metric labels such as every customer or order ID, sample traces deliberately, and set retention according to investigative needs. A dashboard is not a recovery procedure.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://opentelemetry.io/docs/what-is-opentelemetry/" target="_blank" rel="noopener noreferrer">OpenTelemetry</a> · <a href="https://prometheus.io/docs/introduction/overview/" target="_blank" rel="noopener noreferrer">Prometheus</a> · <a href="https://grafana.com/docs/grafana/latest/introduction/" target="_blank" rel="noopener noreferrer">Grafana</a> · <a href="https://learn.microsoft.com/en-us/azure/well-architected/" target="_blank" rel="noopener noreferrer">Cloud architecture quality</a> · <a href="https://learn.microsoft.com/en-us/dotnet/core/diagnostics/observability-with-otel" target="_blank" rel="noopener noreferrer">OpenTelemetry in .NET</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="observability"> Mark this chapter as read</label><a href="#cloud-security">Next: Cloud security, secrets &amp; cost control →</a></footer>
+</article>
+<article class="chapter" id="cloud-security" data-group="DevOps &amp; Cloud" aria-labelledby="cloud-security-title">
+<header class="chapter-header"><p class="eyebrow">DevOps &amp; Cloud · chapter 33</p><h2 id="cloud-security-title">Cloud security, secrets &amp; cost control</h2><p class="chapter-deck">Protecting identities and data while keeping resource use intentional and observable.</p></header>
+<div class="chapter-content">
+<h3>What it is and why it matters</h3><p>Cloud security relies on explicit identity, least privilege, controlled connectivity, secure configuration, and maintained software. A public endpoint, a private database, a deployment runner, and a background worker are different trust boundaries. Each should have only the permissions needed for its task.</p>
+<p>Cost control is an engineering concern because architecture determines compute, storage, request, telemetry, and data-transfer usage. Efficient systems connect spending to workload value and have visible ownership, budgets, and capacity assumptions.</p>
+<h3>Core concepts</h3><div class="concepts"><section class="concept"><h4>Workload identity</h4><p>Give applications and deployment jobs their own identities instead of sharing a human administrator account. Managed identities, instance/workload roles, and federated credentials can obtain short-lived access without stored long-lived keys. CI OIDC trust should be restricted to the intended repository, branch/environment, audience, and workflow conditions.</p></section>
+<section class="concept"><h4>Secrets and supply chain</h4><p>Use a secret manager such as Key Vault, AWS Secrets Manager, or Google Secret Manager where appropriate. Keep secrets out of Git, frontend bundles, image layers, and logs. Rotate credentials and reduce standing privileges. Review dependencies, base images, build provenance, and runner access because a compromised build can compromise deployments.</p></section>
+<section class="concept"><h4>Data and network protection</h4><p>Use TLS, appropriate encryption at rest, least-privilege data access, backups, and retention policies. Private endpoints and network rules reduce exposure but do not replace authentication. Separate production access from test environments and avoid copying sensitive production data into developer systems.</p></section>
+<section class="concept"><h4>Cost visibility</h4><p>Tag or label resources with owner, application, and environment. Track unit costs such as cost per successful order, not just the total bill. Watch idle resources, oversized databases, egress, verbose logs, and cross-region traffic. Budget alerts usually notify; they are not necessarily hard spending caps.</p></section>
+<section class="concept"><h4>Efficient capacity</h4><p>Measure utilization and latency before rightsizing. Scale within downstream limits, define maximums where supported, and use storage lifecycle policies. Reserved/committed capacity can help predictable workloads, while interruptible capacity suits recoverable jobs; the tradeoff is commitment or interruption risk.</p></section></div>
+
+<h3>Where it is useful</h3><p>A pipeline can federate to a narrowly scoped cloud identity, deploy an immutable image, and allow the running API to fetch only its own secrets and access only its database. Budget and telemetry views then connect the deployment to both service health and cost.</p>
+<section class="example" aria-labelledby="cloud-security-example"><div class="example-header"><h3 id="cloud-security-example">A concrete example</h3><span>Trust flow · short-lived deployment access</span></div><pre tabindex="0" aria-label="Trust flow · short-lived deployment access example"><code>CI job with approved repository/environment claims
+  -&gt; OIDC token
+  -&gt; cloud trust-policy validation
+  -&gt; short-lived deployment credential
+  -&gt; limited target resources
+
+Running API
+  -&gt; its own workload identity
+  -&gt; only required database / queue / secret permissions</code></pre><p class="example-explanation">The deployment identity and runtime identity have different responsibilities and should not automatically share privileges. Federation eliminates a stored cloud key only when the trust relationship is narrowly configured.</p></section>
+<aside class="tradeoff"><h3>Decisions and pitfalls</h3><p>“Managed” does not mean no security work, and “serverless” does not mean free or unlimited. Combine secure defaults, ownership, quotas, cost visibility, and recovery testing instead of relying on one tool.</p></aside>
+<p class="references"><strong>Official references & further reading</strong><br><a href="https://docs.github.com/en/actions/concepts/security/openid-connect" target="_blank" rel="noopener noreferrer">OIDC for GitHub Actions</a> · <a href="https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility" target="_blank" rel="noopener noreferrer">Shared responsibility</a> · <a href="https://learn.microsoft.com/en-us/azure/well-architected/" target="_blank" rel="noopener noreferrer">Well-Architected Framework</a> · <a href="https://learn.microsoft.com/en-us/azure/cost-management-billing/costs/tutorial-acm-create-budgets" target="_blank" rel="noopener noreferrer">Budget behavior</a> · <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html" target="_blank" rel="noopener noreferrer">AWS IAM practices</a></p>
+</div>
+<footer class="chapter-footer"><label class="read-label"><input type="checkbox" data-read="cloud-security"> Mark this chapter as read</label><a href="#connected">Connect the full stack →</a></footer>
+</article>
+<section class="appendix" id="connected" aria-labelledby="connected-title"><p class="eyebrow">A complete system in one view</p><h2 id="connected-title">How the concepts work together</h2>
+<p>A checkout journey connects the entire guide. Each layer has a clear responsibility, and failure can occur between layers. The architecture becomes reliable when those boundaries are explicit.</p>
+<ol class="flow"><li><strong>React + TypeScript</strong><span>Collect intent in accessible HTML, validate for usability, and represent pending/success/error states.</span></li><li><strong>HTTP + ASP.NET Core</strong><span>Authenticate, authorize the operation, validate the contract, and call an application use case.</span></li><li><strong>C# + domain model</strong><span>Enforce order invariants through cohesive behavior and explicit dependencies.</span></li><li><strong>EF Core + SQL Server</strong><span>Persist the order and an outbox message in one local transaction with concurrency controls.</span></li><li><strong>Events + workers</strong><span>Coordinate inventory and payment, tolerate redelivery, and reconcile uncertain external outcomes.</span></li><li><strong>API + state management</strong><span>Expose order status and update the UI without stale responses or duplicate sources of truth.</span></li><li><strong>CI/CD + cloud</strong><span>Promote a tested artifact into an environment defined through versioned infrastructure.</span></li><li><strong>Observability + recovery</strong><span>Trace the journey, measure user impact, protect identities, and recover within defined objectives.</span></li></ol>
+<div class="takeaway"><h3>The important connection</h3><p>Good language features do not replace sound data rules. Good architecture does not replace useful telemetry. A managed cloud platform does not replace application security. Each part contributes a different guarantee, and a strong design explains where each guarantee begins and ends.</p></div></section>
+<section class="appendix" id="tool-map" aria-labelledby="tools-title"><p class="eyebrow">DevOps & cloud reference</p><h2 id="tools-title">Common options and the skills behind them</h2><p class="tool-note">This is a practical shortlist, not a claim that every tool is equally popular. Adoption varies by organization and workload. The <a href="https://survey.stackoverflow.co/2025/technology" target="_blank" rel="noopener noreferrer">2025 Stack Overflow Developer Survey</a> provides broad adoption context; the linked official documentation in each chapter explains capabilities.</p><div class="table-scroll" tabindex="0" role="region" aria-label="A practical DevOps and cloud tool map"><table><caption>A practical DevOps and cloud tool map</caption><thead><tr><th scope="col">Purpose</th><th scope="col">Widely encountered options</th><th scope="col">What to understand</th></tr></thead><tbody><tr><th scope="row">Source control</th><td>Git; GitHub, GitLab, Azure Repos</td><td>Commits, review, branch policies, merges, traceability.</td></tr><tr><th scope="row">CI/CD</th><td>GitHub Actions, Azure Pipelines, GitLab CI/CD, Jenkins</td><td>Triggers, runners, artifacts, secrets, environments, release gates.</td></tr><tr><th scope="row">Containers</th><td>Docker, Docker Compose, container registries</td><td>Images, layers, multi-stage builds, ports, volumes, non-root execution.</td></tr><tr><th scope="row">Orchestration</th><td>Kubernetes; AKS, EKS, GKE; Helm</td><td>Desired state, Pods, Deployments, Services, probes, requests/limits.</td></tr><tr><th scope="row">GitOps</th><td>Argo CD, Flux</td><td>Versioned desired state, reconciliation, drift, rollback intent.</td></tr><tr><th scope="row">Infrastructure as code</th><td>Terraform, Bicep, CloudFormation; OpenTofu, Pulumi</td><td>Providers, plans, state, change review, modules, permissions.</td></tr><tr><th scope="row">Host configuration</th><td>Ansible, Bash, PowerShell</td><td>Repeatable configuration, process behavior, files, signals, networking.</td></tr><tr><th scope="row">Telemetry</th><td>OpenTelemetry, Prometheus, Grafana; cloud-native tools</td><td>Logs, metrics, traces, correlation, useful alerts, retention.</td></tr><tr><th scope="row">Cloud platforms</th><td>AWS, Microsoft Azure, Google Cloud</td><td>Compute, managed data, storage, networking, identity, regions, cost.</td></tr></tbody></table></div>
+<h3>A useful depth-first learning path for this profile</h3><p>Build a solid foundation in Git, HTTP, Linux/process basics, automated testing, and Docker. Learn one CI/CD system well—GitHub Actions or Azure Pipelines is a practical pairing with this stack—then deploy a small API using one provider's managed hosting, database, identity, and monitoring services. Add infrastructure as code next. Study Kubernetes deeply when the target role or workload calls for it; meanwhile, understand its main objects and operational tradeoffs.</p><p>The durable skill is the ability to explain the workflow: which source became which artifact, which identity deployed it, where its configuration lives, how it reaches data, how it is observed, and how it is recovered.</p></section>
+<footer class="page-footer">Prepared in English · October 7, 2026 · 33 explanatory chapters and 33 examples. Self-contained HTML with no external runtime dependencies. Reading works offline; reference links require internet access.</footer>
+</main><script>
+document.documentElement.classList.add('has-js');
+const chapters = [...document.querySelectorAll('.chapter')];
+const search = document.getElementById('search');
+const group = document.getElementById('group');
+const status = document.getElementById('search-status');
+const readKey = 'rdl-concepts-guide-read-v1';
+const sizeKey = 'rdl-concepts-guide-size-v1';
+const norm = value => value.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+const index = new Map(chapters.map(chapter => [chapter, norm(chapter.textContent)]));
+let readIds = new Set();
+let fontSize = 17;
+try {
+  const saved = JSON.parse(localStorage.getItem(readKey) || '[]');
+  if (Array.isArray(saved)) readIds = new Set(saved.filter(x => typeof x === 'string'));
+  const savedSize = Number(localStorage.getItem(sizeKey));
+  if (savedSize >= 16 && savedSize <= 21) fontSize = savedSize;
+} catch (_) {}
+function setFont(size) {
+  fontSize = Math.min(21, Math.max(16, size));
+  document.documentElement.style.setProperty('--body-size', fontSize + 'px');
+  document.getElementById('smaller').disabled = fontSize <= 16;
+  document.getElementById('larger').disabled = fontSize >= 21;
+  document.getElementById('font-status').textContent = 'Text: ' + fontSize + ' px';
+  try { localStorage.setItem(sizeKey, String(fontSize)); } catch (_) {}
+}
+function updateProgress() {
+  const count = chapters.filter(c => c.querySelector('input[data-read]').checked).length;
+  document.getElementById('read-progress').value = count;
+  document.getElementById('progress-label').textContent = count + ' of ' + chapters.length + ' chapters read';
+}
+function filter() {
+  const words = norm(search.value.trim()).split(/\s+/).filter(Boolean);
+  let count = 0;
+  chapters.forEach(chapter => {
+    const matches = (group.value === 'All' || chapter.dataset.group === group.value)
+      && words.every(word => index.get(chapter).includes(word));
+    chapter.hidden = !matches;
+    if (matches) count++;
+  });
+  status.textContent = count + ' of ' + chapters.length + ' chapters shown';
+  document.getElementById('no-results').hidden = count > 0;
+}
+function clearFilters() {
+  search.value = ''; group.value = 'All'; filter();
+}
+chapters.forEach(chapter => {
+  const checkbox = chapter.querySelector('input[data-read]');
+  checkbox.checked = readIds.has(chapter.id);
+  chapter.classList.toggle('is-read', checkbox.checked);
+  checkbox.addEventListener('change', () => {
+    checkbox.checked ? readIds.add(chapter.id) : readIds.delete(chapter.id);
+    chapter.classList.toggle('is-read', checkbox.checked);
+    try { localStorage.setItem(readKey, JSON.stringify([...readIds])); }
+    catch (_) { document.getElementById('storage-note').textContent = 'Browser storage unavailable; reading marks last only for this tab.'; }
+    updateProgress();
+  });
+});
+search.addEventListener('input', filter);
+group.addEventListener('change', filter);
+document.getElementById('clear').addEventListener('click', () => { clearFilters(); search.focus(); });
+document.getElementById('larger').addEventListener('click', () => setFont(fontSize + 1));
+document.getElementById('smaller').addEventListener('click', () => setFont(fontSize - 1));
+document.getElementById('print').addEventListener('click', () => window.print());
+function revealHash() {
+  const id = location.hash.slice(1);
+  const target = document.getElementById(id);
+  if (target && target.classList.contains('chapter') && target.hidden) clearFilters();
+  document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('active', a.dataset.nav === id));
+}
+document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', () => {
+  const target = document.getElementById(a.hash.slice(1));
+  if (target && target.classList.contains('chapter') && target.hidden) clearFilters();
+}));
+window.addEventListener('hashchange', revealHash);
+setFont(fontSize); updateProgress(); filter(); revealHash();
+</script></body></html>
