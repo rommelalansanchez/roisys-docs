@@ -1,0 +1,1314 @@
+<title>Full-Stack .NET &amp; React Study Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sticky index on the left grouped by track, one reading column of topic explainers on the right; stacks on phones. */
+:root{
+  --bg:#f5f6f9; --surface:#ffffff; --fg:#172030; --muted:#576274; --line:#dde2ea;
+  --be:#2f58c9; --be-soft:#e7edfb; --fe:#0b7f73; --fe-soft:#e0f3f0; --ops:#b0530c; --ops-soft:#fbeee2;
+  --code-bg:#eef1f6; --code-fg:#1d2a40; --mark:#fff2b8;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0e131b; --surface:#151c27; --fg:#e3e8f0; --muted:#9aa5b7; --line:#253041;
+  --be:#8fa9ff; --be-soft:#1b2540; --fe:#5fd3c4; --fe-soft:#123130; --ops:#f2a65a; --ops-soft:#33241a;
+  --code-bg:#1b2431; --code-fg:#d6deea; --mark:#4a4220; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0e131b; --surface:#151c27; --fg:#e3e8f0; --muted:#9aa5b7; --line:#253041;
+  --be:#8fa9ff; --be-soft:#1b2540; --fe:#5fd3c4; --fe-soft:#123130; --ops:#f2a65a; --ops-soft:#33241a;
+  --code-bg:#1b2431; --code-fg:#d6deea; --mark:#4a4220; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--fg);font:15.5px/1.65 var(--f-body);padding-inline:16px}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:240px minmax(0,1fr);gap:40px;padding-block:32px 80px}
+nav.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 20px);align-self:start;max-height:calc(100vh - 40px);overflow:auto;font-size:13.5px;padding-right:6px}
+.toc h3{font:600 11px/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;margin:22px 0 8px;color:var(--muted)}
+.toc h3:first-child{margin-top:0}
+.toc ol{list-style:none;margin:0;padding:0;display:grid;gap:1px}
+.toc a{display:block;text-decoration:none;padding:4px 10px;border-radius:6px}
+.toc .be a:hover,.toc .be a:focus-visible{background:var(--be-soft)}
+.toc .fe a:hover,.toc .fe a:focus-visible{background:var(--fe-soft)}
+.toc .ops a:hover,.toc .ops a:focus-visible{background:var(--ops-soft)}
+.toc-mobile{display:none}
+header.top{display:grid;gap:14px;padding-bottom:26px;border-bottom:1px solid var(--line)}
+.eyebrow{font:600 12px/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(30px,4.2vw,44px)/1.08 var(--f-display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+.lede{margin:0;max-width:66ch;color:var(--muted)}
+.search{width:100%;max-width:460px;font:14px var(--f-body);padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg)}
+.search:focus-visible{outline:2px solid var(--be);outline-offset:2px}
+.track{margin-top:44px}
+.track-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:8px;border-bottom:3px solid var(--tc)}
+.track-head h2{font:700 28px/1.1 var(--f-display);margin:0;color:var(--tc)}
+.track-head p{margin:0;color:var(--muted);font-size:14px}
+.track.be{--tc:var(--be);--ts:var(--be-soft)} .track.fe{--tc:var(--fe);--ts:var(--fe-soft)} .track.ops{--tc:var(--ops);--ts:var(--ops-soft)}
+section.topic{padding-top:34px;scroll-margin-top:16px}
+section.topic>h3{font:600 23px/1.2 var(--f-display);margin:0 0 6px}
+.what{margin:0 0 14px;max-width:72ch;font-size:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:grid;gap:16px}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.block{min-width:0}
+.block h4{font:600 11.5px/1 var(--f-body);letter-spacing:.11em;text-transform:uppercase;color:var(--tc);margin:0 0 8px}
+.block ul{margin:0;padding-left:18px} .block li{margin:3px 0}
+.block p{margin:0 0 8px;max-width:72ch} .block p:last-child{margin-bottom:0}
+.note{font-size:14px;color:var(--muted);border-left:3px solid var(--tc);padding:4px 0 4px 12px}
+.note b{color:var(--fg)}
+code{font:13.5px var(--f-mono);background:var(--code-bg);color:var(--code-fg);padding:1px 5px;border-radius:4px}
+pre{background:var(--code-bg);color:var(--code-fg);border-radius:8px;padding:12px 14px;overflow-x:auto;margin:0;font:13px/1.55 var(--f-mono)}
+pre code{background:none;padding:0;font:inherit}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;font-size:14px;min-width:560px;width:100%}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+th{background:var(--ts);font-weight:600}
+td:first-child{font-weight:500}
+.hidden-by-search{display:none}
+.empty{display:none;color:var(--muted);margin-top:30px}
+footer{margin-top:60px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:16px}
+@media (max-width:860px){
+  .wrap{grid-template-columns:minmax(0,1fr);gap:0}
+  nav.toc{display:none}
+  .toc-mobile{display:block;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:14px}
+  .toc-mobile summary{cursor:pointer;font-weight:600}
+  .toc-mobile .tcols{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:8px}
+  .toc-mobile ol{list-style:none;padding:0;margin:0}
+  .toc-mobile a{text-decoration:none;display:block;padding:3px 0}
+  .toc-mobile h3{font:600 11px var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:4px 0}
+  .cols{grid-template-columns:minmax(0,1fr)}
+  .card{padding:14px}
+}
+</style>
+
+<div class="wrap">
+<nav class="toc" aria-label="Topics" id="toc"></nav>
+<main>
+<header class="top">
+  <div class="eyebrow">Study notes · Senior Full-Stack (.NET + React)</div>
+  <h1>Full-Stack .NET &amp; React Study Notes</h1>
+  <p class="lede">An explanation of every skill on the job profile: what it is, the ideas you need to know, where it's used in real systems, and a short example. Pair it with the interview question guide once you've studied a topic.</p>
+  <input class="search" id="search" type="search" placeholder="Filter topics (e.g. Kubernetes, JWT, hooks)" aria-label="Filter topics">
+  <details class="toc-mobile"><summary>Jump to a topic</summary><div class="tcols" id="tocMobile"></div></details>
+</header>
+<p class="empty" id="empty">No topics match that filter.</p>
+
+<!-- ======================= BACKEND ======================= -->
+<div class="track be">
+<div class="track-head"><h2>Backend Development</h2><p>16 topics</p></div>
+
+<section class="topic" id="csharp"><h3>Expert-level C#</h3>
+<p class="what">C# is a statically typed, object-oriented language that also supports functional style. "Expert-level" means you know how the language maps to the runtime: memory, allocations, async execution and type-system features, so you can write code that is both clean and fast.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>Value vs reference types:</b> structs copy by value, classes by reference; boxing allocates.</li>
+<li><b>Records:</b> immutable types with value equality and <code>with</code> expressions.</li>
+<li><b>async/await:</b> compiler-generated state machines; <code>Task</code>, <code>ValueTask</code>, <code>CancellationToken</code>.</li>
+<li><b>Generics</b> with constraints, covariance (<code>out</code>) and contravariance (<code>in</code>).</li>
+<li><b>Pattern matching</b> and switch expressions; <b>nullable reference types</b>.</li>
+<li><b>Span&lt;T&gt; / Memory&lt;T&gt;</b> for allocation-free slicing of data.</li>
+<li><b>Garbage collector</b> generations, <code>IDisposable</code>, <code>using</code>.</li>
+<li><b>LINQ, delegates, lambdas, extension methods, source generators.</b></li>
+</ul></div>
+<div class="block"><h4>Where you use it</h4><ul>
+<li>Web APIs and microservices with ASP.NET Core.</li>
+<li>Background workers, message consumers, Azure Functions.</li>
+<li>Desktop (WPF, WinUI, MAUI) and games (Unity).</li>
+<li>Performance-sensitive code: parsers, high-throughput services, where allocations matter.</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: modern C# in one snippet</h4>
+<pre><code>public sealed record Order(Guid Id, decimal Total, OrderStatus Status);
+
+public static string Describe(Order o) =&gt; o switch
+{
+    { Status: OrderStatus.Cancelled }      =&gt; "Cancelled",
+    { Total: &gt; 1_000m }                    =&gt; "Large order",
+    _                                      =&gt; "Standard order"
+};
+
+public async Task&lt;Order?&gt; GetAsync(Guid id, CancellationToken ct)
+{
+    await using var conn = await _factory.OpenAsync(ct);
+    return await conn.QuerySingleOrDefaultAsync&lt;Order&gt;(Sql, new { id }, ct);
+}
+
+var discounted = order with { Total = order.Total * 0.9m };  // non-destructive copy</code></pre></div>
+<p class="note"><b>Keep in mind:</b> never block on async code with <code>.Result</code> or <code>.Wait()</code>; pass <code>CancellationToken</code> all the way down; prefer immutability for data that crosses boundaries.</p>
+</div></section>
+
+<section class="topic" id="dotnet"><h3>.NET 8 / 9</h3>
+<p class="what">.NET is Microsoft's open-source, cross-platform runtime and libraries for C#. A new version ships every November. Even-numbered versions are Long-Term Support (LTS), odd-numbered are Standard-Term Support (STS). .NET 8 (LTS, 2023) and .NET 9 (STS, 2024) both reach end of support in November 2026; .NET 10 (LTS, November 2025) is the current long-term version.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>.NET 8 highlights</h4><ul>
+<li>C# 12: primary constructors, collection expressions <code>[1, 2, 3]</code>.</li>
+<li>Native AOT for ASP.NET Core minimal APIs.</li>
+<li>Keyed services in dependency injection.</li>
+<li><code>TimeProvider</code> for testable time; <code>FrozenDictionary</code>.</li>
+<li><code>IExceptionHandler</code>, Identity API endpoints, built-in metrics.</li>
+</ul></div>
+<div class="block"><h4>.NET 9 highlights</h4><ul>
+<li><code>HybridCache</code>: in-memory + distributed cache with stampede protection.</li>
+<li>Built-in OpenAPI generation (<code>AddOpenApi</code>), replacing Swashbuckle in templates.</li>
+<li>C# 13: <code>params</code> collections, the <code>Lock</code> type.</li>
+<li>LINQ <code>CountBy</code>, <code>AggregateBy</code>, <code>Index</code>; <code>Task.WhenEach</code>.</li>
+<li>Runtime and GC performance improvements.</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: primary constructor + keyed service + HybridCache</h4>
+<pre><code>builder.Services.AddKeyedSingleton&lt;IFileStore, BlobFileStore&gt;("blob");
+builder.Services.AddHybridCache();
+
+public class ReportService(
+    [FromKeyedServices("blob")] IFileStore store,
+    HybridCache cache)
+{
+    public Task&lt;Report&gt; GetAsync(int id, CancellationToken ct) =&gt;
+        cache.GetOrCreateAsync($"report:{id}",
+            async token =&gt; await store.LoadReportAsync(id, token), cancellationToken: ct).AsTask();
+}</code></pre></div>
+<p class="note"><b>Keep in mind:</b> companies plan upgrades around LTS releases. Knowing the support timeline and the upgrade path (target framework change, package updates, breaking changes list) is part of a senior role.</p>
+</div></section>
+
+<section class="topic" id="aspnet"><h3>ASP.NET Core</h3>
+<p class="what">ASP.NET Core is the web framework of .NET. It hosts HTTP APIs, web apps (MVC, Razor Pages, Blazor), real-time apps (SignalR) and gRPC services on the Kestrel web server. Every request flows through a configurable <b>middleware pipeline</b> before reaching an endpoint.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>Program.cs / WebApplication builder:</b> register services, then configure the pipeline.</li>
+<li><b>Middleware:</b> ordered components (exception handling, CORS, auth, rate limiting).</li>
+<li><b>Endpoints:</b> controllers or <b>minimal APIs</b>, route groups, filters.</li>
+<li><b>Model binding and validation</b>; <b>ProblemDetails</b> for errors.</li>
+<li><b>Configuration</b> (appsettings, env vars, Key Vault) and the <b>Options pattern</b>.</li>
+<li><b>Hosted services</b> for background work; <b>health checks</b>.</li>
+<li>Built-in <b>DI</b>, logging, output caching, rate limiting.</li>
+</ul></div>
+<div class="block"><h4>Where you use it</h4><ul>
+<li>REST/JSON APIs consumed by React or mobile apps.</li>
+<li>Backends-for-Frontends (BFF) handling login and token storage.</li>
+<li>Internal gRPC services and real-time notifications with SignalR.</li>
+<li>API gateways built with YARP.</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: a minimal API with a route group</h4>
+<pre><code>var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext&lt;AppDb&gt;(o =&gt; o.UseSqlServer(builder.Configuration.GetConnectionString("Db")));
+builder.Services.AddProblemDetails();
+builder.Services.AddAuthentication().AddJwtBearer();
+builder.Services.AddAuthorization();
+
+var app = builder.Build();
+app.UseExceptionHandler();
+app.UseAuthentication();
+app.UseAuthorization();
+
+var orders = app.MapGroup("/api/orders").RequireAuthorization();
+orders.MapGet("/{id:guid}", async (Guid id, AppDb db, CancellationToken ct) =&gt;
+    await db.Orders.FindAsync([id], ct) is { } o ? TypedResults.Ok(o) : Results.NotFound());
+
+app.Run();</code></pre></div>
+<p class="note"><b>Keep in mind:</b> middleware order matters (exception handler first, authentication before authorization). Inside the request, everything should be async and honor the request's <code>CancellationToken</code>.</p>
+</div></section>
+
+<section class="topic" id="rest"><h3>REST API Development</h3>
+<p class="what">REST (Representational State Transfer) is an architectural style for HTTP APIs. You expose <b>resources</b> at URLs, act on them with standard HTTP methods, and report results with status codes. The goal is a predictable, cacheable, stateless contract that any client can consume.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>Resources as nouns:</b> <code>/customers/7/orders</code>.</li>
+<li><b>Verbs:</b> GET (read), POST (create), PUT (replace), PATCH (partial update), DELETE.</li>
+<li><b>Idempotency:</b> GET, PUT, DELETE can be repeated safely; POST can't (use an Idempotency-Key).</li>
+<li><b>Status codes:</b> 200, 201, 204, 400, 401, 403, 404, 409, 422, 429, 500.</li>
+<li><b>Statelessness:</b> each request carries its own auth (token or cookie).</li>
+<li><b>Versioning, pagination, filtering, ETags</b> for concurrency and caching.</li>
+<li><b>OpenAPI</b> documents the contract.</li>
+</ul></div>
+<div class="block"><h4>Where you use it</h4><ul>
+<li>Public APIs for partners and mobile apps.</li>
+<li>The contract between a React SPA and its backend.</li>
+<li>Integration between services when a synchronous answer is needed.</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: a well-designed endpoint set</h4>
+<div class="tbl"><table>
+<tr><th>Request</th><th>Meaning</th><th>Success response</th></tr>
+<tr><td><code>GET /orders?status=open&amp;page=2&amp;pageSize=20</code></td><td>List with filter and pagination</td><td>200 + items and paging info</td></tr>
+<tr><td><code>GET /orders/42</code></td><td>One order</td><td>200, or 404 if missing</td></tr>
+<tr><td><code>POST /orders</code></td><td>Create</td><td>201 + <code>Location: /orders/43</code></td></tr>
+<tr><td><code>PATCH /orders/42</code> with <code>If-Match</code></td><td>Partial update with concurrency check</td><td>200, or 412 if changed meanwhile</td></tr>
+<tr><td><code>POST /orders/42/cancellation</code></td><td>A business action modeled as a resource</td><td>202 or 200</td></tr>
+<tr><td><code>DELETE /orders/42</code></td><td>Delete</td><td>204</td></tr>
+</table></div></div>
+<p class="note"><b>Keep in mind:</b> consistency matters more than perfection. Use the same error format (ProblemDetails), naming, paging and date format across every endpoint, and never make a breaking change without a new version.</p>
+</div></section>
+
+<section class="topic" id="micro"><h3>Microservices Architecture</h3>
+<p class="what">Microservices split a system into small, independently deployable services, each owning one business capability and its own data. Teams can release and scale each service separately, at the cost of the complexity that comes with any distributed system.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>Service per business capability</b> (Orders, Payments, Catalog), aligned with DDD bounded contexts.</li>
+<li><b>Database per service:</b> no shared tables.</li>
+<li><b>Communication:</b> synchronous (REST, gRPC) or asynchronous (messages, events).</li>
+<li><b>API Gateway</b> (YARP, Azure API Management) as a single entry point.</li>
+<li><b>Resilience:</b> timeouts, retries, circuit breakers (Polly).</li>
+<li><b>Distributed transactions</b> via Sagas and the outbox pattern.</li>
+<li><b>Observability:</b> tracing, metrics, logs with OpenTelemetry.</li>
+<li><b>Containers</b> and orchestration (Docker, Kubernetes).</li>
+</ul></div>
+<div class="block"><h4>Use cases and trade-offs</h4><ul>
+<li>E-commerce: catalog scales for traffic peaks independently from payments.</li>
+<li>Large organizations where many teams must deploy without coordinating.</li>
+<li>Parts with very different load or technology needs.</li>
+<li><b>Not a fit</b> for small teams or new products: a <b>modular monolith</b> is simpler and can be split later.</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: placing an order across services</h4>
+<pre><code>React SPA ──► API Gateway ──► Orders API ──(saves order + outbox row)──► SQL Server
+                                   │
+                                   └─ publishes OrderPlaced ──► Service Bus topic
+                                                                  ├─► Payments service: charges card → PaymentCompleted
+                                                                  ├─► Inventory service: reserves stock → StockReserved
+                                                                  └─► Notifications service: sends email
+If payment fails → PaymentFailed → Inventory releases stock (compensation) → Orders marks order Cancelled</code></pre></div>
+<p class="note"><b>Keep in mind:</b> a "distributed monolith" (services that must deploy together or share a database) gets the costs of microservices without the benefits.</p>
+</div></section>
+
+<section class="topic" id="eda"><h3>Event-Driven Architecture</h3>
+<p class="what">In an event-driven architecture, components communicate by publishing <b>events</b> (facts about something that happened, like <code>OrderPlaced</code>) to a message broker. Other components subscribe and react on their own schedule. Producers don't know or wait for consumers, which decouples services and absorbs load spikes.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>Event vs command:</b> events say what happened (many listeners); commands ask one handler to do something.</li>
+<li><b>Brokers:</b> RabbitMQ, Azure Service Bus, Apache Kafka, AWS SQS/SNS, Azure Event Hubs.</li>
+<li><b>Queues</b> (one consumer per message) vs <b>topics</b> (publish/subscribe).</li>
+<li><b>At-least-once delivery:</b> duplicates happen, so consumers must be <b>idempotent</b>.</li>
+<li><b>Outbox pattern</b> for reliable publishing; <b>dead-letter queues</b> for failures.</li>
+<li><b>Ordering</b> per entity with partition keys or sessions.</li>
+<li><b>Event sourcing</b> and <b>CQRS</b> as related, optional patterns.</li>
+</ul></div>
+<div class="block"><h4>Where you use it</h4><ul>
+<li>Integrating microservices without tight coupling.</li>
+<li>Background processing: emails, PDFs, image resizing.</li>
+<li>Real-time pipelines: IoT telemetry, clickstreams (Kafka, Event Hubs).</li>
+<li>Audit trails and updating read models or search indexes.</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: an idempotent consumer with MassTransit</h4>
+<pre><code>public record OrderPlaced(Guid OrderId, Guid CustomerId, decimal Total);
+
+public class SendConfirmationEmail(AppDb db, IEmailSender email) : IConsumer&lt;OrderPlaced&gt;
+{
+    public async Task Consume(ConsumeContext&lt;OrderPlaced&gt; ctx)
+    {
+        var msgId = ctx.MessageId!.Value;
+        if (await db.ProcessedMessages.AnyAsync(m =&gt; m.Id == msgId)) return;   // duplicate: skip
+
+        await email.SendOrderConfirmationAsync(ctx.Message.OrderId);
+        db.ProcessedMessages.Add(new ProcessedMessage(msgId));
+        await db.SaveChangesAsync();
+    }
+}</code></pre></div>
+<p class="note"><b>Keep in mind:</b> the system becomes eventually consistent. Design the UI and business rules to tolerate a short delay, and add correlation IDs so you can trace a flow across services.</p>
+</div></section>
+
+<section class="topic" id="efcore"><h3>Entity Framework Core</h3>
+<p class="what">EF Core is the object-relational mapper (ORM) for .NET. You work with C# classes and LINQ, and EF Core translates them into SQL, tracks changes to loaded objects, and saves them back. It supports SQL Server, PostgreSQL, SQLite, Cosmos DB and more.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>DbContext</b> (unit of work) and <b>DbSet&lt;T&gt;</b> (tables).</li>
+<li><b>Fluent configuration</b> with <code>IEntityTypeConfiguration&lt;T&gt;</code>.</li>
+<li><b>Migrations</b> to evolve the schema.</li>
+<li><b>Change tracking</b>; <code>AsNoTracking</code> for reads.</li>
+<li><b>Loading:</b> <code>Include</code>, projection with <code>Select</code>, split queries.</li>
+<li><b>Concurrency tokens</b> (<code>rowversion</code>).</li>
+<li><b>Bulk operations:</b> <code>ExecuteUpdate</code>, <code>ExecuteDelete</code>.</li>
+<li><b>Global query filters</b> (soft delete, multi-tenant), owned types, value conversions.</li>
+</ul></div>
+<div class="block"><h4>Where you use it</h4><ul>
+<li>Most CRUD and business data access in .NET apps.</li>
+<li>The write side of CQRS, while reads may use projections or Dapper.</li>
+<li>Multi-tenant SaaS with global filters per tenant.</li>
+<li>Integration tests with Testcontainers running a real SQL Server.</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: configuration, efficient read and bulk update</h4>
+<pre><code>public class OrderConfig : IEntityTypeConfiguration&lt;Order&gt;
+{
+    public void Configure(EntityTypeBuilder&lt;Order&gt; b)
+    {
+        b.Property(o =&gt; o.Total).HasPrecision(18, 2);
+        b.Property(o =&gt; o.RowVersion).IsRowVersion();
+        b.HasMany(o =&gt; o.Lines).WithOne().OnDelete(DeleteBehavior.Cascade);
+        b.HasQueryFilter(o =&gt; !o.IsDeleted);
+    }
+}
+
+// Read: project only the columns you need, no tracking, one SQL query
+var summary = await db.Orders
+    .Where(o =&gt; o.CustomerId == customerId)
+    .Select(o =&gt; new OrderSummary(o.Id, o.Total, o.Lines.Count))
+    .ToListAsync(ct);
+
+// Bulk update: a single UPDATE statement, no entities loaded
+await db.Orders.Where(o =&gt; o.Status == Status.Draft &amp;&amp; o.CreatedAt &lt; cutoff)
+    .ExecuteUpdateAsync(s =&gt; s.SetProperty(o =&gt; o.Status, Status.Expired), ct);</code></pre></div>
+<p class="note"><b>Keep in mind:</b> log the generated SQL in development. Most EF performance problems are N+1 queries, loading whole entities when a projection would do, and tracking data you never modify.</p>
+</div></section>
+
+<section class="topic" id="linq"><h3>LINQ</h3>
+<p class="what">LINQ (Language Integrated Query) lets you query collections, databases and other sources with the same C# operators: <code>Where</code>, <code>Select</code>, <code>GroupBy</code>, <code>OrderBy</code> and many more. Over in-memory data it runs as C# code; over <code>IQueryable</code> (EF Core) it is translated into SQL.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>Deferred execution:</b> the query runs only when enumerated.</li>
+<li><b>Immediate operators:</b> <code>ToList</code>, <code>Count</code>, <code>First</code>, <code>Any</code>, <code>Sum</code>.</li>
+<li><b>IEnumerable</b> (in memory, delegates) vs <b>IQueryable</b> (expression trees, translated).</li>
+<li><b>Projection</b> (<code>Select</code>), <b>flattening</b> (<code>SelectMany</code>), <b>grouping</b>, <b>joins</b>.</li>
+<li>Newer helpers: <code>DistinctBy</code>, <code>MaxBy</code>, <code>Chunk</code>, <code>CountBy</code>, <code>Index</code>.</li>
+<li>Method syntax (most common) and query syntax.</li>
+</ul></div>
+<div class="block"><h4>Where you use it</h4><ul>
+<li>Database queries through EF Core.</li>
+<li>Transforming API results and DTOs.</li>
+<li>Reports and aggregations over in-memory data.</li>
+<li>Validation (<code>Any</code>, <code>All</code>) and lookups (<code>ToDictionary</code>, <code>ToLookup</code>).</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: common operations</h4>
+<pre><code>// Top 3 customers by revenue in a date range
+var top = orders
+    .Where(o =&gt; o.Date &gt;= from &amp;&amp; o.Date &lt; to)
+    .GroupBy(o =&gt; o.CustomerId)
+    .Select(g =&gt; new { CustomerId = g.Key, Revenue = g.Sum(o =&gt; o.Total), Count = g.Count() })
+    .OrderByDescending(x =&gt; x.Revenue)
+    .Take(3)
+    .ToList();
+
+// Flatten all order lines and count products sold
+var unitsByProduct = orders.SelectMany(o =&gt; o.Lines)
+    .GroupBy(l =&gt; l.ProductId)
+    .ToDictionary(g =&gt; g.Key, g =&gt; g.Sum(l =&gt; l.Quantity));
+
+// Existence check: Any() stops at the first match
+bool hasOverdue = invoices.Any(i =&gt; i.DueDate &lt; today &amp;&amp; !i.Paid);</code></pre></div>
+<p class="note"><b>Keep in mind:</b> enumerating the same query twice runs it twice. Calling <code>ToList()</code> too early on an EF query moves filtering from the database into memory.</p>
+</div></section>
+
+<section class="topic" id="sql"><h3>SQL Server</h3>
+<p class="what">SQL Server is Microsoft's relational database. Data is stored in tables with schemas, relationships and constraints, and queried with T-SQL. It provides ACID transactions, indexing, a cost-based query optimizer, and tools for monitoring performance. In the cloud it runs as Azure SQL Database or Azure SQL Managed Instance.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>Normalization</b>, primary and foreign keys, constraints.</li>
+<li><b>Indexes:</b> clustered, nonclustered, covering (<code>INCLUDE</code>), filtered, columnstore.</li>
+<li><b>Execution plans:</b> seeks vs scans, key lookups, statistics.</li>
+<li><b>SARGable</b> predicates that can use indexes.</li>
+<li><b>Transactions and isolation levels</b>, RCSI, locking, deadlocks.</li>
+<li><b>Window functions</b>, CTEs, stored procedures, views.</li>
+<li><b>Query Store</b> to track plan regressions; parameter sniffing.</li>
+</ul></div>
+<div class="block"><h4>Where you use it</h4><ul>
+<li>Transactional systems: orders, billing, inventory, accounts.</li>
+<li>Reporting with views, indexed views, columnstore indexes.</li>
+<li>Data needing strong consistency and complex joins.</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: index for a common query, plus a window function</h4>
+<pre><code>-- Query: a customer's recent orders
+SELECT OrderId, OrderDate, Total
+FROM dbo.Orders
+WHERE CustomerId = @CustomerId AND OrderDate &gt;= @From
+ORDER BY OrderDate DESC;
+
+-- Index that lets SQL Server seek and avoid key lookups
+CREATE NONCLUSTERED INDEX IX_Orders_Customer_Date
+ON dbo.Orders (CustomerId, OrderDate DESC) INCLUDE (Total);
+
+-- Running total per customer
+SELECT CustomerId, OrderDate, Total,
+       SUM(Total) OVER (PARTITION BY CustomerId ORDER BY OrderDate
+                        ROWS UNBOUNDED PRECEDING) AS RunningTotal
+FROM dbo.Orders;
+
+-- Not SARGable (can't seek):  WHERE YEAR(OrderDate) = 2026
+-- SARGable alternative:        WHERE OrderDate &gt;= '2026-01-01' AND OrderDate &lt; '2027-01-01'</code></pre></div>
+<p class="note"><b>Keep in mind:</b> every index speeds up reads and slows down writes. Design indexes from real query patterns and confirm them in the execution plan.</p>
+</div></section>
+
+<section class="topic" id="nosql"><h3>NoSQL Databases</h3>
+<p class="what">NoSQL databases store data in models other than relational tables: documents, key-value pairs, wide columns or graphs. They trade some relational features (joins, cross-entity transactions) for horizontal scalability, flexible schemas and very fast access for known query patterns.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Types and products</h4><ul>
+<li><b>Document:</b> Azure Cosmos DB, MongoDB. JSON documents.</li>
+<li><b>Key-value:</b> Redis, DynamoDB. Fast lookup by key.</li>
+<li><b>Wide-column:</b> Cassandra. Huge write volumes, time series.</li>
+<li><b>Graph:</b> Neo4j. Relationships and traversal.</li>
+<li><b>Search:</b> Elasticsearch, Azure AI Search. Full-text search.</li>
+</ul></div>
+<div class="block"><h4>Where you use it</h4><ul>
+<li>Product catalogs with varied attributes (document).</li>
+<li>Caching, sessions, rate limits, leaderboards (Redis).</li>
+<li>User profiles, carts, IoT events at global scale (Cosmos DB, DynamoDB).</li>
+<li>Recommendations and fraud detection (graph).</li>
+</ul></div>
+</div>
+<div class="block"><h4>Key modeling ideas</h4><ul>
+<li><b>Model for the queries:</b> store data the way it's read. Embed what's read together (an order and its lines); reference what's large or shared.</li>
+<li><b>Partition key</b> (Cosmos DB, DynamoDB) decides scale and cost: choose high cardinality and include it in most queries.</li>
+<li><b>Consistency levels:</b> Cosmos offers Strong, Bounded Staleness, Session, Consistent Prefix and Eventual.</li>
+<li><b>CAP theorem:</b> during a network partition you choose consistency or availability.</li>
+</ul>
+<pre><code>{
+  "id": "order-1042",
+  "customerId": "c-77",          // partition key
+  "status": "Paid",
+  "lines": [
+    { "sku": "KB-01", "name": "Keyboard", "qty": 1, "price": 59.0 },
+    { "sku": "MS-02", "name": "Mouse",    "qty": 2, "price": 19.5 }
+  ],
+  "shippingAddress": { "city": "Culiacán", "country": "MX" }
+}</code></pre></div>
+<p class="note"><b>Keep in mind:</b> many systems are polyglot: SQL Server for transactions, Redis for caching, a document or search store for the catalog. Choose per access pattern.</p>
+</div></section>
+
+<section class="topic" id="di"><h3>Dependency Injection</h3>
+<p class="what">Dependency Injection (DI) means a class receives the objects it depends on (usually through its constructor) instead of creating them. A container builds the object graph for you. This makes code loosely coupled, testable with fakes, and configurable in one place. ASP.NET Core has a DI container built in.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>Lifetimes:</b> Transient (always new), Scoped (one per request), Singleton (one per app).</li>
+<li><b>Captive dependency:</b> a singleton holding a scoped service is a bug.</li>
+<li><b>Constructor injection</b> as the default.</li>
+<li><b>Multiple implementations:</b> <code>IEnumerable&lt;T&gt;</code>, keyed services.</li>
+<li><b>IServiceScopeFactory</b> for scoped services inside singletons and background jobs.</li>
+<li><b>Decorators</b> (Scrutor) for cross-cutting behavior.</li>
+</ul></div>
+<div class="block"><h4>Where you use it</h4><ul>
+<li>Swapping implementations per environment (real email vs fake email).</li>
+<li>Unit tests with mocks (Moq, NSubstitute).</li>
+<li>Wiring Clean Architecture layers together in the composition root.</li>
+<li>Plugin-like strategies chosen at runtime.</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example</h4>
+<pre><code>// Registration (composition root)
+builder.Services.AddScoped&lt;IOrderRepository, SqlOrderRepository&gt;();
+builder.Services.AddSingleton(TimeProvider.System);
+builder.Services.AddTransient&lt;IEmailSender, SmtpEmailSender&gt;();
+
+// Consumer: depends on abstractions, receives them via constructor
+public class PlaceOrderHandler(IOrderRepository repo, IEmailSender email, TimeProvider clock)
+{
+    public async Task HandleAsync(PlaceOrder cmd, CancellationToken ct)
+    {
+        var order = Order.Create(cmd.CustomerId, cmd.Lines, clock.GetUtcNow());
+        await repo.AddAsync(order, ct);
+        await email.SendAsync(cmd.CustomerEmail, "Order received", ct);
+    }
+}
+
+// Test: inject fakes
+var handler = new PlaceOrderHandler(new InMemoryOrderRepo(), new FakeEmailSender(), new FakeTimeProvider());</code></pre></div>
+<p class="note"><b>Keep in mind:</b> avoid the Service Locator anti-pattern (resolving from <code>IServiceProvider</code> all over the code); it hides dependencies.</p>
+</div></section>
+
+<section class="topic" id="clean"><h3>Clean Architecture</h3>
+<p class="what">Clean Architecture organizes code into layers where <b>dependencies point inward</b> toward the business rules. The domain and use cases know nothing about databases, frameworks or UI; those details live in outer layers and plug in through interfaces. The result is business logic you can test and evolve independently of technology.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>The layers</h4><ul>
+<li><b>Domain:</b> entities, value objects, domain events, business rules.</li>
+<li><b>Application:</b> use cases (commands, queries, handlers), interfaces such as <code>IOrderRepository</code>, DTOs, validation.</li>
+<li><b>Infrastructure:</b> EF Core, email, storage, message brokers, external APIs.</li>
+<li><b>Presentation:</b> API endpoints, composition root.</li>
+</ul></div>
+<div class="block"><h4>Use cases and trade-offs</h4><ul>
+<li>Long-lived business systems with complex rules.</li>
+<li>Apps likely to change infrastructure (on-prem SQL to cloud, one broker to another).</li>
+<li>High unit-test coverage of business logic.</li>
+<li><b>Cost:</b> more projects, interfaces and mapping. For simple CRUD, <b>Vertical Slice Architecture</b> (organize by feature) is often lighter.</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: solution structure</h4>
+<pre><code>src/
+  Shop.Domain/            Order.cs, Money.cs, OrderPlaced.cs        (no references)
+  Shop.Application/       Orders/PlaceOrder/PlaceOrderCommand.cs
+                          Orders/PlaceOrder/PlaceOrderHandler.cs
+                          Abstractions/IOrderRepository.cs, IEmailSender.cs
+                                                                     → references Domain
+  Shop.Infrastructure/    Persistence/AppDbContext.cs, SqlOrderRepository.cs
+                          Email/SmtpEmailSender.cs                    → references Application
+  Shop.Api/               Endpoints/OrderEndpoints.cs, Program.cs    → references Application + Infrastructure
+tests/
+  Shop.Domain.Tests/  Shop.Application.Tests/  Shop.Api.IntegrationTests/</code></pre></div>
+<p class="note"><b>Keep in mind:</b> CQRS often fits here (commands through the domain, queries straight to read models). MediatR moved to a commercial license in 2025, so plain handler classes are a common alternative.</p>
+</div></section>
+
+<section class="topic" id="ddd"><h3>Domain-Driven Design (DDD)</h3>
+<p class="what">DDD is an approach to complex software where the code models the business domain closely, in the language that domain experts use. It has a <b>strategic</b> part (how to split a large domain into clear boundaries) and a <b>tactical</b> part (building blocks for the model inside each boundary).</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Strategic concepts</h4><ul>
+<li><b>Ubiquitous language:</b> one shared vocabulary in conversations and code.</li>
+<li><b>Bounded context:</b> a boundary where a model is consistent. "Customer" in Sales differs from "Customer" in Support.</li>
+<li><b>Subdomains:</b> core (competitive advantage), supporting, generic.</li>
+<li><b>Context map:</b> how contexts integrate (anti-corruption layer, shared kernel).</li>
+</ul></div>
+<div class="block"><h4>Tactical concepts</h4><ul>
+<li><b>Entity:</b> has identity (Order #42).</li>
+<li><b>Value object:</b> defined by values, immutable (Money, Address).</li>
+<li><b>Aggregate:</b> consistency boundary with one root; reference others by ID.</li>
+<li><b>Domain events:</b> something meaningful happened (<code>OrderShipped</code>).</li>
+<li><b>Domain services, repositories, factories.</b></li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: an aggregate root protecting its rules</h4>
+<pre><code>public sealed record Money(decimal Amount, string Currency);
+
+public class Order : AggregateRoot
+{
+    private readonly List&lt;OrderLine&gt; _lines = [];
+    public Guid Id { get; private set; }
+    public Guid CustomerId { get; private set; }        // reference by ID, not object
+    public OrderStatus Status { get; private set; } = OrderStatus.Draft;
+    public IReadOnlyList&lt;OrderLine&gt; Lines =&gt; _lines;
+
+    public void AddLine(Guid productId, int qty, Money price)
+    {
+        if (Status != OrderStatus.Draft) throw new DomainException("Only draft orders can change.");
+        if (qty &lt;= 0) throw new DomainException("Quantity must be positive.");
+        _lines.Add(new OrderLine(productId, qty, price));
+    }
+
+    public void Submit()
+    {
+        if (_lines.Count == 0) throw new DomainException("An order needs at least one line.");
+        Status = OrderStatus.Submitted;
+        Raise(new OrderSubmitted(Id, CustomerId));
+    }
+}</code></pre></div>
+<p class="note"><b>Keep in mind:</b> DDD pays off in complex domains (insurance, logistics, banking). For simple CRUD, a rich domain model is overhead. Bounded contexts are also the natural seams for microservices.</p>
+</div></section>
+
+<section class="topic" id="solid"><h3>SOLID Principles</h3>
+<p class="what">SOLID is five object-oriented design principles that keep code easy to change, test and extend. They guide where responsibilities live and how classes depend on each other.</p>
+<div class="card">
+<div class="block"><div class="tbl"><table>
+<tr><th>Principle</th><th>Meaning</th><th>Example</th></tr>
+<tr><td>Single Responsibility</td><td>A class has one reason to change.</td><td>Split an <code>InvoiceService</code> that calculates, renders PDF and emails into three classes.</td></tr>
+<tr><td>Open/Closed</td><td>Extend behavior without modifying existing code.</td><td>New discount types implement <code>IDiscountRule</code> instead of adding cases to a switch.</td></tr>
+<tr><td>Liskov Substitution</td><td>Subtypes must work wherever the base type is expected.</td><td>A <code>ReadOnlyRepository</code> that throws on <code>Save()</code> violates it; split the interface instead.</td></tr>
+<tr><td>Interface Segregation</td><td>Prefer small, specific interfaces.</td><td><code>IOrderReader</code> and <code>IOrderWriter</code> instead of one 20-method interface.</td></tr>
+<tr><td>Dependency Inversion</td><td>Depend on abstractions; high-level code owns the interface.</td><td>The Application layer defines <code>IEmailSender</code>; Infrastructure implements it.</td></tr>
+</table></div></div>
+<div class="block"><h4>Example: Open/Closed with a strategy</h4>
+<pre><code>public interface IDiscountRule { bool Applies(Order o); decimal Discount(Order o); }
+
+public class LoyaltyDiscount : IDiscountRule
+{
+    public bool Applies(Order o) =&gt; o.Customer.YearsActive &gt;= 3;
+    public decimal Discount(Order o) =&gt; o.Total * 0.05m;
+}
+
+public class PricingService(IEnumerable&lt;IDiscountRule&gt; rules)
+{
+    public decimal FinalPrice(Order o) =&gt; o.Total - rules.Where(r =&gt; r.Applies(o)).Sum(r =&gt; r.Discount(o));
+}
+// A new promotion = a new class + one DI registration. PricingService never changes.</code></pre></div>
+<p class="note"><b>Keep in mind:</b> SOLID is a guide, not a goal. Interfaces for every class with a single implementation add noise; balance with YAGNI and KISS.</p>
+</div></section>
+
+<section class="topic" id="patterns"><h3>Design Patterns</h3>
+<p class="what">Design patterns are proven, named solutions to recurring design problems. Knowing them gives you a shared vocabulary ("let's add a decorator for caching") and helps you recognize them inside frameworks you already use.</p>
+<div class="card">
+<div class="block"><div class="tbl"><table>
+<tr><th>Pattern</th><th>Problem it solves</th><th>Where you see it in .NET / React</th></tr>
+<tr><td>Strategy</td><td>Choose an algorithm at runtime</td><td>Payment providers, pricing rules, auth handlers</td></tr>
+<tr><td>Factory</td><td>Centralize object creation</td><td><code>IHttpClientFactory</code>, <code>ILoggerFactory</code></td></tr>
+<tr><td>Builder</td><td>Construct complex objects step by step</td><td><code>WebApplication.CreateBuilder</code>, test data builders</td></tr>
+<tr><td>Decorator</td><td>Add behavior without changing a class</td><td>Caching or logging wrappers; HTTP message handlers</td></tr>
+<tr><td>Adapter</td><td>Make an incompatible API fit your interface</td><td>Wrapping a third-party SDK or legacy service</td></tr>
+<tr><td>Repository / Unit of Work</td><td>Abstract persistence</td><td>DbSet and DbContext</td></tr>
+<tr><td>Mediator</td><td>Decouple senders from handlers</td><td>MediatR-style command/query dispatch</td></tr>
+<tr><td>Observer / Pub-Sub</td><td>Notify many listeners of changes</td><td>C# events, domain events, Redux store subscriptions</td></tr>
+<tr><td>Chain of Responsibility</td><td>Pass a request through a series of handlers</td><td>ASP.NET Core middleware pipeline</td></tr>
+<tr><td>Singleton</td><td>One shared instance</td><td>DI singleton lifetime (preferred over static singletons)</td></tr>
+<tr><td>Specification</td><td>Reusable, combinable query rules</td><td>Filtering in repositories</td></tr>
+<tr><td>Higher-Order Component / Hooks</td><td>Reuse UI logic</td><td>Custom React hooks like <code>useDebounce</code></td></tr>
+</table></div></div>
+<div class="block"><h4>Example: Decorator adding caching</h4>
+<pre><code>public class CachedProductService(IProductService inner, HybridCache cache) : IProductService
+{
+    public async Task&lt;Product?&gt; GetAsync(int id, CancellationToken ct) =&gt;
+        await cache.GetOrCreateAsync($"product:{id}", async t =&gt; await inner.GetAsync(id, t), cancellationToken: ct);
+}
+
+builder.Services.AddScoped&lt;IProductService, ProductService&gt;();
+builder.Services.Decorate&lt;IProductService, CachedProductService&gt;();   // Scrutor</code></pre></div>
+<p class="note"><b>Keep in mind:</b> in an interview, tie each pattern to a problem you actually solved. Using a pattern where none is needed is a code smell too.</p>
+</div></section>
+
+<section class="topic" id="auth"><h3>Authentication &amp; Authorization (OAuth2, OIDC, JWT)</h3>
+<p class="what"><b>Authentication</b> proves who a user is; <b>authorization</b> decides what they can do. Modern apps delegate login to an identity provider (Microsoft Entra ID, Auth0, Okta, Keycloak, Duende IdentityServer) using open standards: <b>OAuth 2.0</b> for delegated API access, <b>OpenID Connect</b> for login and identity, and <b>JWT</b> as the token format.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>OAuth 2.0:</b> a client gets an <b>access token</b> to call an API.</li>
+<li><b>OIDC:</b> adds an <b>ID token</b> describing the logged-in user.</li>
+<li><b>Flows:</b> Authorization Code + PKCE (web, SPA, mobile); Client Credentials (service to service). Implicit and password flows are deprecated.</li>
+<li><b>JWT:</b> header.payload.signature; claims like <code>sub</code>, <code>iss</code>, <code>aud</code>, <code>exp</code>, scopes, roles.</li>
+<li><b>Refresh tokens</b> with rotation; short-lived access tokens.</li>
+<li><b>Authorization models:</b> roles, claims, policies, resource-based checks.</li>
+<li><b>BFF pattern</b> keeps tokens off the browser.</li>
+</ul></div>
+<div class="block"><h4>Where you use it</h4><ul>
+<li>Single sign-on with corporate accounts (Entra ID).</li>
+<li>Protecting APIs called by a React SPA.</li>
+<li>Machine-to-machine calls between microservices.</li>
+<li>Multi-tenant SaaS with per-tenant permissions.</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: the login flow and API protection</h4>
+<pre><code>1. User clicks "Sign in" in the React app
+2. App redirects to the identity provider with a PKCE code challenge
+3. User logs in; provider redirects back with an authorization code
+4. App (or BFF) exchanges code + verifier for ID token, access token, refresh token
+5. API calls send: Authorization: Bearer &lt;access token&gt;
+6. API validates signature, issuer, audience and expiry, then checks policies</code></pre>
+<pre><code>builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(o =&gt; { o.Authority = "https://login.example.com/"; o.Audience = "orders-api"; });
+
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("CanRefund", p =&gt; p.RequireClaim("scope", "orders.refund").RequireRole("Supervisor"));
+
+app.MapPost("/orders/{id}/refund", RefundOrder).RequireAuthorization("CanRefund");</code></pre></div>
+<p class="note"><b>Keep in mind:</b> a JWT is signed, not encrypted, so never put secrets in it. Don't store tokens in <code>localStorage</code>; prefer a BFF with HttpOnly, Secure, SameSite cookies.</p>
+</div></section>
+</div>
+
+<!-- ======================= FRONTEND ======================= -->
+<div class="track fe">
+<div class="track-head"><h2>Frontend Development</h2><p>8 topics</p></div>
+
+<section class="topic" id="react"><h3>ReactJS</h3>
+<p class="what">React is a JavaScript library for building user interfaces from <b>components</b>: functions that take props and state and return markup (JSX). When data changes, React re-renders the affected components and efficiently updates only the parts of the DOM that changed.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>Components, props, state;</b> one-way data flow from parent to child.</li>
+<li><b>Hooks:</b> <code>useState</code>, <code>useEffect</code>, <code>useRef</code>, <code>useMemo</code>, <code>useCallback</code>, <code>useContext</code>, <code>useReducer</code>.</li>
+<li><b>Custom hooks</b> to share logic.</li>
+<li><b>Keys</b> in lists; reconciliation.</li>
+<li><b>Controlled vs uncontrolled</b> form inputs.</li>
+<li><b>React 18/19:</b> concurrent rendering, transitions, Suspense, Actions, <code>useOptimistic</code>, <code>use()</code>, Server Components, React Compiler.</li>
+<li><b>Ecosystem:</b> React Router, TanStack Query, React Hook Form, Vite, Next.js.</li>
+</ul></div>
+<div class="block"><h4>Where you use it</h4><ul>
+<li>Single-page apps and dashboards over an ASP.NET Core API.</li>
+<li>Admin back-offices and internal tools.</li>
+<li>Server-rendered sites with Next.js.</li>
+<li>Mobile apps with React Native.</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: a component with state, effect and a custom hook</h4>
+<pre><code>function useDebounce&lt;T&gt;(value: T, ms = 300) {
+  const [v, setV] = useState(value);
+  useEffect(() =&gt; { const t = setTimeout(() =&gt; setV(value), ms); return () =&gt; clearTimeout(t); }, [value, ms]);
+  return v;
+}
+
+export function ProductSearch() {
+  const [term, setTerm] = useState('');
+  const debounced = useDebounce(term);
+  const { data = [], isLoading } = useQuery({
+    queryKey: ['products', debounced],
+    queryFn: ({ signal }) =&gt; api.searchProducts(debounced, signal),
+    enabled: debounced.length &gt; 1,
+  });
+
+  return (
+    &lt;&gt;
+      &lt;label htmlFor="q"&gt;Search products&lt;/label&gt;
+      &lt;input id="q" value={term} onChange={e =&gt; setTerm(e.target.value)} /&gt;
+      {isLoading ? &lt;p&gt;Loading…&lt;/p&gt; : (
+        &lt;ul&gt;{data.map(p =&gt; &lt;li key={p.id}&gt;{p.name} · ${p.price}&lt;/li&gt;)}&lt;/ul&gt;
+      )}
+    &lt;/&gt;
+  );
+}</code></pre></div>
+<p class="note"><b>Keep in mind:</b> derive values during render instead of syncing them with effects, keep state as close as possible to where it's used, and never use an array index as a key for lists that change.</p>
+</div></section>
+
+<section class="topic" id="ts"><h3>TypeScript</h3>
+<p class="what">TypeScript is JavaScript with a static type system. It compiles to plain JavaScript; the types exist only at build time to catch errors early, power editor autocomplete, and document intent. It's the standard for professional React work.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>Types and interfaces</b> for object shapes.</li>
+<li><b>Union and literal types:</b> <code>'idle' | 'loading'</code>.</li>
+<li><b>Narrowing</b> with <code>typeof</code>, <code>in</code>, type guards; <b>discriminated unions</b>.</li>
+<li><b>Generics</b> with constraints (<code>&lt;T extends …&gt;</code>).</li>
+<li><b>Utility types:</b> <code>Partial</code>, <code>Pick</code>, <code>Omit</code>, <code>Record</code>, <code>ReturnType</code>.</li>
+<li><b>unknown vs any; never</b> for exhaustive checks.</li>
+<li><b>strict mode</b>, <code>satisfies</code>, <code>as const</code>.</li>
+</ul></div>
+<div class="block"><h4>Where you use it</h4><ul>
+<li>Typing React props, state and hooks.</li>
+<li>Typing API requests and responses (often generated from OpenAPI).</li>
+<li>Modeling UI states so impossible states can't compile.</li>
+<li>Node.js tooling and backends.</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: typed API state and props</h4>
+<pre><code>type Order = { id: string; total: number; status: 'Draft' | 'Paid' | 'Shipped' };
+
+type Remote&lt;T&gt; =
+  | { kind: 'loading' }
+  | { kind: 'error'; message: string }
+  | { kind: 'ready'; data: T };
+
+interface OrderListProps {
+  state: Remote&lt;Order[]&gt;;
+  onSelect: (id: Order['id']) =&gt; void;
+}
+
+type OrderPatch = Partial&lt;Pick&lt;Order, 'status'&gt;&gt;;   // { status?: 'Draft' | 'Paid' | 'Shipped' }
+
+function OrderList({ state, onSelect }: OrderListProps) {
+  if (state.kind === 'loading') return &lt;p&gt;Loading…&lt;/p&gt;;
+  if (state.kind === 'error')   return &lt;p role="alert"&gt;{state.message}&lt;/p&gt;;
+  return &lt;ul&gt;{state.data.map(o =&gt; &lt;li key={o.id} onClick={() =&gt; onSelect(o.id)}&gt;{o.status}&lt;/li&gt;)}&lt;/ul&gt;;
+}</code></pre></div>
+<p class="note"><b>Keep in mind:</b> types disappear at runtime. Data from an API or a form is still untrusted; validate it with a schema library such as Zod.</p>
+</div></section>
+
+<section class="topic" id="js"><h3>JavaScript (ES6+)</h3>
+<p class="what">JavaScript is the language of the browser. ES6 (2015) and the yearly versions since added modern syntax and features: block-scoped variables, arrow functions, classes, modules, promises, async/await and many built-in helpers. React and TypeScript code is built on these fundamentals.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><code>let</code>/<code>const</code>, block scope, hoisting, temporal dead zone.</li>
+<li><b>Arrow functions</b> and how <code>this</code> works.</li>
+<li><b>Closures</b> and scope.</li>
+<li><b>Destructuring, spread/rest,</b> template literals, default parameters.</li>
+<li><b>Promises, async/await,</b> <code>Promise.all</code> / <code>allSettled</code>.</li>
+<li><b>Event loop:</b> call stack, microtasks, macrotasks.</li>
+<li><b>ES modules</b> (<code>import</code>/<code>export</code>).</li>
+<li>Optional chaining <code>?.</code>, nullish coalescing <code>??</code>, <code>Map</code>/<code>Set</code>.</li>
+<li>Array methods: <code>map</code>, <code>filter</code>, <code>reduce</code>, <code>toSorted</code>, <code>Object.groupBy</code>.</li>
+</ul></div>
+<div class="block"><h4>Where you use it</h4><ul>
+<li>All browser code, including what React and TypeScript compile to.</li>
+<li>Event handling, DOM APIs, network calls.</li>
+<li>Node.js scripts and build tools.</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: modern syntax in practice</h4>
+<pre><code>const { id, customer: { name = 'Guest' } = {} } = order;   // nested destructuring with defaults
+const updated = { ...order, status: 'Paid' };               // immutable update
+const city = order.shipping?.address?.city ?? 'Unknown';    // safe access
+
+const byStatus = Object.groupBy(orders, o =&gt; o.status);     // { Paid: [...], Draft: [...] }
+const total = orders.reduce((sum, o) =&gt; sum + o.total, 0);
+
+// Run independent requests in parallel
+const [user, orders] = await Promise.all([api.getUser(id), api.getOrders(id)]);
+
+// Event loop order: A, D, C, B
+console.log('A'); setTimeout(() =&gt; console.log('B')); Promise.resolve().then(() =&gt; console.log('C')); console.log('D');</code></pre></div>
+<p class="note"><b>Keep in mind:</b> use <code>===</code>, prefer <code>const</code>, and remember that <code>??</code> keeps <code>0</code> and empty strings while <code>||</code> replaces them.</p>
+</div></section>
+
+<section class="topic" id="html"><h3>HTML5</h3>
+<p class="what">HTML5 is the current standard for structuring web content. Beyond markup, it brought <b>semantic elements</b>, native form validation, audio/video, canvas, and browser APIs for storage and offline use. Good HTML is the foundation of accessibility and SEO.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>Semantic elements:</b> <code>header</code>, <code>nav</code>, <code>main</code>, <code>article</code>, <code>section</code>, <code>aside</code>, <code>footer</code>.</li>
+<li><b>Forms:</b> input types (<code>email</code>, <code>date</code>, <code>number</code>), <code>required</code>, <code>pattern</code>, labels.</li>
+<li><b>Accessibility:</b> headings order, <code>alt</code> text, native buttons, ARIA only when needed.</li>
+<li><b>Script loading:</b> <code>defer</code>, <code>async</code>, <code>type="module"</code>.</li>
+<li><b>Storage:</b> cookies, localStorage, sessionStorage, IndexedDB.</li>
+<li><b>Media:</b> <code>picture</code>, <code>srcset</code>, <code>video</code>, <code>canvas</code>; <code>dialog</code> element.</li>
+</ul></div>
+<div class="block"><h4>Where you use it</h4><ul>
+<li>Every React component renders HTML; JSX choices affect accessibility.</li>
+<li>Accessible forms for checkout, registration, admin screens.</li>
+<li>SEO-friendly public pages.</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: a semantic, accessible form</h4>
+<pre><code>&lt;main&gt;
+  &lt;h1&gt;Create account&lt;/h1&gt;
+  &lt;form novalidate&gt;
+    &lt;label for="email"&gt;Email&lt;/label&gt;
+    &lt;input id="email" name="email" type="email" autocomplete="email" required
+           aria-describedby="email-hint"&gt;
+    &lt;p id="email-hint"&gt;We'll send a confirmation link.&lt;/p&gt;
+
+    &lt;fieldset&gt;
+      &lt;legend&gt;Plan&lt;/legend&gt;
+      &lt;label&gt;&lt;input type="radio" name="plan" value="basic" checked&gt; Basic&lt;/label&gt;
+      &lt;label&gt;&lt;input type="radio" name="plan" value="pro"&gt; Pro&lt;/label&gt;
+    &lt;/fieldset&gt;
+
+    &lt;button type="submit"&gt;Create account&lt;/button&gt;
+    &lt;p role="status" aria-live="polite"&gt;&lt;/p&gt;
+  &lt;/form&gt;
+&lt;/main&gt;</code></pre></div>
+<p class="note"><b>Keep in mind:</b> a <code>&lt;div onClick&gt;</code> isn't keyboard-accessible; use a <code>&lt;button&gt;</code>. Aim for WCAG 2.2 AA and test with the keyboard only.</p>
+</div></section>
+
+<section class="topic" id="css"><h3>CSS3</h3>
+<p class="what">CSS controls presentation: layout, color, typography, spacing and animation. CSS3 and later added Flexbox, Grid, custom properties (variables), transitions and many modern selectors. In React projects it's often written with CSS Modules, Tailwind CSS, or CSS-in-JS.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>Box model</b> and <code>box-sizing: border-box</code>.</li>
+<li><b>Cascade and specificity;</b> cascade layers (<code>@layer</code>).</li>
+<li><b>Flexbox</b> (one dimension) and <b>Grid</b> (two dimensions).</li>
+<li><b>Positioning</b> and stacking contexts (<code>z-index</code>).</li>
+<li><b>Custom properties</b> for theming and dark mode.</li>
+<li>Modern: <b>container queries</b>, <code>:has()</code>, nesting, <code>clamp()</code>, logical properties.</li>
+<li>Transitions and animations; <code>prefers-reduced-motion</code>.</li>
+</ul></div>
+<div class="block"><h4>Where you use it</h4><ul>
+<li>Page layouts, card grids, navigation bars.</li>
+<li>Design systems and theming (light/dark, brand colors).</li>
+<li>Component styling in React (CSS Modules, Tailwind).</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: theme tokens, Grid and Flexbox together</h4>
+<pre><code>:root { --brand: #2f58c9; --surface: #fff; --text: #172030; --space: 1rem; }
+@media (prefers-color-scheme: dark) { :root { --surface: #151c27; --text: #e3e8f0; } }
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));   /* responsive with no media queries */
+  gap: var(--space);
+}
+.card { background: var(--surface); color: var(--text); border-radius: 8px; padding: var(--space); }
+.card__footer { display: flex; justify-content: space-between; align-items: center; }
+.card:has(.badge--sale) { outline: 2px solid var(--brand); }      /* style a parent by its child */</code></pre></div>
+<p class="note"><b>Keep in mind:</b> keep specificity low and predictable. A <code>z-index</code> that "doesn't work" is almost always a stacking-context issue.</p>
+</div></section>
+
+<section class="topic" id="responsive"><h3>Responsive UI Development</h3>
+<p class="what">Responsive design makes one interface work well on phones, tablets and desktops. Layouts reflow, images load at the right size, text stays readable and controls stay easy to tap. It's built on fluid layouts, relative units, media and container queries, and testing on real devices.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>Viewport meta tag</b> and <b>mobile-first</b> CSS.</li>
+<li><b>Breakpoints</b> chosen where content breaks.</li>
+<li><b>Fluid layouts:</b> Grid <code>minmax</code>, flex-wrap, percentages.</li>
+<li><b>Relative units:</b> <code>rem</code>, <code>%</code>, <code>vw</code>, <code>clamp()</code>.</li>
+<li><b>Responsive images:</b> <code>srcset</code>, <code>sizes</code>, <code>picture</code>, lazy loading.</li>
+<li><b>Container queries</b> for components that adapt to their slot.</li>
+<li><b>Touch targets</b> (~44px) and no reliance on hover.</li>
+<li><b>Core Web Vitals:</b> LCP, INP, CLS.</li>
+</ul></div>
+<div class="block"><h4>Where you use it</h4><ul>
+<li>Customer-facing sites where most traffic is mobile.</li>
+<li>Dashboards that collapse sidebars and tables on small screens.</li>
+<li>Responsive tables (stacked rows or horizontal scroll).</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: mobile-first layout with a container query</h4>
+<pre><code>.layout { display: grid; gap: 1rem; padding-inline: 1rem; }
+@media (min-width: 900px) { .layout { grid-template-columns: 260px 1fr; } }   /* sidebar on desktop */
+
+h1 { font-size: clamp(1.6rem, 1.1rem + 2vw, 2.6rem); }                         /* fluid type */
+
+.card-slot { container-type: inline-size; }
+@container (min-width: 420px) {
+  .product-card { display: grid; grid-template-columns: 140px 1fr; }            /* side-by-side when room allows */
+}</code></pre>
+<pre><code>&lt;img src="hero-800.jpg"
+     srcset="hero-400.jpg 400w, hero-800.jpg 800w, hero-1600.jpg 1600w"
+     sizes="(min-width: 900px) 50vw, 100vw"
+     width="800" height="450" alt="Team working at a desk" loading="lazy"&gt;</code></pre></div>
+<p class="note"><b>Keep in mind:</b> DevTools device mode is a start, but test on a real mid-range phone and a slow network. Setting image width and height prevents layout shift (CLS).</p>
+</div></section>
+
+<section class="topic" id="state"><h3>State Management (Redux, Context API, or similar)</h3>
+<p class="what">State management is how a React app stores and shares data that changes over time, and how components react to those changes. The main skill is choosing the right home for each kind of state, from local component state up to a global store, and treating server data as its own category.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Kinds of state and tools</h4><ul>
+<li><b>Local UI state:</b> <code>useState</code>, <code>useReducer</code>.</li>
+<li><b>Shared client state:</b> Context API, <b>Redux Toolkit</b>, Zustand, Jotai.</li>
+<li><b>Server state:</b> TanStack Query, RTK Query (caching, refetch, invalidation).</li>
+<li><b>URL state:</b> filters and pages in search params (React Router).</li>
+<li><b>Form state:</b> React Hook Form.</li>
+</ul></div>
+<div class="block"><h4>When to use what</h4><ul>
+<li><b>Context:</b> low-frequency global values (theme, locale, current user).</li>
+<li><b>Redux Toolkit:</b> large apps, lots of shared and interdependent state, many developers, need for DevTools and conventions.</li>
+<li><b>Zustand:</b> small, simple global stores with selectors.</li>
+<li><b>TanStack Query:</b> almost all API data; often removes the need for a global store.</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: Redux Toolkit slice vs a small Context</h4>
+<pre><code>// Redux Toolkit: cart slice
+const cartSlice = createSlice({
+  name: 'cart',
+  initialState: { items: [] as CartItem[] },
+  reducers: {
+    itemAdded: (state, a: PayloadAction&lt;CartItem&gt;) =&gt; { state.items.push(a.payload); },   // Immer makes this immutable
+    itemRemoved: (state, a: PayloadAction&lt;string&gt;) =&gt; { state.items = state.items.filter(i =&gt; i.id !== a.payload); },
+  },
+});
+export const store = configureStore({ reducer: { cart: cartSlice.reducer } });
+const count = useSelector((s: RootState) =&gt; s.cart.items.length);
+dispatch(cartSlice.actions.itemAdded(item));
+
+// Context: theme (changes rarely)
+const ThemeContext = createContext&lt;{ theme: 'light' | 'dark'; toggle: () =&gt; void } | null&gt;(null);
+function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const [theme, setTheme] = useState&lt;'light' | 'dark'&gt;('light');
+  const value = useMemo(() =&gt; ({ theme, toggle: () =&gt; setTheme(t =&gt; t === 'light' ? 'dark' : 'light') }), [theme]);
+  return &lt;ThemeContext.Provider value={value}&gt;{children}&lt;/ThemeContext.Provider&gt;;
+}</code></pre></div>
+<p class="note"><b>Keep in mind:</b> every Context consumer re-renders when the value changes, so split contexts and memoize values. Always update state immutably.</p>
+</div></section>
+
+<section class="topic" id="api"><h3>API Integration</h3>
+<p class="what">API integration is how the front end talks to backends: making HTTP requests, handling loading and errors, attaching authentication, caching results and keeping types in sync with the server's contract. For this role, the backend is usually your own ASP.NET Core API.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>HTTP clients:</b> <code>fetch</code> (doesn't reject on 4xx/5xx) or Axios (interceptors).</li>
+<li><b>An API layer:</b> one module per resource, not fetch calls scattered in components.</li>
+<li><b>Data fetching libraries:</b> TanStack Query, RTK Query, SWR.</li>
+<li><b>Loading, error, empty states;</b> retries; optimistic updates.</li>
+<li><b>Cancellation</b> with <code>AbortController</code>; avoiding race conditions.</li>
+<li><b>CORS</b> and preflight requests.</li>
+<li><b>Auth:</b> cookies via BFF or bearer tokens with refresh on 401.</li>
+<li><b>Typed clients</b> generated from OpenAPI (NSwag, Orval, openapi-typescript); Zod validation.</li>
+</ul></div>
+<div class="block"><h4>Where you use it</h4><ul>
+<li>Every screen that reads or saves data.</li>
+<li>Search-as-you-type, infinite scroll, file uploads.</li>
+<li>Real-time updates with SignalR or WebSockets.</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: typed client + TanStack Query with optimistic update</h4>
+<pre><code>// api/client.ts
+export async function http&lt;T&gt;(path: string, init?: RequestInit): Promise&lt;T&gt; {
+  const res = await fetch(`/api${path}`, { credentials: 'include', ...init,
+    headers: { 'Content-Type': 'application/json', ...init?.headers } });
+  if (!res.ok) throw await res.json();          // ProblemDetails from ASP.NET Core
+  return res.status === 204 ? (undefined as T) : res.json();
+}
+export const ordersApi = {
+  list: (signal?: AbortSignal) =&gt; http&lt;Order[]&gt;('/orders', { signal }),
+  markPaid: (id: string) =&gt; http&lt;void&gt;(`/orders/${id}/payment`, { method: 'POST' }),
+};
+
+// In a component
+const qc = useQueryClient();
+const { data, isLoading, error } = useQuery({ queryKey: ['orders'], queryFn: ({ signal }) =&gt; ordersApi.list(signal) });
+const markPaid = useMutation({
+  mutationFn: ordersApi.markPaid,
+  onMutate: async id =&gt; {                       // optimistic update
+    await qc.cancelQueries({ queryKey: ['orders'] });
+    const prev = qc.getQueryData&lt;Order[]&gt;(['orders']);
+    qc.setQueryData&lt;Order[]&gt;(['orders'], o =&gt; o?.map(x =&gt; x.id === id ? { ...x, status: 'Paid' } : x));
+    return { prev };
+  },
+  onError: (_e, _id, ctx) =&gt; qc.setQueryData(['orders'], ctx?.prev),   // roll back
+  onSettled: () =&gt; qc.invalidateQueries({ queryKey: ['orders'] }),
+});</code></pre></div>
+<p class="note"><b>Keep in mind:</b> treat 401 (sign in again) and 403 (not allowed) differently, show field-level validation errors from ProblemDetails, and never trust that the response matches your TypeScript types.</p>
+</div></section>
+</div>
+
+<!-- ======================= DEVOPS & CLOUD ======================= -->
+<div class="track ops">
+<div class="track-head"><h2>DevOps &amp; Cloud</h2><p>8 topics · the most widely used tools</p></div>
+
+<section class="topic" id="git"><h3>Git &amp; Branching Strategies</h3>
+<p class="what">Git is the version control system behind nearly all modern development, hosted on GitHub, Azure Repos or GitLab. Teams agree on a branching strategy and use pull requests with code review and automated checks before merging.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>Trunk-based development:</b> short-lived feature branches merged to <code>main</code> daily, with feature flags. Preferred for continuous delivery.</li>
+<li><b>GitFlow:</b> <code>develop</code>, <code>release/*</code>, <code>hotfix/*</code> branches. Suits scheduled releases.</li>
+<li><b>Pull requests</b> with reviews, required checks and branch protection.</li>
+<li><b>Merge vs rebase vs squash</b>; conventional commits; semantic versioning.</li>
+</ul></div>
+<div class="block"><h4>Common commands</h4>
+<pre><code>git switch -c feature/order-refunds
+git add -p &amp;&amp; git commit -m "feat(orders): add refund endpoint"
+git fetch origin &amp;&amp; git rebase origin/main
+git push -u origin feature/order-refunds   # then open a PR</code></pre></div>
+</div></div></section>
+
+<section class="topic" id="cicd"><h3>CI/CD Pipelines</h3>
+<p class="what"><b>Continuous Integration</b> builds and tests every change automatically. <b>Continuous Delivery/Deployment</b> packages the result and promotes it through environments (dev, staging, production), often with approvals. The most used tools for .NET teams are <b>GitHub Actions</b> and <b>Azure DevOps Pipelines</b>; others include GitLab CI and Jenkins.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Typical pipeline stages</h4><ul>
+<li>Restore, build, run unit and integration tests.</li>
+<li>Static analysis and security scans (SonarQube, CodeQL, Dependabot).</li>
+<li>Build the React app (<code>npm ci &amp;&amp; npm run build</code>) and a Docker image.</li>
+<li>Push the image to a registry (ACR, GHCR, ECR).</li>
+<li>Deploy to dev automatically; staging and production with approvals.</li>
+<li>Run EF Core migration scripts; smoke tests; rollback plan.</li>
+</ul></div>
+<div class="block"><h4>Deployment strategies</h4><ul>
+<li><b>Rolling:</b> replace instances gradually.</li>
+<li><b>Blue-green:</b> switch traffic between two identical environments (App Service deployment slots).</li>
+<li><b>Canary:</b> send a small percentage of traffic to the new version first.</li>
+<li><b>Feature flags</b> (Azure App Configuration, LaunchDarkly) to decouple deploy from release.</li>
+</ul></div>
+</div>
+<div class="block"><h4>Example: GitHub Actions workflow for a .NET API</h4>
+<pre><code>name: api-ci
+on:
+  push: { branches: [main] }
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with: { dotnet-version: '9.0.x' }
+      - run: dotnet restore
+      - run: dotnet build --no-restore -c Release
+      - run: dotnet test --no-build -c Release --logger trx
+      - name: Build and push image
+        if: github.ref == 'refs/heads/main'
+        run: |
+          docker build -t ghcr.io/acme/orders-api:${{ github.sha }} .
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          docker push ghcr.io/acme/orders-api:${{ github.sha }}</code></pre></div>
+<p class="note"><b>Keep in mind:</b> build once and promote the same artifact through every environment; only configuration changes. Authenticate pipelines to the cloud with OIDC federation instead of stored passwords.</p>
+</div></section>
+
+<section class="topic" id="docker"><h3>Docker &amp; Containers</h3>
+<p class="what">A container packages an application with its runtime and dependencies into an image that runs the same way on a laptop, in CI and in the cloud. Docker is the standard tool to build and run images. .NET and Node apps are commonly shipped as containers.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>Image</b> (template) vs <b>container</b> (running instance).</li>
+<li><b>Dockerfile</b> and <b>multi-stage builds</b> for small images.</li>
+<li><b>Registries:</b> Docker Hub, Azure Container Registry, GHCR, Amazon ECR.</li>
+<li><b>Docker Compose</b> to run an app with its database and broker locally.</li>
+<li>Environment variables for configuration; volumes for data.</li>
+<li>Run as non-root; scan images for vulnerabilities.</li>
+<li>.NET can build images without a Dockerfile: <code>dotnet publish /t:PublishContainer</code>.</li>
+</ul></div>
+<div class="block"><h4>Example: multi-stage Dockerfile for ASP.NET Core</h4>
+<pre><code>FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+COPY . .
+RUN dotnet publish src/Shop.Api -c Release -o /app
+
+FROM mcr.microsoft.com/dotnet/aspnet:9.0
+WORKDIR /app
+COPY --from=build /app .
+USER app
+EXPOSE 8080
+ENTRYPOINT ["dotnet", "Shop.Api.dll"]</code></pre></div>
+</div>
+<div class="block"><h4>Example: local environment with Docker Compose</h4>
+<pre><code>services:
+  api:
+    build: .
+    ports: ["8080:8080"]
+    environment:
+      ConnectionStrings__Db: "Server=sql;Database=Shop;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=true"
+    depends_on: [sql, redis]
+  sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment: { ACCEPT_EULA: "Y", MSSQL_SA_PASSWORD: "${SA_PASSWORD}" }
+  redis:
+    image: redis:7</code></pre></div>
+</div></section>
+
+<section class="topic" id="k8s"><h3>Kubernetes &amp; Container Orchestration</h3>
+<p class="what">Kubernetes (K8s) runs and manages containers across a cluster of machines: it schedules them, restarts failed ones, scales them, routes traffic and rolls out new versions. Managed offerings remove the cluster management burden: <b>Azure Kubernetes Service (AKS)</b>, <b>Amazon EKS</b>, <b>Google GKE</b>. For simpler needs, <b>Azure Container Apps</b> or <b>AWS ECS/Fargate</b> run containers without managing Kubernetes directly.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>Pod:</b> one or more containers scheduled together.</li>
+<li><b>Deployment:</b> desired number of pod replicas, rolling updates.</li>
+<li><b>Service:</b> stable network address for pods; <b>Ingress</b> for HTTP routing.</li>
+<li><b>ConfigMap</b> and <b>Secret</b> for configuration.</li>
+<li><b>Liveness and readiness probes</b> (map to ASP.NET Core health checks).</li>
+<li><b>Horizontal Pod Autoscaler;</b> resource requests and limits.</li>
+<li><b>Helm</b> charts to package deployments; <b>kubectl</b> to operate.</li>
+</ul></div>
+<div class="block"><h4>Example: a Deployment with probes</h4>
+<pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata: { name: orders-api }
+spec:
+  replicas: 3
+  selector: { matchLabels: { app: orders-api } }
+  template:
+    metadata: { labels: { app: orders-api } }
+    spec:
+      containers:
+        - name: api
+          image: acmeacr.azurecr.io/orders-api:1.4.2
+          ports: [{ containerPort: 8080 }]
+          readinessProbe: { httpGet: { path: /health/ready, port: 8080 } }
+          livenessProbe:  { httpGet: { path: /health/live,  port: 8080 } }
+          resources:
+            requests: { cpu: "250m", memory: "256Mi" }
+            limits:   { memory: "512Mi" }</code></pre></div>
+</div>
+<p class="note"><b>Keep in mind:</b> Kubernetes is powerful but operationally heavy. Be ready to say when a simpler platform (App Service, Container Apps) is the better choice.</p>
+</div></section>
+
+<section class="topic" id="azure"><h3>Cloud Platforms: Azure, AWS and GCP</h3>
+<p class="what">Cloud platforms rent compute, storage, databases, messaging and security services on demand. <b>Microsoft Azure</b> is the most common choice for .NET shops, <b>AWS</b> has the largest overall market share, and <b>Google Cloud</b> is third. The concepts transfer between them; this table maps equivalent services.</p>
+<div class="card">
+<div class="block"><div class="tbl"><table>
+<tr><th>Need</th><th>Azure</th><th>AWS</th><th>Google Cloud</th></tr>
+<tr><td>Host a web app / API (PaaS)</td><td>App Service</td><td>Elastic Beanstalk, App Runner</td><td>App Engine, Cloud Run</td></tr>
+<tr><td>Serverless containers</td><td>Container Apps</td><td>ECS on Fargate</td><td>Cloud Run</td></tr>
+<tr><td>Managed Kubernetes</td><td>AKS</td><td>EKS</td><td>GKE</td></tr>
+<tr><td>Serverless functions</td><td>Azure Functions</td><td>Lambda</td><td>Cloud Run functions</td></tr>
+<tr><td>Static front end (React)</td><td>Static Web Apps, Blob + Front Door</td><td>S3 + CloudFront, Amplify</td><td>Cloud Storage + Cloud CDN, Firebase Hosting</td></tr>
+<tr><td>Relational database</td><td>Azure SQL Database, SQL Managed Instance</td><td>RDS for SQL Server, Aurora</td><td>Cloud SQL</td></tr>
+<tr><td>NoSQL</td><td>Cosmos DB</td><td>DynamoDB</td><td>Firestore, Bigtable</td></tr>
+<tr><td>Cache</td><td>Azure Cache for Redis / Managed Redis</td><td>ElastiCache</td><td>Memorystore</td></tr>
+<tr><td>Messaging</td><td>Service Bus, Event Grid, Event Hubs</td><td>SQS, SNS, EventBridge, Kinesis/MSK</td><td>Pub/Sub</td></tr>
+<tr><td>File/object storage</td><td>Blob Storage</td><td>S3</td><td>Cloud Storage</td></tr>
+<tr><td>Secrets and keys</td><td>Key Vault</td><td>Secrets Manager, KMS</td><td>Secret Manager</td></tr>
+<tr><td>Identity</td><td>Microsoft Entra ID, Entra External ID</td><td>IAM, Cognito</td><td>IAM, Identity Platform</td></tr>
+<tr><td>API gateway</td><td>API Management</td><td>API Gateway</td><td>Apigee, API Gateway</td></tr>
+<tr><td>Monitoring</td><td>Azure Monitor, Application Insights</td><td>CloudWatch, X-Ray</td><td>Cloud Monitoring, Cloud Trace</td></tr>
+<tr><td>Container registry</td><td>Container Registry (ACR)</td><td>ECR</td><td>Artifact Registry</td></tr>
+</table></div></div>
+<div class="cols">
+<div class="block"><h4>Concepts to know</h4><ul>
+<li><b>IaaS vs PaaS vs SaaS vs serverless.</b></li>
+<li><b>Regions and availability zones</b> for resilience.</li>
+<li><b>Managed identity</b> (Azure) or IAM roles (AWS): apps access resources without stored credentials.</li>
+<li><b>Networking:</b> VNets/VPCs, private endpoints, firewalls.</li>
+<li><b>Cost:</b> right-sizing, autoscaling, reserved instances, budgets and alerts.</li>
+</ul></div>
+<div class="block"><h4>Example: a typical Azure setup for this stack</h4><ul>
+<li>React SPA on <b>Azure Static Web Apps</b>.</li>
+<li>ASP.NET Core API on <b>App Service</b> or <b>Container Apps</b>.</li>
+<li><b>Azure SQL</b> for transactions, <b>Redis</b> for caching, <b>Blob Storage</b> for files.</li>
+<li><b>Service Bus</b> for events between services.</li>
+<li><b>Entra ID</b> for login, <b>Key Vault</b> for secrets, accessed with managed identity.</li>
+<li><b>Application Insights</b> for telemetry; <b>Front Door</b> for global routing and WAF.</li>
+</ul></div>
+</div>
+</div></section>
+
+<section class="topic" id="iac"><h3>Infrastructure as Code (IaC)</h3>
+<p class="what">Infrastructure as Code defines cloud resources in versioned files instead of clicking in a portal. The same files create identical dev, staging and production environments, go through code review, and run from pipelines. The most used tools: <b>Terraform</b> (multi-cloud), <b>Bicep</b> (Azure native), AWS CloudFormation and CDK, and Pulumi (IaC in C# or TypeScript).</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>Declarative:</b> describe the desired state; the tool computes changes.</li>
+<li><b>Plan / what-if</b> before apply to review changes.</li>
+<li><b>State</b> (Terraform) stored remotely and locked.</li>
+<li><b>Modules</b> for reuse; parameters per environment.</li>
+<li><b>Drift detection;</b> no manual changes in production.</li>
+<li>Configuration management (Ansible) for VMs.</li>
+</ul></div>
+<div class="block"><h4>Example: Bicep for an App Service with managed identity</h4>
+<pre><code>param location string = resourceGroup().location
+param env string
+
+resource plan 'Microsoft.Web/serverfarms@2023-12-01' = {
+  name: 'plan-shop-${env}'
+  location: location
+  sku: { name: 'P1v3' }
+  properties: { reserved: true }      // Linux
+}
+
+resource api 'Microsoft.Web/sites@2023-12-01' = {
+  name: 'app-shop-api-${env}'
+  location: location
+  identity: { type: 'SystemAssigned' }
+  properties: {
+    serverFarmId: plan.id
+    httpsOnly: true
+    siteConfig: { linuxFxVersion: 'DOTNETCORE|9.0' }
+  }
+}</code></pre></div>
+</div></div></section>
+
+<section class="topic" id="observability"><h3>Monitoring &amp; Observability</h3>
+<p class="what">Observability is the ability to understand what a running system is doing from the data it emits: <b>logs</b> (events), <b>metrics</b> (numbers over time) and <b>traces</b> (a request's path across services). <b>OpenTelemetry</b> is the vendor-neutral standard for collecting them; common back ends are Azure Application Insights, Prometheus + Grafana, Datadog, New Relic, Elastic and Seq.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Key concepts</h4><ul>
+<li><b>Structured logging</b> (Serilog, <code>ILogger</code> with templates) with correlation IDs.</li>
+<li><b>Distributed tracing</b> across APIs, queues and databases.</li>
+<li><b>Metrics:</b> request rate, error rate, latency percentiles (p95, p99), saturation.</li>
+<li><b>Dashboards and alerts</b> tied to SLOs.</li>
+<li><b>Health checks</b> for load balancers and Kubernetes probes.</li>
+<li>Front-end monitoring: Core Web Vitals, JavaScript errors (Sentry).</li>
+</ul></div>
+<div class="block"><h4>Example: OpenTelemetry in ASP.NET Core</h4>
+<pre><code>builder.Services.AddOpenTelemetry()
+    .ConfigureResource(r =&gt; r.AddService("orders-api"))
+    .WithTracing(t =&gt; t
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation()
+        .AddSqlClientInstrumentation()
+        .AddOtlpExporter())
+    .WithMetrics(m =&gt; m
+        .AddAspNetCoreInstrumentation()
+        .AddRuntimeInstrumentation()
+        .AddOtlpExporter());
+
+builder.Services.AddHealthChecks().AddSqlServer(connString);
+app.MapHealthChecks("/health/ready");
+
+log.LogInformation("Order {OrderId} placed by {CustomerId}", order.Id, order.CustomerId);</code></pre></div>
+</div>
+<p class="note"><b>Keep in mind:</b> .NET Aspire wires OpenTelemetry, health checks and service discovery by default and gives a local dashboard, which is a quick way to learn this.</p>
+</div></section>
+
+<section class="topic" id="devsecops"><h3>DevSecOps &amp; Secrets Management</h3>
+<p class="what">DevSecOps builds security into every step of delivery instead of checking it at the end. In practice: no secrets in code, automated scanning in pipelines, least-privilege access, and secure defaults in the cloud.</p>
+<div class="card"><div class="cols">
+<div class="block"><h4>Practices and tools</h4><ul>
+<li><b>Secrets:</b> Azure Key Vault, AWS Secrets Manager, HashiCorp Vault; User Secrets locally.</li>
+<li><b>Managed identities / IAM roles</b> instead of connection strings with passwords.</li>
+<li><b>Dependency scanning:</b> Dependabot, <code>dotnet list package --vulnerable</code>, <code>npm audit</code>.</li>
+<li><b>Static analysis (SAST):</b> CodeQL, SonarQube; <b>secret scanning</b> in repos.</li>
+<li><b>Container image scanning:</b> Trivy, Microsoft Defender for Cloud.</li>
+<li><b>OWASP Top 10</b> awareness: injection, broken access control, XSS.</li>
+<li>HTTPS everywhere, security headers, WAF.</li>
+</ul></div>
+<div class="block"><h4>Example: Key Vault with managed identity</h4>
+<pre><code>// Program.cs: load secrets from Key Vault into configuration.
+// DefaultAzureCredential uses the app's managed identity in Azure
+// and your developer login locally. No password in any file.
+builder.Configuration.AddAzureKeyVault(
+    new Uri($"https://kv-shop-{env}.vault.azure.net/"),
+    new DefaultAzureCredential());
+
+var conn = builder.Configuration.GetConnectionString("Db");
+// Better still: Azure SQL with Entra authentication, so the
+// connection string contains no secret at all.</code></pre></div>
+</div></div></section>
+</div>
+
+<footer>Study tip: for each topic, explain it out loud in two minutes, then connect it to a real project you've worked on. Version and support details reflect October 2026; confirm dates on official vendor pages before the interview.</footer>
+</main>
+</div>
+
+<script>
+(function(){
+  const tracks=[...document.querySelectorAll('.track')];
+  const names={be:'Backend',fe:'Frontend',ops:'DevOps & Cloud'};
+  let side='',mob='';
+  tracks.forEach(t=>{
+    const key=['be','fe','ops'].find(k=>t.classList.contains(k));
+    const items=[...t.querySelectorAll('section.topic')].map(s=>`<li><a href="#${s.id}">${s.querySelector('h3').textContent}</a></li>`).join('');
+    side+=`<h3>${names[key]}</h3><ol class="${key}">${items}</ol>`;
+    mob+=`<div><h3>${names[key]}</h3><ol>${items}</ol></div>`;
+  });
+  document.getElementById('toc').innerHTML=side;
+  document.getElementById('tocMobile').innerHTML=mob;
+  document.querySelectorAll('#tocMobile a').forEach(a=>a.addEventListener('click',()=>a.closest('details').open=false));
+
+  const search=document.getElementById('search'),empty=document.getElementById('empty');
+  search.addEventListener('input',()=>{
+    const term=search.value.trim().toLowerCase();let shown=0;
+    tracks.forEach(t=>{
+      let any=false;
+      t.querySelectorAll('section.topic').forEach(s=>{
+        const m=!term||s.textContent.toLowerCase().includes(term);
+        s.classList.toggle('hidden-by-search',!m); if(m){any=true;shown++;}
+      });
+      t.classList.toggle('hidden-by-search',!any);
+    });
+    empty.style.display=shown?'none':'block';
+  });
+})();
+</script>

@@ -1,0 +1,942 @@
+<title>Full-Stack .NET &amp; React Interview Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sticky topic index on the left, one long reading column of Q&A cards on the right; stacks on phones. */
+:root{
+  --bg:#f5f6f9; --surface:#ffffff; --fg:#172030; --muted:#576274; --line:#dde2ea;
+  --be:#2f58c9; --be-soft:#e7edfb; --fe:#0b7f73; --fe-soft:#e0f3f0;
+  --code-bg:#eef1f6; --code-fg:#1d2a40; --mark:#fff2b8;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0e131b; --surface:#151c27; --fg:#e3e8f0; --muted:#9aa5b7; --line:#253041;
+  --be:#8fa9ff; --be-soft:#1b2540; --fe:#5fd3c4; --fe-soft:#123130;
+  --code-bg:#1b2431; --code-fg:#d6deea; --mark:#4a4220; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0e131b; --surface:#151c27; --fg:#e3e8f0; --muted:#9aa5b7; --line:#253041;
+  --be:#8fa9ff; --be-soft:#1b2540; --fe:#5fd3c4; --fe-soft:#123130;
+  --code-bg:#1b2431; --code-fg:#d6deea; --mark:#4a4220; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--fg);font:15.5px/1.6 var(--f-body);padding-inline:16px}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:250px minmax(0,1fr);gap:40px;padding-block:32px 80px}
+/* sidebar */
+nav.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 20px);align-self:start;max-height:calc(100vh - 40px);overflow:auto;font-size:13.5px;padding-right:6px}
+.toc h3{font:600 11px/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;margin:22px 0 8px;color:var(--muted)}
+.toc h3:first-child{margin-top:0}
+.toc ol{list-style:none;margin:0;padding:0;display:grid;gap:1px}
+.toc a{display:flex;justify-content:space-between;gap:8px;text-decoration:none;padding:4px 10px;border-radius:6px;color:var(--fg)}
+.toc a span{color:var(--muted);font-variant-numeric:tabular-nums}
+.toc .be a:hover,.toc .be a:focus-visible{background:var(--be-soft)}
+.toc .fe a:hover,.toc .fe a:focus-visible{background:var(--fe-soft)}
+.toc-mobile{display:none}
+/* header */
+header.top{display:grid;gap:14px;padding-bottom:26px;border-bottom:1px solid var(--line);margin-bottom:10px}
+.eyebrow{font:600 12px/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(30px,4.2vw,44px)/1.08 var(--f-display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+.lede{margin:0;max-width:64ch;color:var(--muted)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{font:500 14px var(--f-body);border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:8px 14px;border-radius:999px;cursor:pointer}
+.btn[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn:focus-visible,.q:focus-visible{outline:2px solid var(--be);outline-offset:2px}
+.search{flex:1 1 220px;min-width:0;font:14px var(--f-body);padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted)}
+.lv{font:500 11px/1 var(--f-mono);padding:3px 7px;border-radius:4px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.lv.core{} .lv.senior{border-color:var(--be);color:var(--be)} .lv.expert{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+/* track + sections */
+.track{margin-top:44px}
+.track-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:8px;border-bottom:3px solid var(--tc)}
+.track-head h2{font:700 28px/1.1 var(--f-display);margin:0;color:var(--tc)}
+.track-head p{margin:0;color:var(--muted);font-size:14px}
+.track.be{--tc:var(--be);--ts:var(--be-soft)} .track.fe{--tc:var(--fe);--ts:var(--fe-soft)}
+section.topic{padding-top:34px;scroll-margin-top:16px}
+section.topic>h3{font:600 21px/1.2 var(--f-display);margin:0 0 4px;display:flex;gap:10px;align-items:baseline}
+section.topic>h3 small{font:500 12px var(--f-mono);color:var(--tc)}
+.probe{margin:0 0 14px;color:var(--muted);font-size:14px;max-width:70ch}
+.qa{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-top:10px}
+.q{display:flex;gap:10px;align-items:flex-start;font-weight:600;font-size:15.5px;line-height:1.45;margin:0}
+.q .lv{margin-top:3px;flex:none}
+.a{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);min-width:0}
+.a p{margin:0 0 8px;max-width:72ch} .a p:last-child{margin-bottom:0}
+.a ul{margin:4px 0 8px;padding-left:20px;max-width:72ch} .a li{margin:2px 0}
+.a .tip{font-size:14px;color:var(--muted);border-left:3px solid var(--tc);padding:4px 0 4px 12px;margin-top:10px}
+.a .tip b{color:var(--fg)}
+code{font:13.5px var(--f-mono);background:var(--code-bg);color:var(--code-fg);padding:1px 5px;border-radius:4px}
+pre{background:var(--code-bg);color:var(--code-fg);border-radius:8px;padding:12px 14px;overflow-x:auto;margin:8px 0;font:13px/1.55 var(--f-mono)}
+pre code{background:none;padding:0;font:inherit}
+table{border-collapse:collapse;font-size:14px;margin:6px 0 10px;min-width:420px}
+.tbl{overflow-x:auto}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+th{background:var(--ts)}
+/* practice mode */
+body.practice .a{display:none}
+body.practice .qa.open .a{display:block}
+body.practice .q{cursor:pointer}
+body.practice .qa:not(.open) .q::after{content:"Show answer";margin-left:auto;font:500 12px var(--f-body);color:var(--muted);white-space:nowrap;padding-left:10px}
+.qa.hit .q{background:var(--mark);border-radius:4px}
+.hidden-by-search{display:none}
+.empty{display:none;color:var(--muted);margin-top:30px}
+footer{margin-top:60px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:16px}
+@media (max-width:860px){
+  .wrap{grid-template-columns:minmax(0,1fr);gap:0}
+  nav.toc{display:none}
+  .toc-mobile{display:block;margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:14px}
+  .toc-mobile summary{cursor:pointer;font-weight:600}
+  .toc-mobile .cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  .toc-mobile ol{list-style:none;padding:0;margin:0}
+  .toc-mobile a{text-decoration:none;display:block;padding:3px 0}
+  .toc-mobile h3{font:600 11px var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:4px 0}
+  .qa{padding:14px}
+}
+</style>
+
+<div class="wrap">
+<nav class="toc" aria-label="Topics" id="toc"></nav>
+
+<main>
+<header class="top">
+  <div class="eyebrow">Interview study guide · Senior Full-Stack (.NET + React)</div>
+  <h1>Full-Stack .NET &amp; React Interview Guide</h1>
+  <p class="lede">The questions an experienced interviewer would ask for each skill on the job profile, with the answer they want to hear. Read it straight through, or switch on practice mode and try to answer out loud before revealing each answer.</p>
+  <div class="controls">
+    <button class="btn" id="practice" aria-pressed="false" type="button">Practice mode</button>
+    <button class="btn" id="revealAll" type="button" hidden>Reveal all</button>
+    <input class="search" id="search" type="search" placeholder="Filter questions (e.g. JWT, deadlock, useEffect)" aria-label="Filter questions">
+  </div>
+  <div class="legend"><span><span class="lv core">CORE</span> expected from anyone in the role</span><span><span class="lv senior">SENIOR</span> separates mid from senior</span><span><span class="lv expert">EXPERT</span> depth for “expert-level” claims</span></div>
+  <details class="toc-mobile"><summary>Jump to a topic</summary><div class="cols" id="tocMobile"></div></details>
+</header>
+
+<p class="empty" id="empty">No questions match that filter.</p>
+
+<!-- ======================= BACKEND ======================= -->
+<div class="track be" id="backend">
+<div class="track-head"><h2>Backend Development</h2><p>C#, .NET, APIs, architecture, data and security</p></div>
+
+<section class="topic" id="csharp" data-track="be"><h3>Expert-level C# <small>7 questions</small></h3>
+<p class="probe">The interviewer wants to see that you understand what the runtime does with your code, not only the syntax.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>What is the difference between a class, a struct, a record and a record struct?</p><div class="a">
+<p><b>class</b> is a reference type on the heap; assignment copies the reference. <b>struct</b> is a value type; assignment copies the whole value, and it lives inline (on the stack or inside its containing object). <b>record</b> (a record class) is a reference type with compiler-generated value-based equality, <code>ToString</code>, deconstruction and non-destructive mutation via <code>with</code>. <b>record struct</b> gives the same conveniences to a value type.</p>
+<ul><li>Use structs for small, immutable, short-lived values (≈16 bytes or less); large structs are costly to copy.</li><li>Casting a struct to <code>object</code> or an interface causes <b>boxing</b>, an allocation that hurts in hot paths.</li><li>Records are ideal for DTOs, value objects and messages.</li></ul>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Explain what happens when you <code>await</code> a Task. What are <code>ConfigureAwait(false)</code> and <code>ValueTask</code> for?</p><div class="a">
+<p>The compiler rewrites an <code>async</code> method into a state machine. At an <code>await</code>, if the task isn't complete, the method returns to its caller and registers a continuation. When the task completes, the continuation resumes the state machine, by default on the captured <code>SynchronizationContext</code> (UI thread in WPF/WinForms) or the thread pool.</p>
+<ul><li><code>ConfigureAwait(false)</code> says "don't resume on the captured context". It matters in library code and UI apps. ASP.NET Core has no SynchronizationContext, so it changes little there, but libraries should still use it.</li><li>Calling <code>.Result</code> or <code>.Wait()</code> on async code (sync-over-async) can deadlock where a context exists and starves the thread pool everywhere else.</li><li><code>ValueTask</code> avoids a Task allocation when the result is often available synchronously (e.g. a cache hit). Rules: await it once, never twice, and don't await it concurrently.</li></ul>
+<p class="tip"><b>Follow-up to expect:</b> "Why is <code>async void</code> dangerous?" Exceptions can't be caught by the caller and crash the process; use it only for event handlers.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How does the .NET garbage collector work, and when do you implement <code>IDisposable</code>?</p><div class="a">
+<p>The GC is generational: Gen 0 (new, collected often), Gen 1 (buffer), Gen 2 (long-lived). Objects of 85,000 bytes or more go to the Large Object Heap, which is collected with Gen 2 and isn't compacted by default, so large temporary arrays cause fragmentation (use <code>ArrayPool&lt;T&gt;</code>).</p>
+<p>The GC only manages memory. <code>IDisposable</code> is for deterministic release of <b>other</b> resources: connections, file handles, sockets. Use <code>using</code> / <code>await using</code> (<code>IAsyncDisposable</code>). A finalizer is only needed when you directly own an unmanaged handle, and even then prefer <code>SafeHandle</code>.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv expert">EXPERT</span>What are <code>Span&lt;T&gt;</code> and <code>Memory&lt;T&gt;</code>, and when would you use them?</p><div class="a">
+<p><code>Span&lt;T&gt;</code> is a <code>ref struct</code> that represents a contiguous region of memory (array, stack memory via <code>stackalloc</code>, or native memory) without copying. Slicing a span is free, which makes parsing and string handling allocation-free. Because it's a ref struct it can only live on the stack: no fields in classes, no boxing, and no crossing an <code>await</code>.</p>
+<p><code>Memory&lt;T&gt;</code> is the heap-storable equivalent you can keep in fields and pass across <code>await</code>; you call <code>.Span</code> when you need to work on it.</p>
+<pre><code>ReadOnlySpan&lt;char&gt; line = "2026-10-07;ORDER;42";
+int first = line.IndexOf(';');
+ReadOnlySpan&lt;char&gt; date = line[..first];   // no new string allocated</code></pre>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>What's the difference between <code>IEnumerable&lt;T&gt;</code>, <code>ICollection&lt;T&gt;</code>, <code>IList&lt;T&gt;</code> and <code>IReadOnlyList&lt;T&gt;</code>? Which do you return from a method?</p><div class="a">
+<p><code>IEnumerable</code> only supports iteration and may be lazy (it could re-run a query each time you enumerate it). <code>ICollection</code> adds <code>Count</code>, Add/Remove. <code>IList</code> adds index access. <code>IReadOnlyList</code>/<code>IReadOnlyCollection</code> expose count and indexing without mutation.</p>
+<p>Return the most specific <b>read-only</b> type that is honest about the data: if you've materialized results, return <code>IReadOnlyList&lt;T&gt;</code> so callers know it's already in memory and can't mutate it. Accept the most general type you need as parameters.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv expert">EXPERT</span>Explain covariance and contravariance with an example.</p><div class="a">
+<p>Variance applies to generic interfaces and delegates. <b>Covariance</b> (<code>out T</code>) lets you use a more derived type where a less derived one is expected for outputs: <code>IEnumerable&lt;string&gt;</code> can be assigned to <code>IEnumerable&lt;object&gt;</code>. <b>Contravariance</b> (<code>in T</code>) works the other way for inputs: an <code>IComparer&lt;object&gt;</code> can be used as an <code>IComparer&lt;string&gt;</code>. <code>List&lt;T&gt;</code> is invariant because <code>T</code> is both read and written.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>How do you use nullable reference types and pattern matching to write safer code?</p><div class="a">
+<p>With <code>&lt;Nullable&gt;enable&lt;/Nullable&gt;</code> the compiler tracks whether a reference can be null and warns on dereferences. <code>string?</code> declares intent; treat warnings as errors in new projects. Pattern matching makes branching on shape explicit and exhaustive:</p>
+<pre><code>decimal Fee(Payment p) =&gt; p switch
+{
+    Card { Amount: &gt; 1000 } c  =&gt; c.Amount * 0.015m,
+    Card c                     =&gt; c.Amount * 0.025m,
+    Transfer                   =&gt; 5m,
+    null                       =&gt; throw new ArgumentNullException(nameof(p)),
+    _                          =&gt; throw new NotSupportedException()
+};</code></pre>
+</div></article>
+</section>
+
+<section class="topic" id="dotnet" data-track="be"><h3>.NET 8 / 9 <small>5 questions</small></h3>
+<p class="probe">Checks that you keep up with the platform and understand the support model a company has to plan around.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>What's the difference between LTS and STS releases, and where do .NET 8 and 9 stand today?</p><div class="a">
+<p>Even-numbered releases are <b>LTS</b> (Long-Term Support); odd-numbered ones are <b>STS</b> (Standard-Term Support). .NET 8 (Nov 2023) is LTS; .NET 9 (Nov 2024) is STS. Microsoft extended STS support to 24 months, so .NET 8 and .NET 9 both reach end of support in <b>November 2026</b>. .NET 10 (Nov 2025) is the current LTS and the natural upgrade target.</p>
+<p class="tip"><b>Good answer to add:</b> "If I joined, one of my first checks would be the upgrade plan to .NET 10, since 8 and 9 stop getting security patches next month." Verify dates on Microsoft's support policy page before the interview.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Name features from .NET 8 you've used or would use.</p><div class="a">
+<ul><li><b>C# 12:</b> primary constructors for classes, collection expressions (<code>int[] x = [1, 2, 3];</code>), default lambda parameters.</li><li><b>Keyed DI services:</b> <code>AddKeyedSingleton&lt;IStorage, BlobStorage&gt;("blob")</code> and <code>[FromKeyedServices("blob")]</code>.</li><li><b>Native AOT</b> for ASP.NET Core minimal APIs: fast startup, small memory, for containers and serverless.</li><li><b>TimeProvider</b> abstraction, so time-dependent code is testable.</li><li><b>IExceptionHandler</b> for centralized exception handling.</li><li><b>FrozenDictionary / FrozenSet</b> for read-heavy lookups built once.</li><li>Identity API endpoints (<code>MapIdentityApi</code>) and built-in metrics.</li></ul>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>And .NET 9?</p><div class="a">
+<ul><li><b>HybridCache:</b> a two-level cache (in-memory + distributed) with stampede protection, replacing hand-written cache-aside code.</li><li><b>Built-in OpenAPI document generation</b> (<code>AddOpenApi()</code> / <code>MapOpenApi()</code>); new templates no longer include Swashbuckle.</li><li><b>C# 13:</b> <code>params</code> collections (<code>params ReadOnlySpan&lt;T&gt;</code>), the new <code>System.Threading.Lock</code> type.</li><li><b>LINQ:</b> <code>CountBy</code>, <code>AggregateBy</code>, <code>Index</code>.</li><li><code>Task.WhenEach</code>, <code>MapStaticAssets</code> for compressed, fingerprinted static files, and broad runtime performance gains.</li></ul>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv expert">EXPERT</span>What are the trade-offs of Native AOT?</p><div class="a">
+<p>Benefits: very fast startup, lower memory, a single self-contained binary, no JIT. Costs: no runtime code generation, so reflection-heavy libraries break unless they use source generators. You need source-generated JSON (<code>JsonSerializerContext</code>), minimal APIs instead of MVC controllers, and EF Core support is still limited. Builds are slower and platform-specific. It fits serverless functions and high-density microservices, not every app.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Minimal APIs or controllers? How do you choose?</p><div class="a">
+<p>Minimal APIs are lighter, faster to start, AOT-friendly, and pair well with vertical slices; organize them with <code>MapGroup</code>, endpoint filters and <code>TypedResults</code>. Controllers give conventions, filters, model binding attributes and familiarity for large teams. Both have the same performance class in practice. I choose minimal APIs for new microservices and keep controllers in existing codebases rather than mixing styles without a reason.</p>
+</div></article>
+</section>
+
+<section class="topic" id="aspnet" data-track="be"><h3>ASP.NET Core <small>6 questions</small></h3>
+<p class="probe">Tests whether you understand the request pipeline and the framework's extension points.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Explain the middleware pipeline. Why does order matter?</p><div class="a">
+<p>Each middleware receives the <code>HttpContext</code>, can do work, call <code>next()</code> to pass the request on, and do more work on the way back. Middleware runs in registration order on the request and in reverse on the response. Order matters because, for example, authentication must run before authorization, and exception handling must be first so it wraps everything.</p>
+<pre><code>app.UseExceptionHandler();
+app.UseHttpsRedirection();
+app.UseCors("spa");
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseRateLimiter();
+app.MapControllers();</code></pre>
+<p><code>Use</code> chains to the next middleware, <code>Run</code> terminates the pipeline, <code>Map</code> branches by path.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Middleware vs filters: when do you use each?</p><div class="a">
+<p>Middleware sees every request and knows nothing about MVC (no action, no model). Use it for cross-cutting HTTP concerns: logging, correlation IDs, exception handling, headers. Filters (authorization, resource, action, exception, result) run inside the MVC/endpoint pipeline and have access to the action, its arguments and model state. Use them for concerns tied to endpoints, like validation or auditing specific actions. Minimal APIs use endpoint filters (<code>AddEndpointFilter</code>).</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How do you implement global error handling that returns consistent responses?</p><div class="a">
+<p>Register <code>AddProblemDetails()</code> and an <code>IExceptionHandler</code> implementation, then <code>app.UseExceptionHandler()</code>. Map known exceptions (validation, not found, conflict) to the correct status codes and return RFC 9457 <b>ProblemDetails</b> JSON, with a trace ID for correlation. Never leak stack traces outside Development. Expected business failures are often better modeled as result types than exceptions.</p>
+<pre><code>public class AppExceptionHandler(ILogger&lt;AppExceptionHandler&gt; log) : IExceptionHandler
+{
+    public async ValueTask&lt;bool&gt; TryHandleAsync(HttpContext ctx, Exception ex, CancellationToken ct)
+    {
+        var (status, title) = ex switch {
+            NotFoundException   =&gt; (404, "Resource not found"),
+            ValidationException =&gt; (400, "Validation failed"),
+            _                   =&gt; (500, "Unexpected error")
+        };
+        log.LogError(ex, "Request failed");
+        ctx.Response.StatusCode = status;
+        await ctx.Response.WriteAsJsonAsync(new ProblemDetails { Status = status, Title = title }, ct);
+        return true;
+    }
+}</code></pre>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Explain the Options pattern. What's the difference between <code>IOptions</code>, <code>IOptionsSnapshot</code> and <code>IOptionsMonitor</code>?</p><div class="a">
+<p>The Options pattern binds a configuration section to a strongly typed class: <code>builder.Services.AddOptions&lt;SmtpOptions&gt;().BindConfiguration("Smtp").ValidateDataAnnotations().ValidateOnStart();</code></p>
+<ul><li><code>IOptions&lt;T&gt;</code>: singleton, read once, never reloads.</li><li><code>IOptionsSnapshot&lt;T&gt;</code>: scoped, re-reads per request; can't be injected into singletons.</li><li><code>IOptionsMonitor&lt;T&gt;</code>: singleton, gives the current value and an <code>OnChange</code> callback; use in singletons and background services.</li></ul>
+<p>Secrets go in User Secrets locally and Key Vault (or equivalent) in production, never in appsettings.json.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How do you run background work in ASP.NET Core?</p><div class="a">
+<p>Inherit from <code>BackgroundService</code> and register with <code>AddHostedService</code>. Respect the <code>stoppingToken</code> for graceful shutdown. Because hosted services are singletons, create a scope with <code>IServiceScopeFactory</code> to use scoped services like a DbContext. For queued work use a <code>Channel&lt;T&gt;</code>. For durable, retryable or scheduled jobs, use a real queue or a library like Hangfire/Quartz, because in-memory work is lost on restart.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>What built-in tools do you use to make an API fast and protect it under load?</p><div class="a">
+<ul><li><b>Output caching</b> (<code>AddOutputCache</code>) caches responses on the server, with tags for invalidation; <b>response caching</b> relies on HTTP cache headers.</li><li><b>Rate limiting</b> middleware: fixed window, sliding window, token bucket, concurrency limiters, per user or per IP; returns 429.</li><li>Response compression, async I/O everywhere, <code>CancellationToken</code> passed through, pooled DbContext, avoiding sync-over-async.</li><li>Health checks (<code>MapHealthChecks</code>) for liveness/readiness probes.</li></ul>
+</div></article>
+</section>
+
+<section class="topic" id="rest" data-track="be"><h3>REST API Development <small>5 questions</small></h3>
+<p class="probe">Checks API design judgment: semantics, consistency, and how clients will consume what you build.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>What makes an API RESTful? How do you design resource URLs?</p><div class="a">
+<p>REST constraints: client-server, statelessness, cacheability, uniform interface, layered system. In practice: resources are nouns, HTTP verbs carry the action, and status codes carry the outcome.</p>
+<ul><li><code>GET /orders?status=open&amp;page=2</code>, <code>GET /orders/42</code>, <code>POST /orders</code>, <code>PUT /orders/42</code>, <code>PATCH /orders/42</code>, <code>DELETE /orders/42</code></li><li>Sub-resources for ownership: <code>GET /customers/7/orders</code></li><li>Plural nouns, lowercase, no verbs. For actions that aren't CRUD, model a resource: <code>POST /orders/42/cancellation</code>.</li></ul>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Which HTTP methods are idempotent? What's the difference between PUT and PATCH?</p><div class="a">
+<p>Safe (no side effects): GET, HEAD, OPTIONS. Idempotent (repeating gives the same result): GET, PUT, DELETE, HEAD, OPTIONS. POST is neither; PATCH is not guaranteed to be idempotent. PUT replaces the entire resource; PATCH applies a partial update (JSON Merge Patch or JSON Patch).</p>
+<p>To make POST safe to retry (e.g. payments), accept an <b>Idempotency-Key</b> header and store the result per key so a retried request returns the original response.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Which status codes do you use and when?</p><div class="a"><div class="tbl"><table>
+<tr><th>Code</th><th>Use</th></tr>
+<tr><td>200 / 201 / 204</td><td>OK with body · Created (with <code>Location</code> header) · No content</td></tr>
+<tr><td>400 / 422</td><td>Malformed request or validation failure</td></tr>
+<tr><td>401 / 403</td><td>Not authenticated · authenticated but not allowed</td></tr>
+<tr><td>404 / 409</td><td>Not found · conflict (duplicate, concurrency)</td></tr>
+<tr><td>412 / 429</td><td>Precondition failed (ETag mismatch) · too many requests</td></tr>
+<tr><td>500 / 503</td><td>Server error · temporarily unavailable</td></tr>
+</table></div></div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How do you version an API, and how do you avoid breaking clients?</p><div class="a">
+<p>Options: URL segment (<code>/v1/orders</code>, most visible), query string (<code>?api-version=1.0</code>), header, or media type. I prefer URL segments for public APIs, using the <code>Asp.Versioning</code> package. More important than the scheme is avoiding breaking changes: add fields instead of renaming, never change field meaning, keep old versions alive with a published deprecation schedule (the <code>Deprecation</code>/<code>Sunset</code> headers), and use contract tests.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How do you implement pagination, filtering and optimistic concurrency in an API?</p><div class="a">
+<ul><li><b>Pagination:</b> offset (<code>page</code>/<code>pageSize</code>) is simple but slow on deep pages and unstable when data changes. <b>Cursor/keyset</b> pagination (<code>?after=lastId</code>) is fast and stable for large or live data. Always cap the page size.</li><li><b>Filtering/sorting:</b> whitelist allowed fields; never build SQL from raw input.</li><li><b>Concurrency:</b> return an <code>ETag</code> (from a <code>rowversion</code> column). The client sends <code>If-Match</code> on update; if it doesn't match, return 412. That prevents lost updates.</li></ul>
+</div></article>
+</section>
+
+<section class="topic" id="micro" data-track="be"><h3>Microservices Architecture <small>5 questions</small></h3>
+<p class="probe">The interviewer wants trade-off thinking, not enthusiasm. Saying when <em>not</em> to use microservices is a strong signal.</p>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>When would you choose microservices over a monolith, and when not?</p><div class="a">
+<p>Microservices pay off when you need independent deployment and scaling, multiple teams owning separate business capabilities, or different technology needs. They cost a lot: network latency and failures, distributed data, eventual consistency, observability, and DevOps maturity.</p>
+<p>For a new product or a small team, I'd start with a <b>modular monolith</b> with strict module boundaries (one bounded context per module, no shared tables). Extract services later where there's a proven need. A "distributed monolith", services that must deploy together, is the worst of both.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How should services communicate?</p><div class="a">
+<ul><li><b>Synchronous</b> (HTTP/REST, gRPC): simple, immediate response, but creates temporal coupling; a chain of calls multiplies latency and failure probability. gRPC suits internal, high-throughput calls with strong contracts.</li><li><b>Asynchronous</b> (messages/events via RabbitMQ, Azure Service Bus, Kafka): decoupled and resilient; the consumer can be down. Costs: eventual consistency, harder debugging.</li></ul>
+<p>Rule of thumb: queries can be sync; state changes that other services react to should be async events.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv expert">EXPERT</span>Each service owns its database. How do you handle a business transaction spanning several services?</p><div class="a">
+<p>You can't use a distributed ACID transaction in practice (2PC doesn't scale and brokers don't support it). Use a <b>Saga</b>: a sequence of local transactions where each step publishes an event or command, and failures trigger <b>compensating actions</b> (refund payment, release stock).</p>
+<ul><li><b>Choreography:</b> services react to each other's events. Low coupling, but the flow is hard to see.</li><li><b>Orchestration:</b> a central orchestrator (e.g. MassTransit state machine, Durable Functions) tells each service what to do. Easier to follow and monitor.</li></ul>
+<p>Combine with the <b>transactional outbox</b> so saving data and publishing the event can't get out of sync, and make every step idempotent.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How do you make a service resilient to failures in its dependencies?</p><div class="a">
+<p>Use <code>Microsoft.Extensions.Http.Resilience</code> (built on Polly v8): <code>AddStandardResilienceHandler()</code> on an <code>HttpClient</code> adds:</p>
+<ul><li><b>Timeouts</b> per attempt and total.</li><li><b>Retries</b> with exponential backoff and jitter, only for transient errors and idempotent operations.</li><li><b>Circuit breaker</b> to stop hammering a failing dependency.</li><li><b>Rate limiter / bulkhead</b> to isolate resources.</li></ul>
+<p>Also: fallbacks and caching for degraded mode, health checks, and never an unbounded call chain.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>What infrastructure does a microservices system need around the services?</p><div class="a">
+<ul><li><b>API Gateway</b> (YARP, Azure API Management): single entry, routing, auth, rate limiting. A <b>BFF</b> per client type if needs differ.</li><li><b>Observability:</b> distributed tracing, metrics and structured logs via OpenTelemetry, with a correlation ID across calls.</li><li><b>Containers and orchestration:</b> Docker, Kubernetes or Azure Container Apps; service discovery, config, secrets.</li><li><b>CI/CD per service</b> and contract testing.</li><li><b>.NET Aspire</b> helps with local orchestration, service defaults and telemetry wiring.</li></ul>
+</div></article>
+</section>
+
+<section class="topic" id="eda" data-track="be"><h3>Event-Driven Architecture <small>5 questions</small></h3>
+<p class="probe">Expect probing on delivery guarantees. Most real bugs in event systems come from duplicates and ordering.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>What's the difference between a command, an event and a query?</p><div class="a">
+<p>A <b>command</b> asks one specific handler to do something and can be rejected (<code>PlaceOrder</code>, imperative). An <b>event</b> states that something already happened (<code>OrderPlaced</code>, past tense), has zero or many subscribers, and can't be rejected. A <b>query</b> asks for data without changing state. Commands go to a queue; events are published to a topic.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>What delivery guarantees do message brokers give, and how do you handle duplicates?</p><div class="a">
+<p>At-most-once (may lose messages), at-least-once (may duplicate, the common default), exactly-once (only within narrow boundaries). Design for at-least-once by making consumers <b>idempotent</b>:</p>
+<ul><li>Store processed message IDs (an <b>inbox</b> table) and skip repeats, in the same transaction as the work.</li><li>Use natural idempotency: upserts, "set status = Paid" instead of "add 100".</li><li>Poison messages go to a <b>dead-letter queue</b> after N retries, with alerting.</li></ul>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv expert">EXPERT</span>Explain the transactional outbox pattern.</p><div class="a">
+<p>Problem: you save an order to the database and then publish <code>OrderPlaced</code>. If the publish fails after the commit, or the commit fails after the publish, systems disagree. The outbox writes the event into an <code>Outbox</code> table <b>in the same database transaction</b> as the business data. A separate relay (background service, or CDC) reads unsent rows, publishes them, and marks them sent. This gives at-least-once publishing, so consumers must be idempotent. MassTransit and NServiceBus have built-in outbox support with EF Core.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv expert">EXPERT</span>How do you deal with message ordering?</p><div class="a">
+<p>Global ordering doesn't scale. Order only where it matters, usually per entity: in Kafka use the entity ID as the partition key; in Azure Service Bus use sessions with the entity ID as the session ID. Consumers should still tolerate out-of-order arrival with a version number or timestamp on each event and ignore stale ones.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv expert">EXPERT</span>What are event sourcing and CQRS, and do they have to go together?</p><div class="a">
+<p><b>CQRS</b> separates the write model (commands, rich domain validation) from read models optimized for queries. <b>Event sourcing</b> stores the sequence of events as the source of truth, and current state is rebuilt by replaying them, which gives a full audit trail and time travel. They pair well (events project into read models) but are independent: CQRS is often used alone with a normal database. Event sourcing adds complexity: event versioning, snapshots, projections, eventual consistency. Use it where the history itself is valuable, such as ledgers or compliance.</p>
+</div></article>
+</section>
+
+<section class="topic" id="efcore" data-track="be"><h3>Entity Framework Core <small>6 questions</small></h3>
+<p class="probe">Most production EF issues are about performance. Show you know what SQL your code generates.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>What is change tracking, and when do you use <code>AsNoTracking</code>?</p><div class="a">
+<p>The DbContext keeps snapshots of loaded entities and detects changes at <code>SaveChanges</code>. Tracking costs memory and CPU. For read-only queries use <code>AsNoTracking()</code> (or set <code>QueryTrackingBehavior.NoTracking</code> as default for read-heavy contexts). <code>AsNoTrackingWithIdentityResolution()</code> avoids duplicate instances of the same entity in the result graph.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>What is the N+1 problem and how do you fix it in EF Core?</p><div class="a">
+<p>Loading a list and then lazily loading a navigation property for each item runs 1 + N queries. Fixes:</p>
+<ul><li><b>Projection</b> with <code>Select</code> into a DTO: only needed columns, one query. Usually the best option for reads.</li><li><code>Include</code>/<code>ThenInclude</code> for eager loading.</li><li><code>AsSplitQuery()</code> when multiple collection includes cause a "cartesian explosion" of rows.</li><li>Avoid lazy loading proxies in web apps.</li></ul>
+<pre><code>var orders = await db.Orders
+    .Where(o =&gt; o.CustomerId == id)
+    .Select(o =&gt; new OrderDto(o.Id, o.Total, o.Lines.Count))
+    .ToListAsync(ct);</code></pre>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How do you handle concurrency conflicts?</p><div class="a">
+<p>Optimistic concurrency: add a <code>[Timestamp] byte[] RowVersion</code> (SQL Server <code>rowversion</code>) or a concurrency token. EF adds it to the <code>WHERE</code> clause of updates; if no row is affected it throws <code>DbUpdateConcurrencyException</code>. Then you decide: return 409 to the client, reload and retry, or merge values.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How do you apply migrations to production safely?</p><div class="a">
+<p>Don't call <code>Database.Migrate()</code> at app startup in multi-instance deployments (race conditions, app needs DDL rights). Generate an idempotent script (<code>dotnet ef migrations script --idempotent</code>) or a migration bundle (<code>efbundle</code>) and run it in the CD pipeline, reviewed. Design backward-compatible changes (expand/contract): add a nullable column, deploy code, backfill, then tighten. Review generated SQL for data loss.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How do you do bulk updates and deletes efficiently?</p><div class="a">
+<p>Since EF Core 7, <code>ExecuteUpdateAsync</code> and <code>ExecuteDeleteAsync</code> translate directly to a single SQL statement without loading entities:</p>
+<pre><code>await db.Orders.Where(o =&gt; o.CreatedAt &lt; cutoff &amp;&amp; o.Status == Status.Draft)
+    .ExecuteDeleteAsync(ct);</code></pre>
+<p>They bypass change tracking and interceptors, so in-memory entities don't see the change. For massive inserts, use <code>SqlBulkCopy</code> or a bulk extension library.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv expert">EXPERT</span>Should you wrap EF Core in a generic repository? What other performance features exist?</p><div class="a">
+<p>DbContext is already a Unit of Work and DbSet a repository. A generic <code>IRepository&lt;T&gt;</code> with <code>GetAll</code>/<code>Find</code> usually hides useful EF features and leaks <code>IQueryable</code> anyway. A repository per <b>aggregate root</b> with intention-revealing methods is reasonable in DDD-style code. Be ready to argue both sides.</p>
+<p>Other performance tools: DbContext pooling (<code>AddDbContextPool</code>), compiled queries (<code>EF.CompileAsyncQuery</code>), raw SQL with <code>FromSql</code>/<code>SqlQuery</code>, logging generated SQL, global query filters for soft delete and multi-tenancy.</p>
+</div></article>
+</section>
+
+<section class="topic" id="linq" data-track="be"><h3>LINQ <small>4 questions</small></h3>
+<p class="probe">Often a live coding question. Know execution semantics, not just operators.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>What is deferred execution? What's the danger of multiple enumeration?</p><div class="a">
+<p>Most LINQ operators build a query that runs only when enumerated (<code>foreach</code>, <code>ToList</code>, <code>Count</code>, <code>First</code>). Enumerating the same <code>IEnumerable</code> twice runs it twice, which against a database means two queries, and against a generator may give different results. Materialize once with <code>ToList()</code> when you need to iterate multiple times.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>What's the difference between <code>IEnumerable</code> and <code>IQueryable</code> in LINQ?</p><div class="a">
+<p><code>IQueryable</code> holds an expression tree that a provider (EF Core) translates into SQL, so filtering runs in the database. <code>IEnumerable</code> runs delegates in memory. If you call <code>AsEnumerable()</code> or <code>ToList()</code> too early, or your method takes <code>IEnumerable</code>, the rest of the filtering happens in memory after fetching everything. EF Core throws when it can't translate an expression in a filter, for example a custom C# method.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span><code>First</code> vs <code>FirstOrDefault</code> vs <code>Single</code> vs <code>SingleOrDefault</code>; <code>Any()</code> vs <code>Count() &gt; 0</code>?</p><div class="a">
+<p><code>First</code> throws if empty; <code>FirstOrDefault</code> returns default. <code>Single</code> throws if zero <b>or more than one</b> match, so it asserts uniqueness (and in SQL fetches TOP 2). Use <code>Any()</code> to check existence: it stops at the first match (<code>EXISTS</code> in SQL), while <code>Count()</code> may scan everything.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Live coding: from a list of orders, get the top 3 customers by total spent in 2026, with order counts.</p><div class="a">
+<pre><code>var top = orders
+    .Where(o =&gt; o.Date.Year == 2026)
+    .GroupBy(o =&gt; o.CustomerId)
+    .Select(g =&gt; new { CustomerId = g.Key, Total = g.Sum(o =&gt; o.Amount), Orders = g.Count() })
+    .OrderByDescending(x =&gt; x.Total)
+    .Take(3)
+    .ToList();</code></pre>
+<p>Also know <code>SelectMany</code> (flattening a collection of collections), <code>Join</code>/<code>GroupJoin</code>, <code>ToDictionary</code>/<code>ToLookup</code>, <code>Chunk</code>, <code>DistinctBy</code>/<code>MaxBy</code> (.NET 6) and <code>CountBy</code> (.NET 9). In EF, filter by a date range instead of <code>.Year</code> so the query can use an index.</p>
+</div></article>
+</section>
+
+<section class="topic" id="sql" data-track="be"><h3>SQL Server <small>6 questions</small></h3>
+<p class="probe">Expect questions on indexing and on diagnosing a slow query from an execution plan.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Clustered vs nonclustered index? What is a covering index?</p><div class="a">
+<p>A <b>clustered</b> index defines the physical order of the table's rows; one per table, usually the primary key. A narrow, ever-increasing key (INT IDENTITY, sequential GUID) avoids page splits. A <b>nonclustered</b> index is a separate structure with the key and a pointer to the row. If a query needs columns not in the index, SQL Server does a <b>key lookup</b> per row. A <b>covering</b> index includes all needed columns via <code>INCLUDE</code>, eliminating lookups. Filtered indexes (<code>WHERE IsActive = 1</code>) are smaller for selective subsets.</p>
+<pre><code>CREATE NONCLUSTERED INDEX IX_Orders_Customer_Date
+ON dbo.Orders (CustomerId, OrderDate DESC)
+INCLUDE (Total, Status);</code></pre>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>A query is slow. Walk me through how you'd investigate.</p><div class="a">
+<ul><li>Reproduce with real parameters; check <code>SET STATISTICS IO, TIME ON</code> and the <b>actual execution plan</b>.</li><li>Look for scans on large tables, key lookups, big estimated-vs-actual row differences (stale statistics), spills to tempdb, implicit conversions.</li><li>Check <b>SARGability</b>: functions on columns (<code>WHERE YEAR(OrderDate) = 2026</code>), leading wildcards, or type mismatches prevent index seeks.</li><li>Use <b>Query Store</b> to find regressions and plan changes over time, and DMVs for top resource consumers.</li><li>Then fix: rewrite the predicate, add/adjust an index, update statistics, and verify the plan again.</li></ul>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv expert">EXPERT</span>What is parameter sniffing and how do you deal with it?</p><div class="a">
+<p>SQL Server compiles a plan using the first parameter values it sees and caches it. If data is skewed (one customer has 1M orders, most have 10), a plan good for one value can be terrible for another. Options: <code>OPTION (RECOMPILE)</code> for infrequent queries, <code>OPTIMIZE FOR</code> a representative value, splitting into separate queries, or Query Store plan forcing. SQL Server 2022's Parameter Sensitive Plan optimization can cache multiple plans automatically.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Explain isolation levels and how you'd reduce blocking and deadlocks.</p><div class="a">
+<p>Read Uncommitted (dirty reads), Read Committed (default), Repeatable Read, Serializable, plus row-versioning options: <b>Read Committed Snapshot (RCSI)</b> and <b>Snapshot</b>. With RCSI, readers see the last committed version and don't block writers, which removes most reader/writer blocking (costs tempdb space). Avoid <code>NOLOCK</code>: it can return missing or duplicate rows.</p>
+<p>Deadlocks: keep transactions short, access tables in a consistent order, have proper indexes so fewer rows are locked, retry the victim (error 1205), and analyze the deadlock graph from the <code>system_health</code> Extended Events session.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Temp table vs table variable vs CTE?</p><div class="a">
+<p><b>CTE</b>: a named subquery for readability or recursion; not materialized, re-evaluated if referenced twice. <b>Temp table</b> (<code>#t</code>): in tempdb, has statistics and indexes, best for larger intermediate results. <b>Table variable</b> (<code>@t</code>): limited statistics (improved by deferred compilation since 2019), fine for small sets; survives transaction rollback.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Write a query that returns each customer's most recent order.</p><div class="a">
+<pre><code>WITH ranked AS (
+    SELECT o.*, ROW_NUMBER() OVER (PARTITION BY CustomerId ORDER BY OrderDate DESC) AS rn
+    FROM dbo.Orders o
+)
+SELECT * FROM ranked WHERE rn = 1;</code></pre>
+<p>Know the other window functions: <code>RANK</code>/<code>DENSE_RANK</code>, <code>LAG</code>/<code>LEAD</code>, and running totals with <code>SUM() OVER (ORDER BY ... ROWS UNBOUNDED PRECEDING)</code>. <code>CROSS APPLY (SELECT TOP 1 ...)</code> is an alternative that can be faster with the right index.</p>
+</div></article>
+</section>
+
+<section class="topic" id="nosql" data-track="be"><h3>NoSQL Databases <small>4 questions</small></h3>
+<p class="probe">Checks that you choose storage by access pattern, and know how NoSQL modeling differs from relational.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>What types of NoSQL databases exist and when would you choose one over SQL Server?</p><div class="a">
+<ul><li><b>Document</b> (Azure Cosmos DB, MongoDB): flexible JSON, aggregates read as a unit (catalogs, user profiles).</li><li><b>Key-value</b> (Redis): caching, sessions, counters, rate limits.</li><li><b>Wide-column</b> (Cassandra): massive write throughput, time series.</li><li><b>Graph</b> (Neo4j, Cosmos Gremlin): relationship traversal (recommendations, fraud).</li></ul>
+<p>Choose NoSQL for horizontal scale, schema flexibility, or specific access patterns. Keep relational for complex joins, ad-hoc reporting and strong multi-entity transactions. Polyglot persistence is common: SQL for orders, Redis for cache, a document store for the catalog.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How do you model data in a document database?</p><div class="a">
+<p>Model for the queries, not for normalization. <b>Embed</b> data read together and bounded in size (order with its lines). <b>Reference</b> data that's large, unbounded or shared and updated independently. Denormalization is normal; keep copies in sync via change feed or events. Avoid unbounded arrays inside a document.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv expert">EXPERT</span>In Cosmos DB, why is the partition key so important?</p><div class="a">
+<p>The partition key determines how data is distributed and is fixed once the container is created. A good key has high cardinality, spreads requests evenly (no hot partition), and is included in most queries, so they stay single-partition; cross-partition queries cost more RUs. Transactions only work within one logical partition. Typical choices: <code>tenantId</code>, <code>userId</code>, or a hierarchical key. Also know the consistency levels: Strong, Bounded Staleness, Session (default), Consistent Prefix, Eventual.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How would you use Redis in a .NET system? What's the CAP theorem's relevance?</p><div class="a">
+<p>Redis: distributed cache (cache-aside, or <code>HybridCache</code> with Redis as L2), session store, rate-limit counters, pub/sub, distributed locks (carefully), leaderboards with sorted sets. Set TTLs, plan invalidation, and protect against cache stampede.</p>
+<p>CAP: under a network partition a distributed store must choose Consistency or Availability. Most NoSQL systems let you tune this (Cosmos consistency levels, Cassandra quorum). PACELC adds that, even without partitions, you trade latency against consistency.</p>
+</div></article>
+</section>
+
+<section class="topic" id="di" data-track="be"><h3>Dependency Injection <small>4 questions</small></h3>
+<p class="probe">Lifetimes and the captive dependency bug come up in almost every .NET interview.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Explain the three service lifetimes and what a captive dependency is.</p><div class="a">
+<p><b>Transient:</b> new instance every resolution. <b>Scoped:</b> one per scope; in ASP.NET Core, one per HTTP request (DbContext is scoped). <b>Singleton:</b> one for the app's lifetime; must be thread-safe.</p>
+<p>A <b>captive dependency</b> is a longer-lived service holding a shorter-lived one, e.g. a singleton receiving a scoped DbContext: the context lives forever, isn't thread-safe and goes stale. Development mode enables scope validation, which throws at startup. Fix it by injecting <code>IServiceScopeFactory</code> and creating a scope when needed, or <code>IDbContextFactory&lt;T&gt;</code>.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How do you register and choose between multiple implementations of one interface?</p><div class="a">
+<ul><li>Register several and inject <code>IEnumerable&lt;INotifier&gt;</code> to use all of them (e.g. send by email and SMS).</li><li>Use <b>keyed services</b> (.NET 8+) to pick one by key: <code>[FromKeyedServices("sms")] INotifier n</code>.</li><li>Use a factory or strategy resolver when the choice depends on runtime data.</li><li><code>TryAdd*</code> avoids overriding an existing registration (important in libraries).</li></ul>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Why is the Service Locator pattern considered an anti-pattern?</p><div class="a">
+<p>Injecting <code>IServiceProvider</code> and calling <code>GetService</code> everywhere hides dependencies: you can't see from the constructor what a class needs, missing registrations fail at runtime, and tests are harder. Prefer constructor injection. Valid exceptions: composition roots, factories, and creating scopes in singletons/background services.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv expert">EXPERT</span>How do you add cross-cutting behavior (caching, logging) without changing a service?</p><div class="a">
+<p>Use the <b>Decorator</b> pattern: <code>CachedProductService</code> implements <code>IProductService</code> and wraps the real one. The built-in container doesn't support decoration directly; use Scrutor's <code>services.Decorate&lt;IProductService, CachedProductService&gt;()</code> or register by factory. In MediatR-style designs, pipeline behaviors serve the same purpose for all handlers.</p>
+</div></article>
+</section>
+
+<section class="topic" id="clean" data-track="be"><h3>Clean Architecture <small>4 questions</small></h3>
+<p class="probe">They want you to explain the dependency rule and also show pragmatism about its cost.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Describe Clean Architecture and the dependency rule.</p><div class="a">
+<p>Concentric layers with dependencies pointing <b>inward</b> only:</p>
+<ul><li><b>Domain:</b> entities, value objects, domain events, business rules. No dependencies on frameworks.</li><li><b>Application:</b> use cases (commands/queries, handlers), interfaces for what it needs (<code>IOrderRepository</code>, <code>IEmailSender</code>), DTOs, validation.</li><li><b>Infrastructure:</b> implementations: EF Core, external APIs, file storage, messaging.</li><li><b>Presentation/API:</b> controllers or endpoints, composition root (DI wiring).</li></ul>
+<p>The benefit: business logic is testable without a database or web server, and infrastructure can change without touching the core.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Where does each of these go: an EF Core configuration, a validation rule, an <code>IEmailSender</code> interface, an SMTP implementation, a DTO?</p><div class="a">
+<p>EF configuration → Infrastructure. Business invariants → Domain; input validation (FluentValidation) → Application. <code>IEmailSender</code> → Application (the core defines what it needs). SMTP implementation → Infrastructure. Request/response DTOs → Application or API depending on whether they're use-case contracts or transport models.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>What are the downsides of Clean Architecture? What about Vertical Slice Architecture?</p><div class="a">
+<p>Downsides: lots of projects, interfaces and mapping for simple CRUD; a feature change touches many folders. <b>Vertical Slice</b> organizes code by feature (each endpoint/use case owns its request, handler, validation and data access), keeping changes local. Many teams combine them: slices inside the Application layer with a rich Domain where business rules are complex. Match ceremony to complexity.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How do you implement CQRS in a Clean Architecture solution? Do you need MediatR?</p><div class="a">
+<p>Commands change state through the domain model; queries go straight to read-optimized data (projections, Dapper, views), skipping the domain. MediatR is a common in-process dispatcher with pipeline behaviors for validation, logging and transactions. You don't need it: plain handler classes injected directly work fine. Note that MediatR (and AutoMapper) moved to commercial licensing for business use in 2025, so many teams now use plain handlers or alternatives.</p>
+</div></article>
+</section>
+
+<section class="topic" id="ddd" data-track="be"><h3>Domain-Driven Design (DDD) <small>5 questions</small></h3>
+<p class="probe">Strong candidates explain the strategic side (boundaries, language), not only entities and repositories.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>What's the difference between strategic and tactical DDD?</p><div class="a">
+<p><b>Strategic</b> DDD is about the big picture: the <b>ubiquitous language</b> shared with domain experts, <b>bounded contexts</b> (where a model and its terms are consistent), subdomains (core, supporting, generic) and <b>context maps</b> describing how contexts integrate (anti-corruption layer, shared kernel, customer-supplier). <b>Tactical</b> DDD gives building blocks inside a context: entities, value objects, aggregates, domain events, domain services, repositories.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Entity vs value object?</p><div class="a">
+<p>An <b>entity</b> has an identity that persists across changes (Customer #42 stays the same customer when the address changes). A <b>value object</b> is defined only by its values, is immutable, and is replaced rather than modified (Money, Address, DateRange). Value objects carry validation and behavior, so you avoid primitive obsession.</p>
+<pre><code>public sealed record Money(decimal Amount, string Currency)
+{
+    public Money Add(Money other) =&gt; other.Currency == Currency
+        ? this with { Amount = Amount + other.Amount }
+        : throw new InvalidOperationException("Currency mismatch");
+}</code></pre>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>What is an aggregate, and what rules apply to it?</p><div class="a">
+<ul><li>A cluster of entities and value objects treated as one consistency boundary, accessed only through the <b>aggregate root</b> (Order is the root; OrderLine is reached through it).</li><li>Invariants are enforced inside the aggregate (e.g. "an order total can't exceed the credit limit").</li><li>Reference other aggregates <b>by ID</b>, not object reference.</li><li>One transaction modifies one aggregate; cross-aggregate consistency is eventual, via domain events.</li><li>Keep aggregates small. One repository per aggregate root.</li></ul>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Domain events vs integration events?</p><div class="a">
+<p><b>Domain events</b> are raised inside a bounded context, often dispatched in-process (before or after <code>SaveChanges</code>) to trigger side effects within the same service. <b>Integration events</b> cross service boundaries through a message broker, are versioned public contracts with only the data others need, and are published reliably via an outbox. A domain event handler often maps to an integration event.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>What is an anemic domain model and why is it criticized?</p><div class="a">
+<p>Entities that are just property bags with public setters, with all logic in services. Invariants are scattered and easy to bypass. A rich model encapsulates behavior: private setters, methods like <code>order.AddLine(product, qty)</code> and <code>order.Ship()</code> that validate state. For simple CRUD, an anemic model is acceptable; DDD pays off in complex domains.</p>
+</div></article>
+</section>
+
+<section class="topic" id="solid" data-track="be"><h3>SOLID Principles <small>3 questions</small></h3>
+<p class="probe">Don't recite definitions only. Give a concrete example of a violation and how you fixed it.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Explain each SOLID principle with a short example.</p><div class="a">
+<ul><li><b>S, Single Responsibility:</b> a class has one reason to change. An <code>InvoiceService</code> that calculates, renders a PDF and emails should be split.</li><li><b>O, Open/Closed:</b> open for extension, closed for modification. Add a new discount type by adding a class implementing <code>IDiscountRule</code>, not by editing a switch.</li><li><b>L, Liskov Substitution:</b> subtypes must be usable wherever the base type is expected without surprises. A <code>ReadOnlyRepository</code> throwing on <code>Save</code> breaks LSP.</li><li><b>I, Interface Segregation:</b> many small, client-specific interfaces instead of one fat interface (<code>IReader</code> / <code>IWriter</code>).</li><li><b>D, Dependency Inversion:</b> high-level modules depend on abstractions, not on concrete low-level modules; the abstraction belongs to the high-level side.</li></ul>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Is Dependency Inversion the same as Dependency Injection?</p><div class="a">
+<p>No. Dependency Inversion is a design principle about the direction of dependencies (the Application layer owns <code>IEmailSender</code>; Infrastructure implements it). Dependency Injection is a technique for supplying dependencies from outside, and a DI container automates it. You can inject concrete classes without inverting anything, and you can invert dependencies with manual wiring.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Can applying SOLID go too far?</p><div class="a">
+<p>Yes: an interface for every class with one implementation, dozens of tiny classes, and abstractions for change that never comes. I add an abstraction when there's a real second implementation, a test seam I need, or a boundary (I/O, external systems). YAGNI and KISS balance SOLID.</p>
+</div></article>
+</section>
+
+<section class="topic" id="patterns" data-track="be"><h3>Design Patterns <small>4 questions</small></h3>
+<p class="probe">Expect "which patterns have you used and why". Tie each to a real problem you solved.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Which design patterns do you use most in .NET, and where?</p><div class="a">
+<ul><li><b>Strategy:</b> interchangeable algorithms (payment providers, pricing rules) selected at runtime.</li><li><b>Factory / Abstract Factory:</b> creation logic that depends on input or configuration; <code>IHttpClientFactory</code> is a framework example.</li><li><b>Decorator:</b> add caching, logging or retries around a service; ASP.NET middleware follows a similar chain idea.</li><li><b>Adapter:</b> wrap a third-party SDK behind your own interface.</li><li><b>Repository / Unit of Work:</b> persistence abstraction (EF's DbContext already is one).</li><li><b>Mediator:</b> decouple senders from handlers (MediatR).</li><li><b>Observer:</b> events, <code>IObservable</code>, domain events.</li><li><b>Builder:</b> <code>WebApplication.CreateBuilder</code>, test data builders.</li><li><b>Options</b> and <b>Specification</b> (reusable query criteria).</li></ul>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Refactor a large <code>switch</code> on payment type into a better design.</p><div class="a">
+<pre><code>public interface IPaymentProcessor { string Method { get; } Task PayAsync(Order o); }
+
+public class CardProcessor : IPaymentProcessor { public string Method =&gt; "card"; /* ... */ }
+public class PayPalProcessor : IPaymentProcessor { public string Method =&gt; "paypal"; /* ... */ }
+
+public class PaymentService(IEnumerable&lt;IPaymentProcessor&gt; processors)
+{
+    private readonly Dictionary&lt;string, IPaymentProcessor&gt; _map =
+        processors.ToDictionary(p =&gt; p.Method);
+
+    public Task PayAsync(Order o, string method) =&gt;
+        _map.TryGetValue(method, out var p) ? p.PayAsync(o)
+        : throw new NotSupportedException(method);
+}</code></pre>
+<p>This is Strategy plus DI; adding a method means adding a class and a registration (Open/Closed). Keyed services are an alternative.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>What are the problems with the classic Singleton pattern?</p><div class="a">
+<p>Global state, hidden dependencies, hard to test or replace, and thread-safety concerns. In .NET, register a singleton lifetime in the DI container instead; you get one instance without a static accessor. If you must hand-roll one, use <code>Lazy&lt;T&gt;</code> for thread-safe lazy initialization.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Decorator vs inheritance: why prefer composition?</p><div class="a">
+<p>Inheritance fixes behavior at compile time and leads to class explosion (CachedLoggedRetryingService). Decorators compose at runtime in any order, each with one responsibility, and work with sealed classes and interfaces. "Favor composition over inheritance" is the guiding rule.</p>
+</div></article>
+</section>
+
+<section class="topic" id="auth" data-track="be"><h3>Authentication &amp; Authorization (OAuth2, OIDC, JWT) <small>6 questions</small></h3>
+<p class="probe">Security answers must be precise. Mixing up OAuth2 and OIDC, or storing tokens carelessly, is a red flag.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Authentication vs authorization? OAuth 2.0 vs OpenID Connect?</p><div class="a">
+<p><b>Authentication</b> establishes who you are; <b>authorization</b> decides what you can do. <b>OAuth 2.0</b> is an authorization framework: it lets a client get an <b>access token</b> to call an API on a user's behalf; it doesn't define user identity. <b>OpenID Connect</b> is an identity layer on top of OAuth 2.0: it adds the <b>ID token</b> (a JWT describing the authenticated user), the <code>openid</code> scope, the UserInfo endpoint and discovery metadata. Use OIDC to log users in; use OAuth access tokens to call APIs.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Which OAuth 2.0 flows do you use and when?</p><div class="a">
+<ul><li><b>Authorization Code + PKCE:</b> for web apps, SPAs and mobile apps. The user logs in at the identity provider; the app exchanges a code for tokens. PKCE protects the code exchange.</li><li><b>Client Credentials:</b> service-to-service, no user involved.</li><li><b>Device Code:</b> TVs, CLIs.</li><li><b>Refresh Token:</b> to get new access tokens without re-login.</li><li>Deprecated by OAuth 2.1 / current best practice: <b>Implicit</b> and <b>Resource Owner Password</b> flows.</li></ul>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>What's inside a JWT and how does the API validate it?</p><div class="a">
+<p>Three Base64URL parts: <b>header</b> (algorithm, key ID), <b>payload</b> (claims: <code>sub</code>, <code>iss</code>, <code>aud</code>, <code>exp</code>, <code>nbf</code>, scopes, roles), and <b>signature</b>. It's signed, not encrypted, so never put secrets in it. The API validates the signature (fetching public keys from the issuer's JWKS endpoint), issuer, audience, expiry and lifetime.</p>
+<pre><code>builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(o =&gt; {
+        o.Authority = "https://login.example.com/";
+        o.Audience  = "orders-api";
+    });</code></pre>
+<p>Prefer asymmetric signing (RS256/ES256) so only the issuer holds the private key; HS256 shares a secret with every validator.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>JWTs can't be revoked easily. How do you handle logout and compromised tokens?</p><div class="a">
+<p>Keep access tokens short-lived (5–15 minutes) and use <b>refresh tokens</b> with rotation (each use issues a new one and invalidates the old; reuse detection revokes the family). Revoke refresh tokens on logout or compromise. For immediate revocation, keep a denylist of token IDs (<code>jti</code>) in a cache, or use reference tokens with introspection for high-security APIs.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Where should a React SPA store tokens?</p><div class="a">
+<p><code>localStorage</code> is readable by any script, so an XSS bug leaks the tokens. The recommended approach is the <b>Backend-for-Frontend (BFF)</b> pattern: the ASP.NET Core backend performs the OIDC flow, keeps tokens server-side, and gives the browser an <b>HttpOnly, Secure, SameSite</b> session cookie; the BFF proxies API calls and attaches tokens. Protect cookie-based endpoints from CSRF (SameSite plus an anti-forgery header). If tokens must live in the browser, keep them in memory only and use a library like MSAL or oidc-client-ts.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How do you implement authorization in ASP.NET Core beyond roles?</p><div class="a">
+<ul><li><b>Role-based:</b> <code>[Authorize(Roles = "Admin")]</code>, simple but coarse.</li><li><b>Policy-based:</b> named policies combining claims, scopes and custom requirements: <code>AddAuthorizationBuilder().AddPolicy("CanRefund", p =&gt; p.RequireClaim("scope", "orders.refund"))</code>.</li><li><b>Custom requirements and handlers</b> (<code>IAuthorizationHandler</code>) for logic like "must be over 18" or "same tenant".</li><li><b>Resource-based:</b> inject <code>IAuthorizationService</code> and call <code>AuthorizeAsync(User, order, "EditOrder")</code> to check ownership of a specific record.</li></ul>
+<p>Scopes describe what the <b>client app</b> may do; roles/claims describe what the <b>user</b> may do. Check both.</p>
+</div></article>
+</section>
+</div>
+
+<!-- ======================= FRONTEND ======================= -->
+<div class="track fe" id="frontend">
+<div class="track-head"><h2>Frontend Development</h2><p>React, TypeScript, the web platform and data flow</p></div>
+
+<section class="topic" id="react" data-track="fe"><h3>ReactJS <small>7 questions</small></h3>
+<p class="probe">Expect hooks, rendering behavior and performance. Knowing what changed in React 19 shows you're current.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>How does React decide what to update? Why do lists need keys?</p><div class="a">
+<p>When state or props change, React re-renders the component and its children, producing a new element tree. <b>Reconciliation</b> compares it with the previous tree and commits only the differences to the DOM. Elements of a different type replace the subtree. In lists, <b>keys</b> identify items across renders; with stable keys React can reorder and keep each item's state. Using the array index as key breaks when items are inserted, removed or reordered (state attaches to the wrong row). Use a stable ID.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Explain <code>useEffect</code>: dependencies, cleanup, and common mistakes.</p><div class="a">
+<p><code>useEffect</code> synchronizes a component with something outside React (subscriptions, timers, DOM APIs, network). It runs after render; the dependency array controls when it re-runs; the returned function cleans up before the next run and on unmount.</p>
+<pre><code>useEffect(() =&gt; {
+  const controller = new AbortController();
+  fetch(`/api/orders/${id}`, { signal: controller.signal })
+    .then(r =&gt; r.json()).then(setOrder)
+    .catch(e =&gt; { if (e.name !== 'AbortError') setError(e); });
+  return () =&gt; controller.abort();
+}, [id]);</code></pre>
+<ul><li>Missing dependencies cause stale values; objects/functions created in render as dependencies cause infinite loops.</li><li>Don't use effects to derive data from props/state; compute it during render.</li><li>In development, StrictMode mounts, unmounts and remounts to expose missing cleanup.</li></ul>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>When do you use <code>useMemo</code>, <code>useCallback</code> and <code>React.memo</code>?</p><div class="a">
+<p><code>React.memo</code> skips re-rendering a component when its props are shallowly equal. <code>useCallback</code> keeps a function reference stable and <code>useMemo</code> caches a computed value, mainly so memoized children or effect dependencies don't change on every render. Use them when profiling shows a cost (expensive calculation, large list, frequent re-render), not everywhere. The <b>React Compiler</b> (stable since late 2025) adds memoization automatically, which reduces the need for these by hand.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Controlled vs uncontrolled components?</p><div class="a">
+<p>A <b>controlled</b> input's value lives in React state and changes through <code>onChange</code>; easy to validate and transform on each keystroke. An <b>uncontrolled</b> input keeps its value in the DOM and you read it with a ref or <code>FormData</code>, which is simpler and faster for large forms. Libraries like React Hook Form use uncontrolled inputs for performance. React 19's form Actions also work naturally with uncontrolled forms.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>What's new in React 18 and React 19?</p><div class="a">
+<ul><li><b>React 18:</b> concurrent rendering, automatic batching of state updates everywhere, <code>startTransition</code>/<code>useTransition</code> for non-urgent updates, <code>useDeferredValue</code>, Suspense for data with streaming SSR, <code>createRoot</code>.</li><li><b>React 19:</b> <b>Actions</b> (async functions in transitions, <code>&lt;form action={fn}&gt;</code>), <code>useActionState</code>, <code>useFormStatus</code>, <code>useOptimistic</code>, the <code>use()</code> API for promises and context, <code>ref</code> as a regular prop (no more <code>forwardRef</code>), document metadata tags, stable Server Components.</li></ul>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How do you share logic between components? Write a custom hook.</p><div class="a">
+<pre><code>function useDebounce&lt;T&gt;(value: T, delay = 300): T {
+  const [debounced, setDebounced] = useState(value);
+  useEffect(() =&gt; {
+    const t = setTimeout(() =&gt; setDebounced(value), delay);
+    return () =&gt; clearTimeout(t);
+  }, [value, delay]);
+  return debounced;
+}</code></pre>
+<p>Custom hooks extract stateful logic (they replaced HOCs and render props for most cases). Rules of hooks: call them only at the top level of components or other hooks, never in conditions or loops, because React relies on call order.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How do you handle errors and improve performance in a large React app?</p><div class="a">
+<ul><li><b>Error boundaries</b> (class component or <code>react-error-boundary</code>) catch render errors in a subtree and show a fallback. They don't catch errors in event handlers or async code.</li><li><b>Code splitting</b> with <code>React.lazy</code> + <code>Suspense</code> per route.</li><li><b>Virtualize</b> long lists (TanStack Virtual, react-window).</li><li>Keep state close to where it's used; split contexts; measure with React DevTools Profiler.</li></ul>
+</div></article>
+</section>
+
+<section class="topic" id="ts" data-track="fe"><h3>TypeScript <small>5 questions</small></h3>
+<p class="probe">Checks whether you use the type system to prevent bugs, not just to annotate.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span><code>interface</code> vs <code>type</code>?</p><div class="a">
+<p>Both describe object shapes. <code>interface</code> can be extended with <code>extends</code> and merged by redeclaration (useful for augmenting libraries). <code>type</code> aliases can also express unions, intersections, tuples, mapped and conditional types. A common convention: <code>interface</code> for public object contracts and props, <code>type</code> for unions and computed types. Consistency in the codebase matters more than the choice.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span><code>any</code> vs <code>unknown</code> vs <code>never</code>?</p><div class="a">
+<p><code>any</code> turns off checking. <code>unknown</code> accepts anything but forces you to narrow before use; it's the safe type for external data like API responses and <code>catch</code> errors. <code>never</code> is the type with no values: functions that always throw, and exhaustiveness checks.</p>
+<pre><code>function assertNever(x: never): never { throw new Error(`Unexpected: ${x}`); }</code></pre>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>What are discriminated unions and how do you narrow them?</p><div class="a">
+<pre><code>type RequestState&lt;T&gt; =
+  | { status: 'idle' }
+  | { status: 'loading' }
+  | { status: 'success'; data: T }
+  | { status: 'error'; error: string };
+
+function render(s: RequestState&lt;Order[]&gt;) {
+  switch (s.status) {
+    case 'success': return s.data.length;   // data is available here
+    case 'error':   return s.error;
+    case 'idle': case 'loading': return null;
+    default: return assertNever(s);         // compile error if a case is missing
+  }
+}</code></pre>
+<p>This makes impossible states unrepresentable (no "loading and error at the same time"). Other narrowing tools: <code>typeof</code>, <code>instanceof</code>, <code>in</code>, and user-defined type guards (<code>x is Order</code>).</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Explain generics with constraints and the utility types you use.</p><div class="a">
+<pre><code>function getProp&lt;T, K extends keyof T&gt;(obj: T, key: K): T[K] { return obj[key]; }</code></pre>
+<p>Utility types: <code>Partial</code>, <code>Required</code>, <code>Readonly</code>, <code>Pick</code>, <code>Omit</code>, <code>Record</code>, <code>ReturnType</code>, <code>Parameters</code>, <code>Awaited</code>, <code>NonNullable</code>. Example: <code>type UpdateOrder = Partial&lt;Omit&lt;Order, 'id' | 'createdAt'&gt;&gt;</code> for a PATCH payload.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>What does <code>strict</code> mode enable, and what is <code>satisfies</code>?</p><div class="a">
+<p><code>"strict": true</code> enables <code>strictNullChecks</code>, <code>noImplicitAny</code>, strict function types and more. Add <code>noUncheckedIndexedAccess</code> for safer array/record access. <code>satisfies</code> checks that a value matches a type while keeping its narrower inferred type:</p>
+<pre><code>const routes = { home: '/', orders: '/orders' } satisfies Record&lt;string, string&gt;;
+// routes.orders keeps the literal type '/orders'</code></pre>
+<p>Remember that types disappear at runtime; validate external data with a schema library such as Zod.</p>
+</div></article>
+</section>
+
+<section class="topic" id="js" data-track="fe"><h3>JavaScript (ES6+) <small>6 questions</small></h3>
+<p class="probe">Fundamentals often come as "what does this code print?" questions.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span><code>var</code> vs <code>let</code> vs <code>const</code>; what is hoisting?</p><div class="a">
+<p><code>var</code> is function-scoped and hoisted with the value <code>undefined</code>. <code>let</code> and <code>const</code> are block-scoped and hoisted into the <b>temporal dead zone</b>: accessing them before declaration throws. <code>const</code> prevents reassignment, not mutation of the object. Function declarations are fully hoisted. Default to <code>const</code>, use <code>let</code> when reassigning, avoid <code>var</code>.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>What is a closure? Give a practical use.</p><div class="a">
+<p>A function keeps access to variables from the scope where it was created, even after that scope has finished. Uses: private state, factories, memoization, and event handlers and hooks in React (a stale closure is the classic hooks bug).</p>
+<pre><code>function counter() { let n = 0; return () =&gt; ++n; }
+const next = counter(); next(); next(); // 2</code></pre>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Explain the event loop. What does this print?</p><div class="a">
+<pre><code>console.log('A');
+setTimeout(() =&gt; console.log('B'), 0);
+Promise.resolve().then(() =&gt; console.log('C'));
+console.log('D');</code></pre>
+<p>Output: <b>A, D, C, B</b>. Synchronous code runs on the call stack first. Then the event loop drains the <b>microtask</b> queue (promise callbacks, <code>queueMicrotask</code>) completely before taking the next <b>macrotask</b> (timers, I/O, UI events). Rendering happens between macrotasks, so long synchronous work freezes the UI.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>How does <code>this</code> work, and how do arrow functions differ?</p><div class="a">
+<p>In a regular function, <code>this</code> depends on how it's called: the object before the dot, <code>undefined</code> in strict mode for plain calls, or whatever <code>call</code>/<code>apply</code>/<code>bind</code> set. Arrow functions have no own <code>this</code>; they use the enclosing scope's. That makes them right for callbacks, but wrong as object methods that need the object.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span><code>Promise.all</code> vs <code>allSettled</code> vs <code>race</code> vs <code>any</code>?</p><div class="a">
+<ul><li><code>all</code>: resolves with all results; rejects as soon as one rejects. For required parallel calls.</li><li><code>allSettled</code>: waits for all, returns each status. For a dashboard where some widgets may fail.</li><li><code>race</code>: settles with the first to settle (e.g. a timeout).</li><li><code>any</code>: resolves with the first success; rejects only if all fail.</li></ul>
+<p>With <code>async/await</code>, avoid awaiting independent calls one by one in sequence; start them together and await <code>Promise.all</code>.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Which ES6+ features do you use daily?</p><div class="a">
+<p>Destructuring and default values, spread/rest (<code>{...obj}</code>, <code>[...arr]</code>), template literals, arrow functions, classes, ES modules (<code>import</code>/<code>export</code>), optional chaining (<code>a?.b</code>), nullish coalescing (<code>??</code>, which unlike <code>||</code> keeps <code>0</code> and <code>''</code>), <code>Map</code>/<code>Set</code>, array methods (<code>map</code>, <code>filter</code>, <code>reduce</code>, <code>find</code>, <code>flatMap</code>, <code>at</code>), immutable helpers (<code>toSorted</code>, <code>toSpliced</code>, <code>with</code>), <code>structuredClone</code>, <code>Object.groupBy</code>. Also <code>===</code> over <code>==</code> to avoid type coercion.</p>
+</div></article>
+</section>
+
+<section class="topic" id="html" data-track="fe"><h3>HTML5 <small>4 questions</small></h3>
+<p class="probe">Usually about semantics and accessibility, which are easy to get right and often neglected.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Why does semantic HTML matter?</p><div class="a">
+<p>Elements like <code>header</code>, <code>nav</code>, <code>main</code>, <code>article</code>, <code>section</code>, <code>aside</code>, <code>footer</code>, <code>button</code> and <code>label</code> carry meaning for screen readers, keyboard users, search engines and other developers. A <code>&lt;div onClick&gt;</code> isn't focusable or announced as a button; a real <code>&lt;button&gt;</code> gets keyboard support for free. Use one <code>h1</code> and a logical heading order, <code>alt</code> text on images, and labels linked to inputs.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>When do you use ARIA?</p><div class="a">
+<p>The first rule of ARIA: don't use it if a native element does the job. Use it for custom widgets (tabs, comboboxes, dialogs) to expose roles, states and relationships (<code>aria-expanded</code>, <code>aria-controls</code>, <code>aria-live</code> for dynamic messages). Also manage focus (trap it in modals, return it on close) and keep visible focus styles. Target WCAG 2.2 AA; test with keyboard only, axe, and a screen reader.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span><code>&lt;script&gt;</code> vs <code>async</code> vs <code>defer</code> vs <code>type="module"</code>?</p><div class="a">
+<p>A plain script blocks HTML parsing while it downloads and runs. <code>async</code> downloads in parallel and runs as soon as it's ready, in any order (analytics). <code>defer</code> downloads in parallel and runs in order after parsing (app scripts). Module scripts are deferred by default.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Compare cookies, <code>localStorage</code>, <code>sessionStorage</code> and IndexedDB.</p><div class="a">
+<p>Cookies (~4 KB) are sent with every request to their domain and can be <code>HttpOnly</code> (hidden from JavaScript), so they suit session identifiers. <code>localStorage</code> (~5 MB, persistent) and <code>sessionStorage</code> (per tab) are synchronous key-value stores readable by any script, so never put tokens there. IndexedDB is asynchronous, larger and structured, for offline data.</p>
+</div></article>
+</section>
+
+<section class="topic" id="css" data-track="fe"><h3>CSS3 <small>5 questions</small></h3>
+<p class="probe">Layout systems and the cascade. Modern CSS features are a plus.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Explain the box model and <code>box-sizing</code>.</p><div class="a">
+<p>Every element is content + padding + border + margin. With the default <code>content-box</code>, <code>width</code> sets the content only, so padding and border add to it. <code>border-box</code> includes padding and border in the width, which is easier to reason about; most resets apply <code>*, *::before, *::after { box-sizing: border-box; }</code>. Vertical margins between blocks can collapse; flex and grid gaps avoid that.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>How is specificity calculated? How do you avoid specificity wars?</p><div class="a">
+<p>Order of weight: inline styles, then IDs, then classes/attributes/pseudo-classes, then elements/pseudo-elements. Equal specificity: the later rule wins. <code>!important</code> overrides all and should be rare. Keep specificity flat with single-class selectors (BEM, CSS Modules, or utility classes), and use <b>cascade layers</b> (<code>@layer reset, base, components, utilities;</code>) to control precedence explicitly. <code>:where()</code> adds zero specificity.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Flexbox vs Grid: when do you use each?</p><div class="a">
+<p><b>Flexbox</b> is one-dimensional: laying out items in a row or column, distributing space, aligning (toolbars, nav bars, button groups, centering). <b>Grid</b> is two-dimensional: rows and columns together (page layouts, card galleries, forms). They combine well: a grid page with flex components inside.</p>
+<pre><code>.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }</code></pre>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Why doesn't my <code>z-index: 9999</code> work?</p><div class="a">
+<p><code>z-index</code> only compares elements within the same <b>stacking context</b>. A new context is created by positioned elements with a z-index, and also by <code>opacity &lt; 1</code>, <code>transform</code>, <code>filter</code>, <code>isolation: isolate</code> and others. A child can never rise above its parent's context. Fix it by moving the element (render modals in a portal at the document root) or adjusting the parent's context.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Which modern CSS features do you use?</p><div class="a">
+<p>Custom properties (<code>--brand</code>) for theming and dark mode, container queries (<code>@container</code>), <code>:has()</code> (parent selector), native nesting, <code>clamp()</code> for fluid sizing, logical properties (<code>margin-inline</code>), <code>aspect-ratio</code>, <code>gap</code> in flexbox, <code>prefers-color-scheme</code> and <code>prefers-reduced-motion</code> media features.</p>
+</div></article>
+</section>
+
+<section class="topic" id="responsive" data-track="fe"><h3>Responsive UI Development <small>4 questions</small></h3>
+<p class="probe">They want a process: mobile-first thinking, fluid layouts, and performance on real devices.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>How do you approach building a responsive UI?</p><div class="a">
+<ul><li>Include <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code>.</li><li><b>Mobile-first:</b> base styles for small screens, then <code>@media (min-width: …)</code> to enhance.</li><li>Choose breakpoints where the content breaks, not for specific devices.</li><li>Use fluid layouts (grid with <code>minmax</code>, flex-wrap), relative units (<code>rem</code>, <code>%</code>, <code>vw</code>), and <code>max-width</code> on media.</li><li>Touch targets at least ~44px; don't rely on hover.</li></ul>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Media queries vs container queries?</p><div class="a">
+<p>Media queries respond to the viewport. Container queries respond to the size of a parent container, so a component (a product card) adapts to wherever it's placed, sidebar or main column. This makes components truly reusable.</p>
+<pre><code>.card-wrap { container-type: inline-size; }
+@container (min-width: 400px) { .card { display: grid; grid-template-columns: 120px 1fr; } }</code></pre>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How do you make images and typography responsive?</p><div class="a">
+<p>Images: <code>srcset</code> and <code>sizes</code> so the browser picks the right resolution, <code>&lt;picture&gt;</code> for art direction or modern formats (AVIF/WebP), explicit <code>width</code>/<code>height</code> or <code>aspect-ratio</code> to avoid layout shift, <code>loading="lazy"</code> below the fold. Typography: <code>rem</code> units to respect user font settings and fluid sizes with <code>clamp()</code>: <code>font-size: clamp(1.5rem, 1rem + 2vw, 2.5rem);</code></p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How do you measure front-end performance?</p><div class="a">
+<p>Core Web Vitals: <b>LCP</b> (Largest Contentful Paint, loading, target ≤ 2.5 s), <b>INP</b> (Interaction to Next Paint, responsiveness, ≤ 200 ms; it replaced FID in 2024) and <b>CLS</b> (Cumulative Layout Shift, ≤ 0.1). Measure with Lighthouse, Chrome DevTools and real-user monitoring. Improve with code splitting, image optimization, caching, and avoiding long main-thread tasks. Test on real mid-range phones and slow networks, not just DevTools resizing.</p>
+</div></article>
+</section>
+
+<section class="topic" id="state" data-track="fe"><h3>State Management (Redux, Context API) <small>5 questions</small></h3>
+<p class="probe">The key signal: you distinguish server state from client state and pick the lightest tool that works.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>What kinds of state exist in a React app, and where should each live?</p><div class="a">
+<ul><li><b>Local UI state</b> (an open dropdown, a form input): <code>useState</code>/<code>useReducer</code> in the component.</li><li><b>Shared client state</b> (theme, current user, cart): lift state up, Context, or a store (Redux Toolkit, Zustand).</li><li><b>Server state</b> (data from the API): a cache library such as TanStack Query or RTK Query, which handles caching, refetching and invalidation.</li><li><b>URL state</b> (filters, page, selected tab): the router's search params, so it survives refresh and can be shared.</li></ul>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>What are the pitfalls of the Context API?</p><div class="a">
+<p>Every consumer re-renders when the context value changes, and an object literal as the value changes on every provider render. Mitigations: memoize the value with <code>useMemo</code>, split contexts by concern or by change frequency (separate state and dispatch contexts), and keep frequently changing data out of a widely used context. Context is a dependency-injection mechanism, not a full state manager; for complex, frequently updated global state use a store with selectors.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Explain Redux and how Redux Toolkit simplifies it.</p><div class="a">
+<p>Redux keeps global state in one store; components <b>dispatch actions</b>; pure <b>reducers</b> compute the next state; components read with <b>selectors</b>. It's predictable and debuggable (DevTools, time travel). Redux Toolkit is the standard way to write it today: <code>configureStore</code>, <code>createSlice</code> (generates actions and reducers; Immer lets you write "mutating" code that produces immutable updates), <code>createAsyncThunk</code> for async logic, and <b>RTK Query</b> for data fetching and caching.</p>
+<pre><code>const cartSlice = createSlice({
+  name: 'cart',
+  initialState: { items: [] as CartItem[] },
+  reducers: {
+    added(state, action: PayloadAction&lt;CartItem&gt;) { state.items.push(action.payload); },
+    removed(state, action: PayloadAction&lt;string&gt;) {
+      state.items = state.items.filter(i =&gt; i.id !== action.payload);
+    },
+  },
+});</code></pre>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>Redux vs Context vs Zustand vs TanStack Query: how do you choose?</p><div class="a">
+<p>If most "global state" is server data, TanStack Query or RTK Query removes most of it, and what remains is small enough for Context or Zustand. Choose Redux Toolkit for large apps with lots of shared, interdependent client state, many developers, and a need for strict conventions and DevTools. Zustand is minimal boilerplate with selector-based subscriptions. Context alone fits low-frequency values like theme, locale and auth user.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>Why must state be updated immutably?</p><div class="a">
+<p>React and Redux detect changes by reference comparison. Mutating an array or object in place keeps the same reference, so the UI may not re-render and memoization breaks. Create new objects: <code>setItems(prev =&gt; [...prev, item])</code>, <code>{...user, name}</code>. Use the functional updater form when the new state depends on the previous one.</p>
+</div></article>
+</section>
+
+<section class="topic" id="api" data-track="fe"><h3>API Integration <small>5 questions</small></h3>
+<p class="probe">Where front end meets your backend. Show you handle failures, cancellation, auth and typing end-to-end.</p>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>How do you structure API calls in a React app? <code>fetch</code> or Axios?</p><div class="a">
+<p>Put calls in an API layer (one module per resource), not inside components, with a shared client that sets the base URL, headers, credentials and error handling. <code>fetch</code> is native but <b>doesn't reject on HTTP errors</b>; check <code>response.ok</code>. Axios rejects on non-2xx, has interceptors and automatic JSON. Either is fine; then use TanStack Query or RTK Query in components for loading, error, caching and retries.</p>
+<pre><code>async function api&lt;T&gt;(path: string, init?: RequestInit): Promise&lt;T&gt; {
+  const res = await fetch(`${BASE_URL}${path}`, {
+    ...init, credentials: 'include',
+    headers: { 'Content-Type': 'application/json', ...init?.headers },
+  });
+  if (!res.ok) throw new ApiError(res.status, await res.json().catch(() =&gt; null));
+  return res.status === 204 ? (undefined as T) : res.json();
+}</code></pre>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How do you avoid race conditions when a user changes a filter quickly?</p><div class="a">
+<p>Responses can arrive out of order, so an old response may overwrite newer results. Solutions: cancel the previous request with <code>AbortController</code> in the effect cleanup, ignore stale responses with a flag, debounce the input, or use TanStack Query, which keys queries by parameters and handles this. Pass the abort signal through and have the ASP.NET Core endpoint honor its <code>CancellationToken</code>.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv core">CORE</span>What is CORS and how do you configure it with an ASP.NET Core API?</p><div class="a">
+<p>Browsers block cross-origin responses unless the server allows the origin. For non-simple requests (custom headers, JSON, PUT/DELETE) the browser first sends a <b>preflight</b> <code>OPTIONS</code> request. CORS is enforced by browsers only; it's not server security.</p>
+<pre><code>builder.Services.AddCors(o =&gt; o.AddPolicy("spa", p =&gt; p
+    .WithOrigins("https://app.example.com")
+    .AllowAnyHeader().AllowAnyMethod().AllowCredentials()));
+app.UseCors("spa");</code></pre>
+<p>You can't combine <code>AllowAnyOrigin</code> with credentials. Serving the SPA and API from the same origin (or through a BFF/reverse proxy) avoids CORS entirely.</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How do you handle auth tokens and expired sessions in API calls?</p><div class="a">
+<p>With a BFF, the browser sends the session cookie automatically (<code>credentials: 'include'</code>) plus an anti-forgery header. With bearer tokens, an interceptor attaches <code>Authorization: Bearer …</code>; on 401 it refreshes the token once, queues concurrent requests during the refresh, retries them, and redirects to login if refresh fails. Distinguish 401 (log in again) from 403 (show "not allowed").</p>
+</div></article>
+
+<article class="qa"><p class="q"><span class="lv senior">SENIOR</span>How do you keep front-end types in sync with the backend API?</p><div class="a">
+<p>Generate clients and types from the backend's OpenAPI document (built into .NET 9+) with NSwag, openapi-typescript or Orval, in the build pipeline so contract changes break the build instead of production. Validate critical responses at runtime with Zod, since types don't exist at runtime. Map ProblemDetails errors into a typed error the UI can display, including field-level validation messages.</p>
+</div></article>
+</section>
+</div>
+
+<footer>Tip for the interview: for each topic, prepare one real story from your own projects (the problem, what you chose, the trade-off, the result). Interviewers remember examples more than definitions. Dates and version details reflect October 2026; re-check .NET support dates on Microsoft's official lifecycle page.</footer>
+</main>
+</div>
+
+<script>
+(function(){
+  const sections=[...document.querySelectorAll('section.topic')];
+  const groups={be:[],fe:[]};
+  sections.forEach(s=>{
+    const name=s.querySelector('h3').childNodes[0].textContent.trim();
+    const n=s.querySelectorAll('.qa').length;
+    groups[s.dataset.track].push(`<li><a href="#${s.id}">${name}<span>${n}</span></a></li>`);
+  });
+  const total=document.querySelectorAll('.qa').length;
+  document.getElementById('toc').innerHTML=
+    `<h3>Backend</h3><ol class="be">${groups.be.join('')}</ol><h3>Frontend</h3><ol class="fe">${groups.fe.join('')}</ol><h3>${total} questions</h3>`;
+  document.getElementById('tocMobile').innerHTML=
+    `<div><h3>Backend</h3><ol>${groups.be.join('')}</ol></div><div><h3>Frontend</h3><ol>${groups.fe.join('')}</ol></div>`;
+  document.querySelectorAll('#tocMobile a').forEach(a=>a.addEventListener('click',()=>a.closest('details').open=false));
+
+  const body=document.body, btn=document.getElementById('practice'), reveal=document.getElementById('revealAll');
+  function setPractice(on){
+    body.classList.toggle('practice',on);
+    btn.setAttribute('aria-pressed',String(on));
+    btn.textContent=on?'Practice mode: on':'Practice mode';
+    reveal.hidden=!on;
+    document.querySelectorAll('.qa').forEach(q=>q.classList.remove('open'));
+    document.querySelectorAll('.q').forEach(q=>{ if(on){q.tabIndex=0;q.setAttribute('role','button');} else {q.removeAttribute('tabindex');q.removeAttribute('role');} });
+    try{localStorage.setItem('practice',on?'1':'0')}catch(e){}
+  }
+  btn.addEventListener('click',()=>setPractice(!body.classList.contains('practice')));
+  reveal.addEventListener('click',()=>document.querySelectorAll('.qa').forEach(q=>q.classList.add('open')));
+  function toggle(e){ if(!body.classList.contains('practice'))return; const qa=e.target.closest('.qa'); if(qa) qa.classList.toggle('open'); }
+  document.addEventListener('click',e=>{ if(e.target.closest('.q')) toggle(e); });
+  document.addEventListener('keydown',e=>{ if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('q')){e.preventDefault();toggle(e);} });
+  try{ if(localStorage.getItem('practice')==='1') setPractice(true); }catch(e){}
+
+  const search=document.getElementById('search'), empty=document.getElementById('empty');
+  search.addEventListener('input',()=>{
+    const term=search.value.trim().toLowerCase(); let shown=0;
+    sections.forEach(s=>{
+      let any=false;
+      s.querySelectorAll('.qa').forEach(qa=>{
+        const match=!term||qa.textContent.toLowerCase().includes(term);
+        qa.classList.toggle('hidden-by-search',!match);
+        if(match){any=true;shown++;}
+      });
+      s.classList.toggle('hidden-by-search',!any);
+    });
+    document.querySelectorAll('.track').forEach(t=>t.classList.toggle('hidden-by-search',!t.querySelector('section.topic:not(.hidden-by-search)')));
+    empty.style.display=shown?'none':'block';
+  });
+})();
+</script>
